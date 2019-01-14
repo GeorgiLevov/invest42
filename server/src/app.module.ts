@@ -1,3 +1,4 @@
+import { OverviewModule } from './overview/overview.module';
 import { ConfigService } from './config/config.service';
 import { Module, HttpModule } from '@nestjs/common';
 import { ConfigModule } from './config/config.module';
@@ -9,6 +10,7 @@ import { DatabaseModule } from './database/database.module';
 
 @Module({
   imports: [
+    OverviewModule,
     ConfigModule,
     HttpModule,
     AuthModule,

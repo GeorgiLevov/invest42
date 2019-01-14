@@ -1,16 +1,16 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { WatchlistService } from './watchlist.service';
+// import { Test, TestingModule } from '@nestjs/testing';
+// import { WatchlistService } from './watchlist.service';
 
-describe('WatchlistService', () => {
-  let service: WatchlistService;
-  
-  beforeAll(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [WatchlistService],
-    }).compile();
-    service = module.get<WatchlistService>(WatchlistService);
-  });
-  it('should be defined', () => {
-    expect(service).toBeDefined();
-  });
-});
+// describe('WatchlistService', () => {
+//   let service: WatchlistService;
+
+//   beforeAll(async () => {
+//     const module: TestingModule = await Test.createTestingModule({
+//       providers: [WatchlistService],
+//     }).compile();
+//     service = module.get<WatchlistService>(WatchlistService);
+//   });
+//   it('should be defined', () => {
+//     expect(service).toBeDefined();
+//   });
+// });

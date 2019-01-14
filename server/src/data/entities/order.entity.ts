@@ -1,5 +1,5 @@
+import { Client } from './client.entity';
 import { Company } from './company.entity';
-import { Status } from './status.entity';
 import { User } from './user.entity';
 import {
   Column,
@@ -16,17 +16,11 @@ export class Order {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(type => User, user => user.orders)
-  client: Promise<User>;
-
   @Column()
   opendate: Date;
 
   @Column({ nullable: true, default: null })
   closedate: Date;
-
-  @ManyToOne(type => Company, company => company.orders)
-  company: Promise<Company>;
 
   @Column()
   buyprice: number;
@@ -37,6 +31,12 @@ export class Order {
   @Column()
   units: number;
 
-  @ManyToOne(type => Status, status => status.orders, { eager: true })
-  status: Status;
+  @ManyToOne(type => Client, client => client.orders)
+  client: Promise<Client>;
+
+  @Column({enum: ['OPENED', 'CLOSED'], type: 'enum'})
+  status: string;
+
+  @ManyToOne(type => Company, company => company.orders)
+  company: Promise<Company>;
 }

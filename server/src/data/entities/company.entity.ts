@@ -1,8 +1,8 @@
-import { Watchlist } from './watchlist.entity';
+import { Status } from './../../models/enums/status.enum';
+import { Industry } from './../../models/enums/industry.enum';
 import { Order } from './order.entity';
-import { Industry } from './industry.entity';
 import { Price } from './prices.entity';
-import { User } from './user.entity';
+import { Client } from './client.entity';
 import {
   Column,
   PrimaryGeneratedColumn,
@@ -11,6 +11,7 @@ import {
   OneToMany,
   ManyToMany,
 } from 'typeorm';
+import { News } from './news.entity';
 
 @Entity({
   name: 'companies',
@@ -19,7 +20,7 @@ export class Company {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ default: '', unique: true })
+  @Column({ unique: true })
   name: string;
 
   @Column({ default: '' })
@@ -35,10 +36,16 @@ export class Company {
   address: string;
 
   @Column()
-  closedate: Date;
+  startdate: Date;
 
-  @ManyToOne(type => Industry, industry => industry.company, { eager: true })
-  industry: Industry;
+  @Column({enum: [Status.active, Status.acrhived], type: 'enum'})
+  status: string;
+
+  @OneToMany(type => News, news => news.company)
+  news: Promise<News[]>;
+
+  @Column({enum: [Industry.tech, Industry.pharma, Industry.health, Industry.manufacturing, Industry.retail, Industry.goods], type: 'enum'})
+  industry: string;
 
   @OneToMany(type => Price, price => price.company)
   prices: Promise<Price[]>;
@@ -46,6 +53,6 @@ export class Company {
   @OneToMany(type => Order, order => order.company)
   orders: Promise<Order[]>;
 
-  @ManyToMany(type => Watchlist, watchlist => watchlist.companies)
-  watchlists: Promise<Watchlist[]>;
+  @ManyToMany(type => Client, client => client.watchlist)
+  clients: Promise<Client[]>;
 }

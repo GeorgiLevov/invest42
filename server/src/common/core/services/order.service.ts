@@ -1,137 +1,135 @@
-import { Status } from './../../../data/entities/status.entity';
-import { Company } from './../../../data/entities/company.entity';
-import { Injectable, HttpException, HttpStatus, BadRequestException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { User } from 'src/data/entities/user.entity';
-import { Repository } from 'typeorm';
-import { Order } from '../../../data/entities/order.entity';
-import { OrderDTO } from '../../../models/order/order.dto';
 
-@Injectable()
-export class OrderService {
-    constructor(
-        @InjectRepository(Order)
-        private readonly orderRepository: Repository<Order>,
-        @InjectRepository(User)
-        private readonly userrRepository: Repository<User>,
-        @InjectRepository(Company)
-        private readonly companyRepository: Repository<Company>,
-        @InjectRepository(Status)
-        private readonly statusRepository: Repository<Status>,
-    ) { }
+// import { Company } from './../../../data/entities/company.entity';
+// import { Injectable, HttpException, HttpStatus, BadRequestException } from '@nestjs/common';
+// import { InjectRepository } from '@nestjs/typeorm';
+// import { User } from 'src/data/entities/user.entity';
+// import { Repository } from 'typeorm';
+// import { Order } from '../../../data/entities/order.entity';
+// import { OrderDTO } from '../../../models/order/order.dto';
 
-    async createOrder(clientId: string, order: OrderDTO) {
-        const foundUser: User = await this.userrRepository.findOne({ where: { id: clientId } });
-        if (!foundUser) {
-            throw new HttpException('Client not found!', HttpStatus.NOT_FOUND);
-        }
+// @Injectable()
+// export class OrderService {
+//     constructor(
+//         @InjectRepository(Order)
+//         private readonly orderRepository: Repository<Order>,
+//         @InjectRepository(User)
+//         private readonly userrRepository: Repository<User>,
+//         @InjectRepository(Company)
+//         private readonly companyRepository: Repository<Company>,
+//     ) { }
 
-        const foundCompany: Company = await this.companyRepository.findOneOrFail({ where: { id: order.companyId } });
-        if (!foundCompany) {
-            throw new HttpException('Company not found!', HttpStatus.NOT_FOUND);
-        }
+//     async createOrder(clientId: string, order: OrderDTO) {
+//         const foundUser: User = await this.userrRepository.findOne({ where: { id: clientId } });
+//         if (!foundUser) {
+//             throw new HttpException('Client not found!', HttpStatus.NOT_FOUND);
+//         }
 
-        const foundStatus = await this.statusRepository.findOne({ where: { statusname: 'opened' } });
-        if (!foundStatus) {
-            throw new HttpException('Status not found!', HttpStatus.NOT_FOUND);
-        }
+//         const foundCompany: Company = await this.companyRepository.findOneOrFail({ where: { id: order.companyId } });
+//         if (!foundCompany) {
+//             throw new HttpException('Company not found!', HttpStatus.NOT_FOUND);
+//         }
 
-        const amountNeeded = order.buyPrice * order.units;
-        if (amountNeeded > foundUser.funds.currentamount) {
-            try {
-                const createOrder: Order = await this.orderRepository.create();
-                createOrder.opendate = order.openDate;
-                createOrder.closedate = order.closeDate;
-                createOrder.buyprice = order.buyPrice;
-                createOrder.sellprice = order.sellPrice;
-                createOrder.units = order.units;
-                createOrder.client = Promise.resolve(foundUser);
-                createOrder.status = foundStatus;
-                createOrder.company = Promise.resolve(foundCompany);
+//         const foundStatus = await this.statusRepository.findOne({ where: { statusname: 'opened' } });
+//         if (!foundStatus) {
+//             throw new HttpException('Status not found!', HttpStatus.NOT_FOUND);
+//         }
 
-                await this.orderRepository.save(createOrder);
-            } catch (error) {
-                throw new HttpException('Cannot create order', HttpStatus.BAD_REQUEST);
-            }
-        } else {
-            throw new HttpException('You are out of money', HttpStatus.BAD_REQUEST);
-        }
+//         const amountNeeded = order.buyPrice * order.units;
+//         if (amountNeeded > foundUser.funds.currentamount) {
+//             try {
+//                 const createOrder: Order = await this.orderRepository.create();
+//                 createOrder.opendate = order.openDate;
+//                 createOrder.closedate = order.closeDate;
+//                 createOrder.buyprice = order.buyPrice;
+//                 createOrder.sellprice = order.sellPrice;
+//                 createOrder.units = order.units;
+//                 createOrder.client = Promise.resolve(foundUser);
+//                 createOrder.status = foundStatus;
+//                 createOrder.company = Promise.resolve(foundCompany);
 
-    }
+//                 await this.orderRepository.save(createOrder);
+//             } catch (error) {
+//                 throw new HttpException('Cannot create order', HttpStatus.BAD_REQUEST);
+//             }
+//         } else {
+//             throw new HttpException('You are out of money', HttpStatus.BAD_REQUEST);
+//         }
 
-    async getOrdersAll() {
-        try {
-            const foundOrders = await this.orderRepository.find();
-            return foundOrders;
-        } catch (error) {
-            throw new HttpException('Open orders not found!', HttpStatus.NOT_FOUND);
-        }
-    }
+//     }
 
-    async getOrdersByClient(id: string) {
-        const foundOrder = await this.orderRepository.findOneOrFail({ where: { clientId: id } });
+//     async getOrdersAll() {
+//         try {
+//             const foundOrders = await this.orderRepository.find();
+//             return foundOrders;
+//         } catch (error) {
+//             throw new HttpException('Open orders not found!', HttpStatus.NOT_FOUND);
+//         }
+//     }
 
-        if (!foundOrder) {
-            throw new HttpException('Orders not found!', HttpStatus.NOT_FOUND);
-        }
+//     async getOrdersByClient(id: string) {
+//         const foundOrder = await this.orderRepository.findOneOrFail({ where: { clientId: id } });
 
-        return foundOrder;
-    }
+//         if (!foundOrder) {
+//             throw new HttpException('Orders not found!', HttpStatus.NOT_FOUND);
+//         }
 
-    async closeOrder(id: string) { }
+//         return foundOrder;
+//     }
 
-    async getClosedOrders(id: string) {
+//     async closeOrder(id: string) { }
 
-        const foundStatus = await this.statusRepository.findOne({ where: { statusname: 'closed' } });
-        const foundClosedOrders = await this.orderRepository.find({
-            where: {
-                clientId: id,
-                status: foundStatus.id,
-            },
-        });
+//     async getClosedOrders(id: string) {
 
-        if (!foundClosedOrders) {
-            throw new HttpException('Closed orders not found!', HttpStatus.NOT_FOUND);
-        }
+//         const foundStatus = await this.statusRepository.findOne({ where: { statusname: 'closed' } });
+//         const foundClosedOrders = await this.orderRepository.find({
+//             where: {
+//                 clientId: id,
+//                 status: foundStatus.id,
+//             },
+//         });
 
-        if (foundClosedOrders.length === 0) {
-            throw new BadRequestException('Client has no closed orders');
-        }
-        return foundClosedOrders;
-    }
+//         if (!foundClosedOrders) {
+//             throw new HttpException('Closed orders not found!', HttpStatus.NOT_FOUND);
+//         }
 
-    async getOpenOrders(id: string) {
+//         if (foundClosedOrders.length === 0) {
+//             throw new BadRequestException('Client has no closed orders');
+//         }
+//         return foundClosedOrders;
+//     }
 
-        const foundStatus = await this.statusRepository.findOne({ where: { statusname: 'opened' } });
-        const foundOpenOrders = await this.orderRepository.find({
-            where: {
-                clientId: id,
-                status: foundStatus.id,
-            },
-        });
+//     async getOpenOrders(id: string) {
 
-        if (!foundOpenOrders) {
-            throw new HttpException('Open orders not found!', HttpStatus.NOT_FOUND);
-        }
-        if (foundOpenOrders.length === 0) {
-            throw new BadRequestException('Client has no opened orders');
-        }
+//         const foundStatus = await this.statusRepository.findOne({ where: { statusname: 'opened' } });
+//         const foundOpenOrders = await this.orderRepository.find({
+//             where: {
+//                 clientId: id,
+//                 status: foundStatus.id,
+//             },
+//         });
 
-        return foundOpenOrders;
-    }
+//         if (!foundOpenOrders) {
+//             throw new HttpException('Open orders not found!', HttpStatus.NOT_FOUND);
+//         }
+//         if (foundOpenOrders.length === 0) {
+//             throw new BadRequestException('Client has no opened orders');
+//         }
 
-    async getOrdersInInterval(start: Date, end: Date) {
-        const foundOrdersInInrerval = await this.orderRepository.find({
-            where: {
-                opendate: start,
-                closedate: end,
-            },
-        });
+//         return foundOpenOrders;
+//     }
 
-        if (!foundOrdersInInrerval) {
-            throw new HttpException('Orders in set interval not found!', HttpStatus.NOT_FOUND);
-        }
+//     async getOrdersInInterval(start: Date, end: Date) {
+//         const foundOrdersInInrerval = await this.orderRepository.find({
+//             where: {
+//                 opendate: start,
+//                 closedate: end,
+//             },
+//         });
 
-        return foundOrdersInInrerval;
-    }
-}
+//         if (!foundOrdersInInrerval) {
+//             throw new HttpException('Orders in set interval not found!', HttpStatus.NOT_FOUND);
+//         }
+
+//         return foundOrdersInInrerval;
+//     }
+// }

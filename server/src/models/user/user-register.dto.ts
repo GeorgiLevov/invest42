@@ -1,5 +1,6 @@
 import { IsString, Length, Matches, IsOptional, IsEmail } from 'class-validator';
 import { Optional } from '@nestjs/common';
+import { Column } from 'typeorm';
 
 export class UserRegisterDTO {
 
@@ -11,6 +12,12 @@ export class UserRegisterDTO {
   password: string;
 
   @Optional()
-  avatarUrl: string;
+  avatar: string;
+
+  @IsString()
+  fullname: string;
+
+  @IsString()
+  role: string;
 
 }

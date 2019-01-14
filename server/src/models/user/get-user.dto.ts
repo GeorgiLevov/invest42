@@ -5,4 +5,8 @@ export class GetUserDTO {
   email: string;
 
   password: string;
+
+  role: string;
+
+  fullname: string;
 }

@@ -1,16 +1,18 @@
-import { RolesGuard } from './../common/guards/roles/roles.guard';
+import { ClientRegisterDTO } from './../models/user/client-register.dto';
+import { RolesGuard } from './../common';
 import { UserLoginDTO } from '../models/user/user-login.dto';
-import { AdminGuard, Roles } from './../common';
+import { Roles } from '../common';
 import { FileService } from '../common/core/file.service';
 import { UserRegisterDTO } from '../models/user/user-register.dto';
 import { UsersService } from '../common/core/users.service';
 import { AuthService } from './auth.service';
-import { Get, Controller, UseGuards, Post, Body, FileInterceptor, UseInterceptors, UploadedFile, ValidationPipe, UsePipes, BadRequestException } from '@nestjs/common';
+import { Get, Controller, UseGuards, Post, Body, FileInterceptor,
+  UseInterceptors, UploadedFile, ValidationPipe, UsePipes, BadRequestException } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { join } from 'path';
 import { unlink } from 'fs';
 
-@Controller('auth')
+@Controller('')
 export class AuthController {
 
   constructor(
@@ -18,8 +20,8 @@ export class AuthController {
     private readonly usersService: UsersService,
   ) { }
 
-  @Get()
-  @Roles('admin')
+  @Get('returnroot')
+  @Roles('ADMIN')
   @UseGuards(AuthGuard(), RolesGuard)
   root(): string {
     return 'root';
@@ -29,22 +31,24 @@ export class AuthController {
   async sign(@Body(new ValidationPipe({
     transform: true,
     whitelist: true,
-  })) user: UserLoginDTO): Promise<string> {
-    const token = await this.authService.signIn(user);
-    if (!token) {
+  })) user: UserLoginDTO): Promise<object> {
+    const generatedToken = await this.authService.signIn(user);
+    if (!generatedToken) {
       throw new BadRequestException('Wrong credentials!');
     }
 
-    return token;
+    return {token: generatedToken} ;
   }
 
-  @Post('register')
+  @Post('register/user')
+  @Roles('ADMIN')
+  @UseGuards(AuthGuard(), RolesGuard)
   @UseInterceptors(FileInterceptor('avatar', {
     limits: FileService.fileLimit(1, 2 * 1024 * 1024),
     storage: FileService.storage(['public', 'images']),
     fileFilter: (req, file, cb) => FileService.fileFilter(req, file, cb, '.png', '.jpg'),
   }))
-  async register(
+  async registerUser(
     @Body(new ValidationPipe({
       transform: true,
       whitelist: true,
@@ -56,14 +60,60 @@ export class AuthController {
   ): Promise<string> {
     const folder = join('.', 'public', 'uploads');
     if (!file) {
-      user.avatarUrl = join(folder, 'default.png');
+      user.avatar = join(folder, 'default.png');
     } else {
-      user.avatarUrl = join(folder, file.filename);
+      user.avatar = join(folder, file.filename);
     }
 
     try {
       await this.usersService.registerUser(user);
-      return 'saved';
+      return `${user.role}: ${user.fullname} is now registered.`;
+    } catch (error) {
+      await new Promise((resolve, reject) => {
+
+        // Delete the file if user not found
+        if (file) {
+          unlink(join('.', file.path), (err) => {
+            if (err) {
+              reject(error.message);
+            }
+            resolve();
+          });
+        }
+
+        resolve();
+      });
+
+      return (error.message);
+    }
+  }
+
+  @Post('register/client')
+  @Roles('ADMIN')
+  @UseGuards(AuthGuard(), RolesGuard)
+  @UseInterceptors(FileInterceptor('avatar', {
+    limits: FileService.fileLimit(1, 2 * 1024 * 1024),
+    storage: FileService.storage(['public', 'images']),
+    fileFilter: (req, file, cb) => FileService.fileFilter(req, file, cb, '.png', '.jpg'),
+  }))
+  async registerClient(
+    @Body(new ValidationPipe({
+      transform: true,
+      whitelist: true,
+    }))
+    client: ClientRegisterDTO,
+    @UploadedFile()
+    file,
+  ): Promise<string> {
+    const folder = join('.', 'public', 'uploads');
+    if (!file) {
+      client.icon = join(folder, 'default.png');
+    } else {
+      client.icon = join(folder, file.filename);
+    }
+    try {
+      await this.usersService.registerClient(client);
+      return `Client: ${client.fullname} is now registered.`;
     } catch (error) {
       await new Promise((resolve, reject) => {
 

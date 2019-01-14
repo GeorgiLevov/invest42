@@ -1,95 +1,93 @@
-import { Industry } from '../../../data/entities/industry.entity';
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Company } from 'src/data/entities/company.entity';
-import { Repository } from 'typeorm';
-import { CompanyDTO } from 'src/models/company.dto';
-import { Watchlist } from 'src/data/entities/watchlist.entity';
+// import { Company } from '../../../data/entities/company.entity';
+// import { CompanyDTO } from './../../../models/company.dto';
+// import { Industry } from '../../../data/entities/industry.entity';
+// import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+// import { InjectRepository } from '@nestjs/typeorm';
 
-@Injectable()
-export class CompaniesService {
-    constructor(
-        @InjectRepository(Company)
-        private readonly companyRepository: Repository<Company>,
-        @InjectRepository(Industry)
-        private readonly industryRepository: Repository<Industry>,
-        @InjectRepository(Watchlist)
-        private readonly watchlistRepository: Repository<Watchlist>,
-    ) { }
+// import { Repository } from 'typeorm';
 
-    async createCompany(companyDTO: CompanyDTO) {
-        const companyFound = await this.companyRepository.findOne({ where: { name: companyDTO.name } });
+// @Injectable()
+// export class CompaniesService {
+//     constructor(
+//         @InjectRepository(Company)
+//         private readonly companyRepository: Repository<Company>,
+//         @InjectRepository(Industry)
+//         private readonly industryRepository: Repository<Industry>,
+//     ) { }
 
-        if (companyFound) {
-            throw new HttpException('Company already exists!', HttpStatus.BAD_REQUEST);
-        }
+//     async createCompany(companyDTO: CompanyDTO) {
+//         const companyFound = await this.companyRepository.findOne({ where: { name: companyDTO.name } });
 
-        const industry = await this.industryRepository.findOne({ where: { id: companyDTO.industryId } });
-        if (!industry) {
-            throw new HttpException('Industry not found!', HttpStatus.NOT_FOUND);
-        }
+//         if (companyFound) {
+//             throw new HttpException('Company already exists!', HttpStatus.BAD_REQUEST);
+//         }
 
-        const company = new Company();
-        company.name = companyDTO.name;
-        company.abbr = companyDTO.abbr;
-        company.icon = companyDTO.icon;
-        company.ceo = companyDTO.ceo;
-        company.address = companyDTO.address;
-        company.industry = industry;
-        company.closedate = new Date();
+//         const industry = await this.industryRepository.findOne({ where: { id: companyDTO.industryId } });
+//         if (!industry) {
+//             throw new HttpException('Industry not found!', HttpStatus.NOT_FOUND);
+//         }
 
-        await this.companyRepository.create(company);
+//         const company = new Company();
+//         company.name = companyDTO.name;
+//         company.abbr = companyDTO.abbr;
+//         company.icon = companyDTO.icon;
+//         company.ceo = companyDTO.ceo;
+//         company.address = companyDTO.address;
+//         // company.industry = industry;
+//         company.closedate = new Date();
 
-        return await this.companyRepository.save(company);
-    }
+//         await this.companyRepository.create(company);
 
-    async updateCompany(id: string, companyDTO: Partial<CompanyDTO>) {
-        const companyFound = await this.companyRepository.findOne({ where: { id } });
+//         return await this.companyRepository.save(company);
+//     }
 
-        if (!companyFound) {
-            throw new HttpException('Company not found!', HttpStatus.NOT_FOUND);
-        }
+//     async updateCompany(id: string, companyDTO: Partial<CompanyDTO>) {
+//         const companyFound = await this.companyRepository.findOne({ where: { id } });
 
-        companyFound.name = companyDTO.name;
-        companyFound.abbr = companyDTO.abbr;
-        companyFound.icon = companyDTO.icon;
-        companyFound.ceo = companyDTO.ceo;
-        companyFound.address = companyDTO.address;
+//         if (!companyFound) {
+//             throw new HttpException('Company not found!', HttpStatus.NOT_FOUND);
+//         }
 
-        if (companyDTO.industryId) {
-            const industry = await this.industryRepository.findOne({ where: { id: companyDTO.industryId } });
-            if (!industry) {
-                throw new HttpException('Industry not found!', HttpStatus.NOT_FOUND);
-            }
-            companyFound.industry = industry;
-        }
+//         companyFound.name = companyDTO.name;
+//         companyFound.abbr = companyDTO.abbr;
+//         companyFound.icon = companyDTO.icon;
+//         companyFound.ceo = companyDTO.ceo;
+//         companyFound.address = companyDTO.address;
 
-        await this.companyRepository.save(companyFound);
+//         if (companyDTO.industryId) {
+//             const industry = await this.industryRepository.findOne({ where: { id: companyDTO.industryId } });
+//             if (!industry) {
+//                 throw new HttpException('Industry not found!', HttpStatus.NOT_FOUND);
+//             }
+//             // companyFound.industry = industry;
+//         }
 
-        return await this.companyRepository.findOne({
-            where: { id },
-        });
-    }
+//         await this.companyRepository.save(companyFound);
 
-    async getCompaniesByIndustry(id: string) {
-        const industry = await this.industryRepository.findOne({ where: { id } });
+//         return await this.companyRepository.findOne({
+//             where: { id },
+//         });
+//     }
 
-        if (!industry) {
-            throw new HttpException('Industry not found!', HttpStatus.NOT_FOUND);
-        }
+//     async getCompaniesByIndustry(id: string) {
+//         const industry = await this.industryRepository.findOne({ where: { id } });
 
-        return await this.companyRepository.find({ where: { industry } });
-    }
+//         if (!industry) {
+//             throw new HttpException('Industry not found!', HttpStatus.NOT_FOUND);
+//         }
 
-    async getCompanyTimesListed(id: string) {
-        const companyFound = await this.companyRepository.findOne({ where: { id } });
+//         return await this.companyRepository.find({ where: { industry } });
+//     }
 
-        if (!companyFound) {
-            throw new HttpException('Company not found!', HttpStatus.NOT_FOUND);
-        }
+//     async getCompanyTimesListed(id: string) {
+//         const companyFound = await this.companyRepository.findOne({ where: { id } });
 
-        const companies = await this.watchlistRepository.find({ where: { companyFound } });
+//         if (!companyFound) {
+//             throw new HttpException('Company not found!', HttpStatus.NOT_FOUND);
+//         }
 
-        return companies.length;
-    }
-}
+//         const companies = [1, 2, 3];
+
+//         return companies.length;
+//     }
+// }

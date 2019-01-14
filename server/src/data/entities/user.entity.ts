@@ -1,8 +1,7 @@
-import { Funds } from './funds.entity';
-import { Settings } from './settings.entity';
-import { Order } from './order.entity';
-import { Watchlist } from './watchlist.entity';
-import { Role } from './role.entity';
+import { Status } from './../../models/enums/status.enum';
+import { Role } from './../../models/enums/roles.enum';
+import { Client } from './client.entity';
+
 import {
   Column,
   PrimaryGeneratedColumn,
@@ -20,38 +19,31 @@ export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(type => Role, role => role.users, { eager: true })
-  role: Role;
-
-  @ManyToOne(type => User, user => user.clients)
-  manager: User;
-
-  @OneToMany(type => User, user => user.manager)
-  clients: Promise<User[]>;
-
-  @OneToOne(type => Watchlist, watchlist => watchlist.client, { eager: true})
-  @JoinColumn()
-  watchlist: Promise<Watchlist>;
-
-  @OneToOne(type => Settings, settings => settings.user)
-  settings: Promise<Settings>;
-
-  @OneToOne(type => Funds, funds => funds.client, { eager: true})
-  @JoinColumn()
-  funds: Funds;
-
-  @Column({ default: '' })
-  fullname: string;
-
   @Column()
-  dateregistered: Date;
+  fullname: string;
 
   @Column({ unique: true })
   email: string;
 
-  @Column({ default: '' })
+  @Column()
   password: string;
 
-  @OneToMany(type => Order, order => order.client)
-  orders: Promise<Order[]>;
+  @Column({enum: [Role.admin, Role.manager], type: 'enum'})
+  role: string;
+
+  @Column({ default: '' })
+  avatar: string;
+
+  @OneToMany(type => Client, client => client.manager, {cascade: true})
+  clients: Client[];
+
+  @Column({enum: [Status.acrhived, Status.active], type: 'enum', default: Status.active})
+  status: string;
+
+  // @OneToOne(type => Funds, funds => funds.client, { eager: true})
+  // @JoinColumn()
+  // funds: Funds;
+
+  // @Column()
+  // dateregistered: Date;
 }
