@@ -40,4 +40,10 @@ export class ManagementController {
         return this.managementService.addCompanyToWatchlist(info.email, info.companyName);
     }
 
+    @Get('market')
+    @Roles(Role.manager)
+    getClientMarket(): Promise<object> {
+        return this.managementService.getClientMarket();
+    }
+
 }

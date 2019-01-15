@@ -152,4 +152,5 @@ export class UsersService {
     return {result: `User${userFound.fullname} was changed`};
   }
 
+  }
 }

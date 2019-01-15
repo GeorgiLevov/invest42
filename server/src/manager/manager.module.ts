@@ -1,3 +1,4 @@
+import { Price } from './../data/entities/prices.entity';
 import { ManagementService } from './../common/core/management.service';
 import { ManagementController } from './management.controller';
 import { Client } from '../data/entities/client.entity';
@@ -12,7 +13,7 @@ import { User } from '../data/entities/user.entity';
 import { OverviewController } from './overview.controller';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, Company, Client]), CoreModule, AuthModule],
+  imports: [TypeOrmModule.forFeature([User, Company, Client, Price]), CoreModule, AuthModule],
   providers: [OverviewService, ManagementService],
   exports: [],
   controllers: [OverviewController, ManagementController],

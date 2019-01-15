@@ -1,3 +1,4 @@
+import { Price } from './../../data/entities/prices.entity';
 import { Order } from './../../data/entities/order.entity';
 import { UserRegisterDTO } from './../../models/user/user-register.dto';
 import { Company } from '../../data/entities/company.entity';
@@ -5,8 +6,9 @@ import { Client } from '../../data/entities/client.entity';
 import { User } from 'src/data/entities/user.entity';
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, getManager } from 'typeorm';
 import { OrderStatus } from '../../models/enums/orderstatus.enum';
+import { timer } from 'rxjs';
 
 @Injectable()
 export class ManagementService {
@@ -20,6 +22,9 @@ export class ManagementService {
 
         @InjectRepository(Company)
         private readonly companyRepository: Repository<Company>,
+
+        @InjectRepository(Price)
+        private readonly pricesRepository: Repository<Price>,
 
     ) { }
 
@@ -112,5 +117,25 @@ export class ManagementService {
     //     }
 
     // }
+
+    async getClientMarket(): Promise<object> {
+        const foundCompanies = await this.companyRepository.find({ select: ['name', 'abbr', 'industry'] });
+        if (! foundCompanies){
+            throw new HttpException('No companies found', HttpStatus.BAD_REQUEST);
+        }
+
+        const companies = await getManager().query(`SELECT companies.name,
+        prices.opendate,
+        prices.startprice,
+        prices.endprice,
+        prices.highprice,
+        prices.lowprice
+        FROM prices
+        JOIN companies ON prices.companyId = companies.id
+        WHERE prices.opendate
+        BETWEEN NOW() - interval 60 minute AND NOW()
+        LIMIT 10;`);
+        return {result: companies};
+    }
 
 }
