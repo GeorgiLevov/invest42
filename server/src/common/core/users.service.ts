@@ -1,3 +1,4 @@
+import { ManagerUpdateDTO } from './../../models/user/update-manager.dto';
 import { ClientRegisterDTO } from './../../models/user/client-register.dto';
 import { Client } from './../../data/entities/client.entity';
 import { GetUserDTO } from '../../models/user/get-user.dto';
@@ -12,6 +13,7 @@ import * as bcrypt from 'bcrypt';
 import { JwtPayload } from './../../interfaces/jwt-payload';
 import { validate } from 'class-validator';
 import { BasicStatus } from '../../models/enums/basicstatus.enum';
+import { Role } from 'src/models/enums/roles.enum';
 
 @Injectable()
 export class UsersService {
@@ -72,6 +74,33 @@ export class UsersService {
     return await this.usersRepository.find({});
   }
 
+  async getManager(userEmail): Promise<User>{
+    const managerFound = await this.usersRepository.findOne( { where: {email: userEmail } } );
+
+    if (!managerFound){
+      throw new HttpException('User not found', HttpStatus.BAD_REQUEST);
+    }
+    // if (managerFound.role === Role.admin){
+    //   throw new HttpException('Unauthorized access', HttpStatus.UNAUTHORIZED);
+    // }
+
+    return managerFound;
+  }
+
+  async updateManager(managerEmail: string, newManagerDetails: ManagerUpdateDTO): Promise<object>{
+
+    const oldManagerDetails = await this.usersRepository.findOne( {email: managerEmail } ) ;
+
+    newManagerDetails.password = await bcrypt.hash( newManagerDetails.password , 10);
+
+    const updatedUser = await this.usersRepository.update(oldManagerDetails.id, {
+        email: newManagerDetails.email,
+        password: newManagerDetails.password,
+      });
+
+    return {result: `Manager ${oldManagerDetails.fullname} was successfully edited!`};
+  }
+
   async addClientToManager(managerEmail: string, clientEmail: string): Promise<object> {
     const managerFound = await this.usersRepository.findOne( { email: managerEmail }, { relations: ['clients']} );
     if (!managerFound){
@@ -93,7 +122,7 @@ export class UsersService {
 
  }
 
- async archiveAnyUser(userEmail: string): Promise<object> {
+ async toggleArchiveUser(userEmail: string): Promise<object> {
    const clientFound = await this.clientsRepository.findOne ( {where: { email: userEmail} } );
    const userFound = await this.usersRepository.findOne( {where: {email: userEmail} } );
 
@@ -103,22 +132,24 @@ export class UsersService {
 
    if (clientFound){
     if (clientFound.status === BasicStatus.acrhived){
-      throw new HttpException('Client is already archived', HttpStatus.BAD_REQUEST);
+      clientFound.status = BasicStatus.active;
     }
-
-    clientFound.status = BasicStatus.acrhived;
+    else{
+      clientFound.status = BasicStatus.acrhived;
+    }
     await this.clientsRepository.save(clientFound);
-    return {result: `Client:${clientFound.fullname} was archived`};
+    return {result: `Client:${clientFound.fullname} was changed`};
   }
 
    if (userFound){
     if (userFound.status === BasicStatus.acrhived){
-      throw new HttpException('User is already archived', HttpStatus.BAD_REQUEST);
+      userFound.status = BasicStatus.active;
     }
-
-    userFound.status = BasicStatus.acrhived;
+    else{
+      userFound.status = BasicStatus.acrhived;
+    }
     await this.usersRepository.save(userFound);
-    return {result: `User${userFound.fullname} was archived`};
+    return {result: `User${userFound.fullname} was changed`};
   }
  }
 

@@ -55,7 +55,7 @@ export class AuthController {
     @UploadedFile()
     file,
   ): Promise<string> {
-    const folder = join('.', 'public', 'uploads');
+    const folder = join('.', 'uploads');
     if (!file) {
       user.avatar = join(folder, 'default.png');
     } else {
@@ -99,7 +99,7 @@ export class AuthController {
     @UploadedFile()
     file,
   ): Promise<string> {
-    const folder = join('.', 'public', 'uploads');
+    const folder = join('.', 'uploads');
     if (!file) {
       client.icon = join(folder, 'default.png');
     } else {

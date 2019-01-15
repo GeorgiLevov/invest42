@@ -31,7 +31,7 @@ export class User {
   @Column({enum: [Role.admin, Role.manager], type: 'enum'})
   role: string;
 
-  @Column({ default: '' })
+  @Column()
   avatar: string;
 
   @OneToMany(type => Client, client => client.manager, {cascade: true})

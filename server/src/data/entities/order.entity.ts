@@ -1,6 +1,7 @@
 import { Client } from './client.entity';
 import { Company } from './company.entity';
 import { User } from './user.entity';
+import { OrderStatus } from './../../models/enums/orderstatus.enum';
 import {
   Column,
   PrimaryGeneratedColumn,
@@ -8,7 +9,7 @@ import {
   ManyToOne,
   OneToOne,
 } from 'typeorm';
-import { OrderStatus } from 'src/models/enums/orderstatus.enum';
+
 
 @Entity({
   name: 'orders',
