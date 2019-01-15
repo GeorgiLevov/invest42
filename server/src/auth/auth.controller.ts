@@ -8,7 +8,7 @@ import { UsersService } from '../common/core/users.service';
 import { AuthService } from './auth.service';
 import {
   Get, Controller, UseGuards, Post, Body, FileInterceptor,
-  UseInterceptors, UploadedFile, ValidationPipe, UsePipes, BadRequestException,
+  UseInterceptors, UploadedFile, BadRequestException,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { join } from 'path';
@@ -30,10 +30,7 @@ export class AuthController {
   }
 
   @Post('login')
-  async sign(@Body(new ValidationPipe({
-    transform: true,
-    whitelist: true,
-  })) user: UserLoginDTO): Promise<object> {
+  async sign(@Body() user: UserLoginDTO): Promise<object> {
     const generatedToken = await this.authService.signIn(user);
     if (!generatedToken) {
       throw new BadRequestException('Wrong credentials!');
