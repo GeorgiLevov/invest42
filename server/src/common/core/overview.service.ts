@@ -1,3 +1,4 @@
+import { Order } from './../../data/entities/order.entity';
 import { UserRegisterDTO } from './../../models/user/user-register.dto';
 import { Company } from '../../data/entities/company.entity';
 import { Client } from '../../data/entities/client.entity';
@@ -5,7 +6,9 @@ import { User } from 'src/data/entities/user.entity';
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Status } from 'src/models/enums/status.enum';
+import { BasicStatus } from 'src/models/enums/basicstatus.enum';
+import { OrderStatus } from 'src/models/enums/orderstatus.enum';
+import { from, Observable, of } from 'rxjs';
 
 @Injectable()
 export class OverviewService {
@@ -22,7 +25,7 @@ export class OverviewService {
     ) { }
 
   async getAllCompanies(): Promise<Company[]> {
-    const companiesOnMarket = await this.companyRepository.find({ where: { status: Status.active } });
+    const companiesOnMarket = await this.companyRepository.find({ where: { status: BasicStatus.active } });
     return companiesOnMarket;
   }
 
@@ -32,7 +35,7 @@ export class OverviewService {
       throw new HttpException('Manager account not found', HttpStatus.BAD_REQUEST);
     }
 
-    const assignedClients = await this.clientsRepository.find({ where: { managerId: managerFound.id , status: Status.active } });
+    const assignedClients = await this.clientsRepository.find({ where: { managerId: managerFound.id , status: BasicStatus.active } });
     if (!assignedClients){
       throw new HttpException('No clients found', HttpStatus.BAD_REQUEST);
     }
@@ -41,5 +44,47 @@ export class OverviewService {
     }
     return assignedClients;
   }
+
+  async getAllClientsOrders(manager: User): Promise<Order[][]> {
+    const allClients =  await this.getAllClients(manager);
+    // const allClientsOrders: Order[][] = [];
+    // allClients.forEach(async (client) => {
+    //     const orderArray = await client.orders;
+    //     allClientsOrders.push(orderArray);
+    // });
+
+    // return allClientsOrders;
+
+    return await Promise.all(allClients.map(client =>  client.orders));
+  }
+
+  async getClientOrdersHistory(manager: User): Promise<Order[][]>{
+    const allClientsOrders = await this.getAllClientsOrders(manager);
+
+    // const allClientsOrderHistory: Order[][] = allClientsOrders.map( (clientOrders) => {
+    //   const clientSoldOrders = clientOrders.filter((order) => {
+    //     return order.status === OrderStatus.sold;
+    //   });
+    //   return clientSoldOrders;
+    // });
+
+    // return allClientsOrderHistory;
+    return await Promise.all(allClientsOrders.map( (orders) => orders.filter(order => order.status === OrderStatus.sold) ) );
+  }
+
+  // get names with observable
+  // async getClientsByName(nameQuery: string): Promise<any>{
+  //   const clientsFound = await this.clientsRepository.find({where: { fullname: nameQuery} } );
+  //   if (!clientsFound){
+  //     throw new HttpException('No clients found', HttpStatus.BAD_REQUEST);
+  //   }
+  //   // Delay each item by time and project value;
+  //   const source: Observable<string[]> = from(clientsFound)
+  //     .map( (client) => of(client.fullname) )
+  //     .debounce(1000 /* ms */);
+
+  //   return source.subscribe((returnedName) => returnedName );
+
+  // }
 
 }

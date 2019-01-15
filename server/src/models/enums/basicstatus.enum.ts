@@ -1,4 +1,4 @@
-export enum Status {
+export enum BasicStatus {
     active = 'ACTIVE',
     acrhived = 'ARCHIVED',
 }

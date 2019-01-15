@@ -49,10 +49,7 @@ export class AuthController {
     fileFilter: (req, file, cb) => FileService.fileFilter(req, file, cb, '.png', '.jpg'),
   }))
   async registerUser(
-    @Body(new ValidationPipe({
-      transform: true,
-      whitelist: true,
-    }))
+    @Body()
     user: UserRegisterDTO,
 
     @UploadedFile()
@@ -97,10 +94,7 @@ export class AuthController {
     fileFilter: (req, file, cb) => FileService.fileFilter(req, file, cb, '.png', '.jpg'),
   }))
   async registerClient(
-    @Body(new ValidationPipe({
-      transform: true,
-      whitelist: true,
-    }))
+    @Body()
     client: ClientRegisterDTO,
     @UploadedFile()
     file,

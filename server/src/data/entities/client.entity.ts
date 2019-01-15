@@ -2,7 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, OneToOne,
 import { User } from './user.entity';
 import { Order } from './order.entity';
 import { Company } from './company.entity';
-import { Status } from './../../models/enums/status.enum';
+import { BasicStatus } from '../../models/enums/basicstatus.enum';
 
 @Entity({
     name: 'clients',
@@ -37,7 +37,7 @@ import { Status } from './../../models/enums/status.enum';
     @JoinTable()
     watchlist: Promise<Company[]>;
 
-    @Column({enum: [Status.active, Status.acrhived], type: 'enum', default: Status.active})
+    @Column({enum: [BasicStatus.active, BasicStatus.acrhived], type: 'enum', default: BasicStatus.active})
     status: string;
 
   }

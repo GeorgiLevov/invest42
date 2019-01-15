@@ -11,7 +11,7 @@ import { InjectRepository, InjectEntityManager } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import { JwtPayload } from './../../interfaces/jwt-payload';
 import { validate } from 'class-validator';
-import { Status } from './../../models/enums/status.enum';
+import { BasicStatus } from '../../models/enums/basicstatus.enum';
 
 @Injectable()
 export class UsersService {
@@ -83,7 +83,7 @@ export class UsersService {
       throw new HttpException('Client with this e-mail does not exist', HttpStatus.BAD_REQUEST);
     }
 
-    if (clientFound.status === Status.acrhived){
+    if (clientFound.status === BasicStatus.acrhived){
       throw new HttpException('Client does not have an active account', HttpStatus.BAD_REQUEST);
     }
     managerFound.clients.push(clientFound);
@@ -102,21 +102,21 @@ export class UsersService {
   }
 
    if (clientFound){
-    if (clientFound.status === Status.acrhived){
+    if (clientFound.status === BasicStatus.acrhived){
       throw new HttpException('Client is already archived', HttpStatus.BAD_REQUEST);
     }
 
-    clientFound.status = Status.acrhived;
+    clientFound.status = BasicStatus.acrhived;
     await this.clientsRepository.save(clientFound);
     return {result: `Client:${clientFound.fullname} was archived`};
   }
 
    if (userFound){
-    if (userFound.status === Status.acrhived){
+    if (userFound.status === BasicStatus.acrhived){
       throw new HttpException('User is already archived', HttpStatus.BAD_REQUEST);
     }
 
-    userFound.status = Status.acrhived;
+    userFound.status = BasicStatus.acrhived;
     await this.usersRepository.save(userFound);
     return {result: `User${userFound.fullname} was archived`};
   }
