@@ -1,3 +1,5 @@
+import { News } from './../../data/entities/news.entity';
+import { BasicStatus } from './../../models/enums/basicstatus.enum';
 import { Order } from './../../data/entities/order.entity';
 import { UserRegisterDTO } from './../../models/user/user-register.dto';
 import { Company } from '../../data/entities/company.entity';
@@ -20,6 +22,9 @@ export class ManagementService {
 
         @InjectRepository(Company)
         private readonly companyRepository: Repository<Company>,
+
+        @InjectRepository(Order)
+        private readonly ordersRepository: Repository<Order>,
 
     ) { }
 
@@ -49,16 +54,16 @@ export class ManagementService {
         return orders;
     }
 
-    // async getCompanies(name: string): Promise<Company[]> {
+    async getClientWatchlist(clientEmail: string): Promise<Company[]> {
 
-    //     const foundCompany = await this.companyRepository.findOne({ name: `${name}` });
+        const foundClient = await this.clientsRepository.findOne({ email: `${clientEmail}` });
 
-    //     if (!foundCompany) {
-    //         throw new HttpException('There is no such company!', HttpStatus.NOT_FOUND);
-    //     }
+        if (!foundClient) {
+            throw new HttpException('There is no such client!', HttpStatus.NOT_FOUND);
+        }
 
-    //     return foundWatchlist.companies;
-    // }
+        return await foundClient.watchlist;
+    }
 
     async addCompanyToWatchlist(clientEmail: string, companyName: string): Promise<object> {
 
@@ -86,31 +91,81 @@ export class ManagementService {
         return { result: 'Company was successfully added to watchlist!' };
     }
 
-    // async removeCompany(companyId: string): Promise<object> {
-    //     try {
-    //         const watchlistCompanies = await this.currentWatchlist.companies;
-    //         const initialNumberOfCompanies = watchlistCompanies.length;
+    async removeCompanyFromWatchlist(clientEmail: string, companyName: string): Promise<object> {
 
-    //         for (const [index, company] of watchlistCompanies.entries()) {
-    //             if (company.id === companyId) {
-    //                 watchlistCompanies.splice(index, 1);
-    //                 break;
-    //             }
-    //         }
+        const clientFound = await this.clientsRepository.findOne({ email: `${clientEmail}` });
 
-    //         if (initialNumberOfCompanies === watchlistCompanies.length) {
-    //             throw new HttpException('Company not found in watchlist', HttpStatus.NOT_FOUND);
-    //         }
-    //         // updating watchlist in service also in db
-    //         await this.watchlistRepository.save(this.currentWatchlist);
+        if (!clientFound) {
+            throw new HttpException('There is no such client!', HttpStatus.NOT_FOUND);
+        }
 
-    //         return { result: `Company with id:${companyId} has been removed from watchlist!` };
-    //     } catch (error) {
-    //         console.log(`error details: Error on method removeCompany\n`)
-    //         console.log(`error message: ${error}`);
-    //         throw new HttpException('Cannot remove company', HttpStatus.BAD_REQUEST);
-    //     }
+        const foundCompany = await this.companyRepository.findOne({ name: `${companyName}` });
 
-    // }
+        if (!foundCompany) {
+            throw new HttpException('There is no such company!', HttpStatus.NOT_FOUND);
+        }
+
+        const watchlist = await clientFound.watchlist;
+
+        let index = -1;
+        watchlist.forEach((company, idx) => {
+            if (company.name === foundCompany.name) {
+                index = idx;
+            }
+        });
+        if (index === -1) {
+            throw new HttpException('There is no such company in client list!', HttpStatus.NOT_FOUND);
+        }
+        clientFound.watchlist = Promise.all(watchlist.splice(index, 1));
+        await this.clientsRepository.save(clientFound);
+        // console.log(clientFound);
+
+        return { result: 'Company was successfully removed from client watchlist!' };
+    }
+
+    async updateBalance(clientEmail: string, balance: number): Promise<object> {
+
+        const clientFound = await this.clientsRepository.findOne({ email: `${clientEmail}` });
+
+        if (!clientFound) {
+            throw new HttpException('There is no such client!', HttpStatus.NOT_FOUND);
+        }
+
+        await this.clientsRepository.update(clientFound.id, { availableBalance: clientFound.availableBalance + balance });
+
+        return { result: 'Balance was updated successfully!' };
+    }
+
+    async getOpenCompanies(): Promise<Company[]> {
+
+        const foundCompanies = await this.companyRepository.find({ status: BasicStatus.active });
+
+        return foundCompanies;
+    }
+
+    async getNewsForSpecificCompany(companyName: string): Promise<News[]> {
+
+        const foundCompany = await this.companyRepository.findOne({ name: `${companyName}` });
+
+        return await foundCompany.news;
+    }
+
+    async buyStock(orderId: string): Promise<object> {
+
+        const foundCompany = await this.ordersRepository.findOne({ id: `${orderId}` });
+
+        await this.ordersRepository.update(foundCompany.id, { status: OrderStatus.closed });
+
+        return { result: 'Successfully bought stock!' };
+    }
+
+    async sellStock(orderId: string): Promise<object> {
+
+        const foundCompany = await this.ordersRepository.findOne({ id: `${orderId}` });
+
+        await this.ordersRepository.update(foundCompany.id, { status: OrderStatus.sold });
+
+        return { result: 'Successfully sold stock!' };
+    }
 
 }

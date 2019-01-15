@@ -38,10 +38,10 @@ export class Company {
   @Column()
   startdate: Date;
 
-  @Column({enum: [BasicStatus.active, BasicStatus.acrhived], type: 'enum'})
+  @Column({ enum: [BasicStatus.active, BasicStatus.acrhived], type: 'enum' })
   status: string;
 
-  @OneToMany(type => News, news => news.company)
+  @OneToMany(type => News, news => news.company, { eager: true })
   news: Promise<News[]>;
 
   @Column({ enum: [Industry.tech, Industry.pharma, Industry.health, Industry.manufacturing, Industry.retail, Industry.goods], type: 'enum' })
