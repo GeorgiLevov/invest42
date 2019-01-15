@@ -1,10 +1,7 @@
-import { User } from 'src/data/entities/user.entity';
-import { AdminGuard } from './../common/guards/roles/admin.guard';
 import { AuthGuard } from '@nestjs/passport';
 import { Controller, Get, UseGuards, Post, Req, Body, Put, Delete, Param, Patch } from '@nestjs/common';
 import { UsersService } from './../common/core/users.service';
 import { Roles } from 'src/common';
-import { ManagerUpdateDTO } from './../models/user/update-manager.dto';
 
 @Controller('user')
 export class UsersController {
@@ -12,12 +9,6 @@ export class UsersController {
   constructor(
     private readonly usersService: UsersService,
   ) { }
-
-  @Get('')
-  // @UseGuards(AuthGuard(), AdminGuard)
-  all() {
-    return this.usersService.getAll();
-  }
 
   @Put('assign-to-manager')
   @Roles('ADMIN')

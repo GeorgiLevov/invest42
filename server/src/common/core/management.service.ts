@@ -1,21 +1,19 @@
+import { Price } from './../../data/entities/prices.entity';
 import { News } from './../../data/entities/news.entity';
 import { BasicStatus } from './../../models/enums/basicstatus.enum';
 import { Order } from './../../data/entities/order.entity';
-import { UserRegisterDTO } from './../../models/user/user-register.dto';
 import { Company } from '../../data/entities/company.entity';
 import { Client } from '../../data/entities/client.entity';
 import { User } from 'src/data/entities/user.entity';
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, getManager } from 'typeorm';
 import { OrderStatus } from '../../models/enums/orderstatus.enum';
 
 @Injectable()
 export class ManagementService {
 
     constructor(
-        @InjectRepository(User)
-        private readonly usersRepository: Repository<User>,
 
         @InjectRepository(Client)
         private readonly clientsRepository: Repository<Client>,
@@ -117,8 +115,9 @@ export class ManagementService {
             throw new HttpException('There is no such company in client list!', HttpStatus.NOT_FOUND);
         }
         clientFound.watchlist = Promise.all(watchlist.splice(index, 1));
+        // tslint:disable-next-line:no-console
+        console.log(clientFound);
         await this.clientsRepository.save(clientFound);
-        // console.log(clientFound);
 
         return { result: 'Company was successfully removed from client watchlist!' };
     }
@@ -166,6 +165,26 @@ export class ManagementService {
         await this.ordersRepository.update(foundCompany.id, { status: OrderStatus.sold });
 
         return { result: 'Successfully sold stock!' };
+    }
+
+    async getClientMarket(): Promise<object> {
+        const foundCompanies = await this.companyRepository.find({ select: ['name', 'abbr', 'industry'] });
+        if (! foundCompanies){
+            throw new HttpException('No companies found', HttpStatus.BAD_REQUEST);
+        }
+
+        const companies = await getManager().query(`SELECT companies.name,
+        prices.opendate,
+        prices.startprice,
+        prices.endprice,
+        prices.highprice,
+        prices.lowprice
+        FROM prices
+        JOIN companies ON prices.companyId = companies.id
+        WHERE prices.opendate
+        BETWEEN NOW() - interval 60 minute AND NOW()
+        LIMIT 10;`);
+        return {result: companies};
     }
 
 }

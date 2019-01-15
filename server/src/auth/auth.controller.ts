@@ -66,7 +66,7 @@ export class AuthController {
     } catch (error) {
       await new Promise((resolve, reject) => {
 
-        // Delete the file if user not found
+        // This willabsolutely be edited, it's ugly
         if (file) {
           unlink(join('.', file.path), (err) => {
             if (err) {
@@ -109,7 +109,7 @@ export class AuthController {
     } catch (error) {
       await new Promise((resolve, reject) => {
 
-        // Delete the file if user not found
+        // This willabsolutely be edited, it's ugly
         if (file) {
           unlink(join('.', file.path), (err) => {
             if (err) {
