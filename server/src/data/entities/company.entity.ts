@@ -1,4 +1,4 @@
-import { BasicStatus } from './../../models/enums/status.enum';
+import { BasicStatus } from '../../models/enums/basicstatus.enum';
 import { Industry } from './../../models/enums/industry.enum';
 import { Order } from './order.entity';
 import { Price } from './prices.entity';
@@ -38,7 +38,7 @@ export class Company {
   @Column()
   startdate: Date;
 
-  @Column({ enum: [BasicStatus.active, BasicStatus.acrhived], type: 'enum' })
+  @Column({enum: [BasicStatus.active, BasicStatus.acrhived], type: 'enum'})
   status: string;
 
   @OneToMany(type => News, news => news.company)

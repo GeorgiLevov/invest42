@@ -1,4 +1,4 @@
-import { BasicStatus } from './../../models/enums/status.enum';
+import { BasicStatus } from '../../models/enums/basicstatus.enum';
 import { Role } from './../../models/enums/roles.enum';
 import { Client } from './client.entity';
 
@@ -31,13 +31,13 @@ export class User {
   @Column({ enum: [Role.admin, Role.manager], type: 'enum' })
   role: string;
 
-  @Column({ default: '' })
+  @Column()
   avatar: string;
 
   @OneToMany(type => Client, client => client.manager, { cascade: true })
   clients: Client[];
 
-  @Column({ enum: [BasicStatus.acrhived, BasicStatus.active], type: 'enum', default: BasicStatus.active })
+  @Column({enum: [BasicStatus.acrhived, BasicStatus.active], type: 'enum', default: BasicStatus.active})
   status: string;
 
   // @OneToOne(type => Funds, funds => funds.client, { eager: true})

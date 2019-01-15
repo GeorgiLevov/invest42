@@ -1,6 +1,7 @@
 import { Client } from './client.entity';
 import { Company } from './company.entity';
 import { User } from './user.entity';
+import { OrderStatus } from './../../models/enums/orderstatus.enum';
 import {
   Column,
   PrimaryGeneratedColumn,
@@ -8,6 +9,7 @@ import {
   ManyToOne,
   OneToOne,
 } from 'typeorm';
+
 
 @Entity({
   name: 'orders',
@@ -34,7 +36,7 @@ export class Order {
   @ManyToOne(type => Client, client => client.orders)
   client: Promise<Client>;
 
-  @Column({enum: ['OPENED', 'CLOSED'], type: 'enum'})
+  @Column({enum: [OrderStatus.open, OrderStatus.closed, OrderStatus.sold], type: 'enum'})
   status: string;
 
   @ManyToOne(type => Company, company => company.orders)
