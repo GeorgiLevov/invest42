@@ -1,6 +1,8 @@
-import { Client } from './../data/entities/client.entity';
-import { OverviewService } from './../common/core/overview.service';
-import { Company } from './../data/entities/company.entity';
+import { ManagementService } from './../common/core/management.service';
+import { ManagementController } from './management.controller';
+import { Client } from '../data/entities/client.entity';
+import { OverviewService } from '../common/core/overview.service';
+import { Company } from '../data/entities/company.entity';
 import { AuthModule } from '../auth/auth.module';
 import { AuthService } from '../auth/auth.service';
 import { CoreModule } from '../common/core/core.module';
@@ -11,8 +13,8 @@ import { OverviewController } from './overview.controller';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User, Company, Client]), CoreModule, AuthModule],
-  providers: [OverviewService],
+  providers: [OverviewService, ManagementService],
   exports: [],
-  controllers: [OverviewController],
+  controllers: [OverviewController, ManagementController],
 })
-export class OverviewModule {}
+export class ManagerModule { }

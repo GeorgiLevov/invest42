@@ -6,8 +6,10 @@ import { FileService } from '../common/core/file.service';
 import { UserRegisterDTO } from '../models/user/user-register.dto';
 import { UsersService } from '../common/core/users.service';
 import { AuthService } from './auth.service';
-import { Get, Controller, UseGuards, Post, Body, FileInterceptor,
-  UseInterceptors, UploadedFile, ValidationPipe, UsePipes, BadRequestException } from '@nestjs/common';
+import {
+  Get, Controller, UseGuards, Post, Body, FileInterceptor,
+  UseInterceptors, UploadedFile, ValidationPipe, UsePipes, BadRequestException,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { join } from 'path';
 import { unlink } from 'fs';
@@ -37,7 +39,7 @@ export class AuthController {
       throw new BadRequestException('Wrong credentials!');
     }
 
-    return {token: generatedToken} ;
+    return { token: generatedToken };
   }
 
   @Post('register/user')
@@ -49,16 +51,12 @@ export class AuthController {
     fileFilter: (req, file, cb) => FileService.fileFilter(req, file, cb, '.png', '.jpg'),
   }))
   async registerUser(
-    @Body(new ValidationPipe({
-      transform: true,
-      whitelist: true,
-    }))
+    @Body()
     user: UserRegisterDTO,
-
     @UploadedFile()
     file,
   ): Promise<string> {
-    const folder = join('.', 'public', 'uploads');
+    const folder = join('.', 'uploads');
     if (!file) {
       user.avatar = join(folder, 'default.png');
     } else {
@@ -97,15 +95,12 @@ export class AuthController {
     fileFilter: (req, file, cb) => FileService.fileFilter(req, file, cb, '.png', '.jpg'),
   }))
   async registerClient(
-    @Body(new ValidationPipe({
-      transform: true,
-      whitelist: true,
-    }))
+    @Body()
     client: ClientRegisterDTO,
     @UploadedFile()
     file,
   ): Promise<string> {
-    const folder = join('.', 'public', 'uploads');
+    const folder = join('.', 'uploads');
     if (!file) {
       client.icon = join(folder, 'default.png');
     } else {

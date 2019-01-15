@@ -2,42 +2,42 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, OneToOne,
 import { User } from './user.entity';
 import { Order } from './order.entity';
 import { Company } from './company.entity';
-import { Status } from './../../models/enums/status.enum';
+import { BasicStatus } from './../../models/enums/status.enum';
 
 @Entity({
-    name: 'clients',
-  })
-  export class Client {
+  name: 'clients',
+})
+export class Client {
 
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-    @Column()
-    fullname: string;
+  @Column()
+  fullname: string;
 
-    @Column()
-    email: string;
+  @Column()
+  email: string;
 
-    @Column()
-    address: string;
+  @Column()
+  address: string;
 
-    @Column()
-    availableBalance: number;
+  @Column()
+  availableBalance: number;
 
-    @Column()
-    icon: string;
+  @Column()
+  icon: string;
 
-    @ManyToOne(type => User, user => user.clients)
-    manager: User;
+  @ManyToOne(type => User, user => user.clients)
+  manager: User;
 
-    @OneToMany(type => Order, order => order.client)
-    orders: Promise<Order[]>;
+  @OneToMany(type => Order, order => order.client, { eager: true })
+  orders: Promise<Order[]>;
 
-    @ManyToMany(type => Company, company => company.clients, { eager: true, cascade: true})
-    @JoinTable()
-    watchlist: Promise<Company[]>;
+  @ManyToMany(type => Company, company => company.clients, { eager: true, cascade: true })
+  @JoinTable()
+  watchlist: Promise<Company[]>;
 
-    @Column({enum: [Status.active, Status.acrhived], type: 'enum', default: Status.active})
-    status: string;
+  @Column({ enum: [BasicStatus.active, BasicStatus.acrhived], type: 'enum', default: BasicStatus.active })
+  status: string;
 
-  }
+}

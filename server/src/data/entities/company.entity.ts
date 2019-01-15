@@ -1,4 +1,4 @@
-import { Status } from './../../models/enums/status.enum';
+import { BasicStatus } from './../../models/enums/status.enum';
 import { Industry } from './../../models/enums/industry.enum';
 import { Order } from './order.entity';
 import { Price } from './prices.entity';
@@ -38,13 +38,13 @@ export class Company {
   @Column()
   startdate: Date;
 
-  @Column({enum: [Status.active, Status.acrhived], type: 'enum'})
+  @Column({ enum: [BasicStatus.active, BasicStatus.acrhived], type: 'enum' })
   status: string;
 
   @OneToMany(type => News, news => news.company)
   news: Promise<News[]>;
 
-  @Column({enum: [Industry.tech, Industry.pharma, Industry.health, Industry.manufacturing, Industry.retail, Industry.goods], type: 'enum'})
+  @Column({ enum: [Industry.tech, Industry.pharma, Industry.health, Industry.manufacturing, Industry.retail, Industry.goods], type: 'enum' })
   industry: string;
 
   @OneToMany(type => Price, price => price.company)

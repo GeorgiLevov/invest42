@@ -22,7 +22,7 @@ export class UsersService {
     @InjectRepository(Client)
     private readonly clientsRepository: Repository<Client>,
 
-    ) { }
+  ) { }
 
   async registerUser(user: UserRegisterDTO) {
     const userFound = await this.usersRepository.findOne({ where: { email: user.email } });
@@ -73,53 +73,53 @@ export class UsersService {
   }
 
   async addClientToManager(managerEmail: string, clientEmail: string): Promise<object> {
-    const managerFound = await this.usersRepository.findOne( { email: managerEmail }, { relations: ['clients']} );
-    if (!managerFound){
+    const managerFound = await this.usersRepository.findOne({ email: managerEmail }, { relations: ['clients'] });
+    if (!managerFound) {
       throw new HttpException('Manager with this e-mail does not exist', HttpStatus.BAD_REQUEST);
     }
 
-    const clientFound = await this.clientsRepository.findOne( { where: { email: clientEmail } } );
-    if (!clientFound){
+    const clientFound = await this.clientsRepository.findOne({ where: { email: clientEmail } });
+    if (!clientFound) {
       throw new HttpException('Client with this e-mail does not exist', HttpStatus.BAD_REQUEST);
     }
 
-    if (clientFound.status === Status.acrhived){
+    if (clientFound.status === Status.acrhived) {
       throw new HttpException('Client does not have an active account', HttpStatus.BAD_REQUEST);
     }
     managerFound.clients.push(clientFound);
     await this.usersRepository.save(managerFound);
 
-    return { result: `Manager: ${managerFound.fullname} is assigned to Client: ${clientFound.fullname}`};
+    return { result: `Manager: ${managerFound.fullname} is assigned to Client: ${clientFound.fullname}` };
 
- }
-
- async archiveAnyUser(userEmail: string): Promise<object> {
-   const clientFound = await this.clientsRepository.findOne ( {where: { email: userEmail} } );
-   const userFound = await this.usersRepository.findOne( {where: {email: userEmail} } );
-
-   if (!(clientFound || userFound)){
-    throw new HttpException('Email does not exist', HttpStatus.BAD_REQUEST);
   }
 
-   if (clientFound){
-    if (clientFound.status === Status.acrhived){
-      throw new HttpException('Client is already archived', HttpStatus.BAD_REQUEST);
+  async archiveAnyUser(userEmail: string): Promise<object> {
+    const clientFound = await this.clientsRepository.findOne({ where: { email: userEmail } });
+    const userFound = await this.usersRepository.findOne({ where: { email: userEmail } });
+
+    if (!(clientFound || userFound)) {
+      throw new HttpException('Email does not exist', HttpStatus.BAD_REQUEST);
     }
 
-    clientFound.status = Status.acrhived;
-    await this.clientsRepository.save(clientFound);
-    return {result: `Client:${clientFound.fullname} was archived`};
-  }
+    if (clientFound) {
+      if (clientFound.status === Status.acrhived) {
+        throw new HttpException('Client is already archived', HttpStatus.BAD_REQUEST);
+      }
 
-   if (userFound){
-    if (userFound.status === Status.acrhived){
-      throw new HttpException('User is already archived', HttpStatus.BAD_REQUEST);
+      clientFound.status = Status.acrhived;
+      await this.clientsRepository.save(clientFound);
+      return { result: `Client:${clientFound.fullname} was archived` };
     }
 
-    userFound.status = Status.acrhived;
-    await this.usersRepository.save(userFound);
-    return {result: `User${userFound.fullname} was archived`};
+    if (userFound) {
+      if (userFound.status === Status.acrhived) {
+        throw new HttpException('User is already archived', HttpStatus.BAD_REQUEST);
+      }
+
+      userFound.status = Status.acrhived;
+      await this.usersRepository.save(userFound);
+      return { result: `User${userFound.fullname} was archived` };
+    }
   }
- }
 
 }
