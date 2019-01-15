@@ -4,7 +4,7 @@ import { ConfigService } from './../../config/config.service';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { AuthService } from './../auth.service';
 import { PassportStrategy } from '@nestjs/passport';
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, HttpException, HttpStatus } from '@nestjs/common';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -21,7 +21,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     const user = await this.authService.validateUser(payload);
 
     if (!user) {
-      throw new Error('Not authorized');
+      throw new HttpException('Not authorized', HttpStatus.UNAUTHORIZED );
     }
     return user;
   }

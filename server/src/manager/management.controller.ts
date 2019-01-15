@@ -1,14 +1,10 @@
 import { ManagementService } from './../common/core/management.service';
 import { Client } from '../data/entities/client.entity';
-import { Company } from '../data/entities/company.entity';
 import { OverviewService } from '../common/core/overview.service';
-import { User } from 'src/data/entities/user.entity';
-import { AdminGuard } from '../common/guards/roles/admin.guard';
 import { AuthGuard } from '@nestjs/passport';
-import { Controller, Get, UseGuards, Post, Req, Body, Put, Delete } from '@nestjs/common';
+import { Controller, Get, UseGuards, Post, Body } from '@nestjs/common';
 import { UsersService } from '../common/core/users.service';
 import { Roles, RolesGuard } from 'src/common';
-import { GetClientDTO } from '../models/user/client-get.dto';
 import { Role } from '../models/enums/roles.enum';
 import { Order } from '../data/entities/order.entity';
 
@@ -16,8 +12,6 @@ import { Order } from '../data/entities/order.entity';
 export class ManagementController {
 
     constructor(
-        private readonly usersService: UsersService,
-        private readonly overviewService: OverviewService,
         private readonly managementService: ManagementService,
     ) { }
 
@@ -39,7 +33,13 @@ export class ManagementController {
     @Roles(Role.manager)
     @UseGuards(AuthGuard(), RolesGuard)
     addToClientWatchlist(@Body() info): Promise<object> {
-        return this.managementService.addCompanyToWatchlist(info.email, info.companyName);
+        return this.managementService.addCompanyToWatchlist(info.email, info.companyname);
+    }
+
+    @Get('market')
+    @Roles(Role.manager)
+    getClientMarket(): Promise<object> {
+        return this.managementService.getClientMarket();
     }
 
     @Get('watchlist')
@@ -53,7 +53,7 @@ export class ManagementController {
     @Roles(Role.manager)
     @UseGuards(AuthGuard(), RolesGuard)
     removeFromClientWatchlist(@Body() info): Promise<object> {
-        return this.managementService.removeCompanyFromWatchlist(info.email, info.companyName);
+        return this.managementService.removeCompanyFromWatchlist(info.email, info.companyname);
     }
 
     @Post('balance/update')

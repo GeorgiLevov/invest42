@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { diskStorage } from 'multer';
 import { join, extname } from 'path';
 import { v4 } from 'uuid';
-import { contentType } from 'mime-types';
 
 @Injectable()
 export class FileService {
@@ -22,13 +21,10 @@ export class FileService {
   }
 
   static fileFilter(req: any, file, cb, ...extensions: string[]) {
-    // Different types of extensions
-    // const ext = contentType(file.mimetype);
-    // const ext1 = file.mimetype;
 
     const ext = extname(file.originalname);
     if (!extensions.includes(ext)) {
-      return cb(new Error('Extension not allowed'), false); // FileInterceptor is completely ignoring this.
+      return cb(new Error('Extension not allowed'), false);
     }
     return cb(null, true);
   }

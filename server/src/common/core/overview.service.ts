@@ -47,13 +47,6 @@ export class OverviewService {
 
   async getAllClientsOrders(manager: User): Promise<Order[][]> {
     const allClients =  await this.getAllClients(manager);
-    // const allClientsOrders: Order[][] = [];
-    // allClients.forEach(async (client) => {
-    //     const orderArray = await client.orders;
-    //     allClientsOrders.push(orderArray);
-    // });
-
-    // return allClientsOrders;
 
     return await Promise.all(allClients.map(client =>  client.orders));
   }
@@ -61,17 +54,11 @@ export class OverviewService {
   async getClientOrdersHistory(manager: User): Promise<Order[][]>{
     const allClientsOrders = await this.getAllClientsOrders(manager);
 
-    // const allClientsOrderHistory: Order[][] = allClientsOrders.map( (clientOrders) => {
-    //   const clientSoldOrders = clientOrders.filter((order) => {
-    //     return order.status === OrderStatus.sold;
-    //   });
-    //   return clientSoldOrders;
-    // });
-
-    // return allClientsOrderHistory;
     return await Promise.all(allClientsOrders.map( (orders) => orders.filter(order => order.status === OrderStatus.sold) ) );
   }
 
+  // PLEASE LOOK AT THIS !!!
+  // this can be downgraded to a promise
   // get names with observable
   // async getClientsByName(nameQuery: string): Promise<any>{
   //   const clientsFound = await this.clientsRepository.find({where: { fullname: nameQuery} } );
