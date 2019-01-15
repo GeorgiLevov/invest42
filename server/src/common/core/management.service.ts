@@ -23,6 +23,9 @@ export class ManagementService {
         @InjectRepository(Company)
         private readonly companyRepository: Repository<Company>,
 
+        @InjectRepository(Order)
+        private readonly ordersRepository: Repository<Order>,
+
     ) { }
 
     async getClientPortfolio(email: string): Promise<Client> {
@@ -145,6 +148,24 @@ export class ManagementService {
         const foundCompany = await this.companyRepository.findOne({ name: `${companyName}` });
 
         return await foundCompany.news;
+    }
+
+    async buyStock(orderId: string): Promise<object> {
+
+        const foundCompany = await this.ordersRepository.findOne({ id: `${orderId}` });
+
+        await this.ordersRepository.update(foundCompany.id, { status: OrderStatus.closed });
+
+        return { result: 'Successfully bought stock!' };
+    }
+
+    async sellStock(orderId: string): Promise<object> {
+
+        const foundCompany = await this.ordersRepository.findOne({ id: `${orderId}` });
+
+        await this.ordersRepository.update(foundCompany.id, { status: OrderStatus.sold });
+
+        return { result: 'Successfully sold stock!' };
     }
 
 }

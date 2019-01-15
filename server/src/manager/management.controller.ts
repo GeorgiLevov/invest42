@@ -77,4 +77,18 @@ export class ManagementController {
         return this.managementService.getNewsForSpecificCompany(info.companyName);
     }
 
+    @Post('buy')
+    @Roles(Role.manager)
+    @UseGuards(AuthGuard(), RolesGuard)
+    buyStock(@Body() info): Promise<object> {
+        return this.managementService.buyStock(info.orderId);
+    }
+
+    @Post('sell')
+    @Roles(Role.manager)
+    @UseGuards(AuthGuard(), RolesGuard)
+    sellStock(@Body() info): Promise<object> {
+        return this.managementService.sellStock(info.orderId);
+    }
+
 }
