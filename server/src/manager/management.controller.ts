@@ -29,14 +29,16 @@ export class ManagementController {
     }
 
     @Get('activeOrders')
-    @Roles(Role.admin)
+    @Roles(Role.manager)
+    @UseGuards(AuthGuard(), RolesGuard)
     getAllActiveClientOrders(@Body() client): Promise<Order[]> {
         return this.managementService.getAllActiveClientOrders(client.email);
     }
 
-    @Post('watchlist')
-    @Roles(Role.admin)
-    getClientWatchlist(@Body() info): Promise<object> {
+    @Post('watchlist/add')
+    @Roles(Role.manager)
+    @UseGuards(AuthGuard(), RolesGuard)
+    addToClientWatchlist(@Body() info): Promise<object> {
         return this.managementService.addCompanyToWatchlist(info.email, info.companyName);
     }
 
@@ -44,6 +46,55 @@ export class ManagementController {
     @Roles(Role.manager)
     getClientMarket(): Promise<object> {
         return this.managementService.getClientMarket();
+    }
+
+    @Get('watchlist')
+    @Roles(Role.manager)
+    @UseGuards(AuthGuard(), RolesGuard)
+    getClientWatchlist(@Body() info): Promise<object> {
+        return this.managementService.getClientWatchlist(info.email);
+    }
+
+    @Post('watchlist/remove')
+    @Roles(Role.manager)
+    @UseGuards(AuthGuard(), RolesGuard)
+    removeFromClientWatchlist(@Body() info): Promise<object> {
+        return this.managementService.removeCompanyFromWatchlist(info.email, info.companyName);
+    }
+
+    @Post('balance/update')
+    @Roles(Role.manager)
+    @UseGuards(AuthGuard(), RolesGuard)
+    updateBalance(@Body() info): Promise<object> {
+        return this.managementService.updateBalance(info.email, info.balance);
+    }
+
+    @Get('open-companies')
+    @Roles(Role.manager)
+    @UseGuards(AuthGuard(), RolesGuard)
+    getOpenCompanies(@Body() info): Promise<object> {
+        return this.managementService.getOpenCompanies();
+    }
+
+    @Get('company/news')
+    @Roles(Role.manager)
+    @UseGuards(AuthGuard(), RolesGuard)
+    getNewsForSpecificCompany(@Body() info): Promise<object> {
+        return this.managementService.getNewsForSpecificCompany(info.companyName);
+    }
+
+    @Post('buy')
+    @Roles(Role.manager)
+    @UseGuards(AuthGuard(), RolesGuard)
+    buyStock(@Body() info): Promise<object> {
+        return this.managementService.buyStock(info.orderId);
+    }
+
+    @Post('sell')
+    @Roles(Role.manager)
+    @UseGuards(AuthGuard(), RolesGuard)
+    sellStock(@Body() info): Promise<object> {
+        return this.managementService.sellStock(info.orderId);
     }
 
 }
