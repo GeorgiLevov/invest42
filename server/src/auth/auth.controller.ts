@@ -6,8 +6,10 @@ import { FileService } from '../common/core/file.service';
 import { UserRegisterDTO } from '../models/user/user-register.dto';
 import { UsersService } from '../common/core/users.service';
 import { AuthService } from './auth.service';
-import { Get, Controller, UseGuards, Post, Body, FileInterceptor,
-  UseInterceptors, UploadedFile, ValidationPipe, UsePipes, BadRequestException } from '@nestjs/common';
+import {
+  Get, Controller, UseGuards, Post, Body, FileInterceptor,
+  UseInterceptors, UploadedFile, ValidationPipe, UsePipes, BadRequestException,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { join } from 'path';
 import { unlink } from 'fs';
@@ -37,7 +39,7 @@ export class AuthController {
       throw new BadRequestException('Wrong credentials!');
     }
 
-    return {token: generatedToken} ;
+    return { token: generatedToken };
   }
 
   @Post('register/user')
@@ -51,7 +53,6 @@ export class AuthController {
   async registerUser(
     @Body()
     user: UserRegisterDTO,
-
     @UploadedFile()
     file,
   ): Promise<string> {

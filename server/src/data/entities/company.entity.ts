@@ -44,7 +44,7 @@ export class Company {
   @OneToMany(type => News, news => news.company)
   news: Promise<News[]>;
 
-  @Column({enum: [Industry.tech, Industry.pharma, Industry.health, Industry.manufacturing, Industry.retail, Industry.goods], type: 'enum'})
+  @Column({ enum: [Industry.tech, Industry.pharma, Industry.health, Industry.manufacturing, Industry.retail, Industry.goods], type: 'enum' })
   industry: string;
 
   @OneToMany(type => Price, price => price.company)

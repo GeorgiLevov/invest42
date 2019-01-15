@@ -28,13 +28,13 @@ export class User {
   @Column()
   password: string;
 
-  @Column({enum: [Role.admin, Role.manager], type: 'enum'})
+  @Column({ enum: [Role.admin, Role.manager], type: 'enum' })
   role: string;
 
   @Column()
   avatar: string;
 
-  @OneToMany(type => Client, client => client.manager, {cascade: true})
+  @OneToMany(type => Client, client => client.manager, { cascade: true })
   clients: Client[];
 
   @Column({enum: [BasicStatus.acrhived, BasicStatus.active], type: 'enum', default: BasicStatus.active})

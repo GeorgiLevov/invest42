@@ -1,6 +1,5 @@
 import { IsString } from 'class-validator';
 import { Optional } from '@nestjs/common';
-import { Industry } from '../../data/entities/industry.entity';
 
 export class AddCompanyDTO {
 
@@ -19,8 +18,5 @@ export class AddCompanyDTO {
 
   @IsString()
   address: string;
-
-  @Optional()
-  industry: Industry;
 
 }

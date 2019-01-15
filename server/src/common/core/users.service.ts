@@ -24,7 +24,7 @@ export class UsersService {
     @InjectRepository(Client)
     private readonly clientsRepository: Repository<Client>,
 
-    ) { }
+  ) { }
 
   async registerUser(user: UserRegisterDTO) {
     const userFound = await this.usersRepository.findOne({ where: { email: user.email } });
@@ -102,13 +102,13 @@ export class UsersService {
   }
 
   async addClientToManager(managerEmail: string, clientEmail: string): Promise<object> {
-    const managerFound = await this.usersRepository.findOne( { email: managerEmail }, { relations: ['clients']} );
-    if (!managerFound){
+    const managerFound = await this.usersRepository.findOne({ email: managerEmail }, { relations: ['clients'] });
+    if (!managerFound) {
       throw new HttpException('Manager with this e-mail does not exist', HttpStatus.BAD_REQUEST);
     }
 
-    const clientFound = await this.clientsRepository.findOne( { where: { email: clientEmail } } );
-    if (!clientFound){
+    const clientFound = await this.clientsRepository.findOne({ where: { email: clientEmail } });
+    if (!clientFound) {
       throw new HttpException('Client with this e-mail does not exist', HttpStatus.BAD_REQUEST);
     }
 
@@ -118,7 +118,7 @@ export class UsersService {
     managerFound.clients.push(clientFound);
     await this.usersRepository.save(managerFound);
 
-    return { result: `Manager: ${managerFound.fullname} is assigned to Client: ${clientFound.fullname}`};
+    return { result: `Manager: ${managerFound.fullname} is assigned to Client: ${clientFound.fullname}` };
 
  }
 
@@ -151,6 +151,5 @@ export class UsersService {
     await this.usersRepository.save(userFound);
     return {result: `User${userFound.fullname} was changed`};
   }
- }
 
 }
