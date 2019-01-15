@@ -74,10 +74,10 @@ export class UsersService {
     return await this.usersRepository.find({});
   }
 
-  async getManager(userEmail): Promise<User>{
-    const managerFound = await this.usersRepository.findOne( { where: {email: userEmail } } );
+  async getManager(userEmail): Promise<User> {
+    const managerFound = await this.usersRepository.findOne({ where: { email: userEmail } });
 
-    if (!managerFound){
+    if (!managerFound) {
       throw new HttpException('User not found', HttpStatus.BAD_REQUEST);
     }
     // if (managerFound.role === Role.admin){
@@ -87,18 +87,18 @@ export class UsersService {
     return managerFound;
   }
 
-  async updateManager(managerEmail: string, newManagerDetails: ManagerUpdateDTO): Promise<object>{
+  async updateManager(managerEmail: string, newManagerDetails: ManagerUpdateDTO): Promise<object> {
 
-    const oldManagerDetails = await this.usersRepository.findOne( {email: managerEmail } ) ;
+    const oldManagerDetails = await this.usersRepository.findOne({ email: managerEmail });
 
-    newManagerDetails.password = await bcrypt.hash( newManagerDetails.password , 10);
+    newManagerDetails.password = await bcrypt.hash(newManagerDetails.password, 10);
 
     const updatedUser = await this.usersRepository.update(oldManagerDetails.id, {
-        email: newManagerDetails.email,
-        password: newManagerDetails.password,
-      });
+      email: newManagerDetails.email,
+      password: newManagerDetails.password,
+    });
 
-    return {result: `Manager ${oldManagerDetails.fullname} was successfully edited!`};
+    return { result: `Manager ${oldManagerDetails.fullname} was successfully edited!` };
   }
 
   async addClientToManager(managerEmail: string, clientEmail: string): Promise<object> {
@@ -112,7 +112,7 @@ export class UsersService {
       throw new HttpException('Client with this e-mail does not exist', HttpStatus.BAD_REQUEST);
     }
 
-    if (clientFound.status === BasicStatus.acrhived){
+    if (clientFound.status === BasicStatus.acrhived) {
       throw new HttpException('Client does not have an active account', HttpStatus.BAD_REQUEST);
     }
     managerFound.clients.push(clientFound);
@@ -120,36 +120,38 @@ export class UsersService {
 
     return { result: `Manager: ${managerFound.fullname} is assigned to Client: ${clientFound.fullname}` };
 
- }
-
- async toggleArchiveUser(userEmail: string): Promise<object> {
-   const clientFound = await this.clientsRepository.findOne ( {where: { email: userEmail} } );
-   const userFound = await this.usersRepository.findOne( {where: {email: userEmail} } );
-
-   if (!(clientFound || userFound)){
-    throw new HttpException('Email does not exist', HttpStatus.BAD_REQUEST);
   }
 
-   if (clientFound){
-    if (clientFound.status === BasicStatus.acrhived){
-      clientFound.status = BasicStatus.active;
-    }
-    else{
-      clientFound.status = BasicStatus.acrhived;
-    }
-    await this.clientsRepository.save(clientFound);
-    return {result: `Client:${clientFound.fullname} was changed`};
-  }
+  async toggleArchiveUser(userEmail: string): Promise<object> {
+    const clientFound = await this.clientsRepository.findOne({ where: { email: userEmail } });
+    const userFound = await this.usersRepository.findOne({ where: { email: userEmail } });
 
-   if (userFound){
-    if (userFound.status === BasicStatus.acrhived){
-      userFound.status = BasicStatus.active;
+    if (!(clientFound || userFound)) {
+      throw new HttpException('Email does not exist', HttpStatus.BAD_REQUEST);
     }
-    else{
-      userFound.status = BasicStatus.acrhived;
+
+    if (clientFound) {
+      if (clientFound.status === BasicStatus.acrhived) {
+        clientFound.status = BasicStatus.active;
+      }
+      else {
+        clientFound.status = BasicStatus.acrhived;
+      }
+      await this.clientsRepository.save(clientFound);
+      return { result: `Client:${clientFound.fullname} was changed` };
     }
-    await this.usersRepository.save(userFound);
-    return {result: `User${userFound.fullname} was changed`};
+
+    if (userFound) {
+      if (userFound.status === BasicStatus.acrhived) {
+        userFound.status = BasicStatus.active;
+      }
+      else {
+        userFound.status = BasicStatus.acrhived;
+      }
+      await this.usersRepository.save(userFound);
+      return { result: `User${userFound.fullname} was changed` };
+    }
+
   }
 
 }
