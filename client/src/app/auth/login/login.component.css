@@ -1,14 +1,9 @@
-/* body {
-  background-image: url("./../../../assets/Deutsche-Bank-Survey-87-of-Financial-Market-Participants-Say-Blockchain-Will-Disrupt-The-Industry-1440x564_c.jpg  ");
-  /* background-color: #cccccc; */
-/* background-repeat: no-repeat;  } */
-
 .login-input {
   color: white;
 }
 
 .login-div {
   width: 30%;
-  margin: 15%;
-
+  margin-top: 15%;
+  text-align: center
 }

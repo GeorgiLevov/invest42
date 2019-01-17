@@ -10,6 +10,9 @@ import { SharedModule } from './shared/shared.module';
 import { RoleGuard } from './shared/core/authentication/role-guard.service';
 import { JwtModule } from '@auth0/angular-jwt';
 
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './shared/core/authentication/token.interceptor';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +28,13 @@ import { JwtModule } from '@auth0/angular-jwt';
     //     }
     //   })
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

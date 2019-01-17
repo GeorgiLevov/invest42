@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  private readonly apiUrl = 'http://localhost:5500';
+
+
+  constructor(
+    private http: HttpClient
+  ) { }
 
   ngOnInit() {
+
+  }
+
+
+  getMarket() {
+    console.log('te');
+    const obj = this.http.get(`${this.apiUrl}/view/market`);
+    obj.subscribe((data) => {
+      console.log(data);
+    },
+      (err) => {
+        console.log(err);
+      });
   }
 
 }
