@@ -13,7 +13,6 @@ import * as bcrypt from 'bcrypt';
 import { JwtPayload } from './../../interfaces/jwt-payload';
 import { validate } from 'class-validator';
 import { BasicStatus } from '../../models/enums/basicstatus.enum';
-import { Role } from 'src/models/enums/roles.enum';
 
 @Injectable()
 export class UsersService {
