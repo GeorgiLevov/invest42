@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { JwtHelperService } from '@auth0/angular-jwt';
+// import { JwtHelperService } from '@auth0/angular-jwt';
 import * as jwt_decode from 'jwt-decode';
 import { ToastrService } from 'ngx-toastr';
 import * as decode from 'jwt-decode';
@@ -9,15 +9,15 @@ import * as decode from 'jwt-decode';
 })
 export class AuthenticationService {
     constructor(
-        private jwtService: JwtHelperService,
+        // private jwtService: JwtHelperService,
         private toastr: ToastrService,
     ) { }
 
-    public isAuthenticated(): boolean {
-        const token = localStorage.getItem('token');
+    // public isAuthenticated(): boolean {
+    //     const token = localStorage.getItem('token');
 
-        return !this.jwtService.isTokenExpired(token);
-    }
+    //     return !this.jwtService.isTokenExpired(token);
+    // }
 
     public getRole(): string {
         const token = localStorage.getItem('token');

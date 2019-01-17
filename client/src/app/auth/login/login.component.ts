@@ -8,6 +8,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { MzToastService } from 'ngx-materialize';
 import { ToastrService } from 'ngx-toastr';
+import { AuthenticationService } from '../../shared/core/authentication/authentication.service';
+import { Role } from '../../../../../server/src/models/enums/roles.enum';
 // import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -43,6 +45,7 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute,
     private loginService: LoginService,
     private toastService: ToastrService,
+    private authService: AuthenticationService,
 
   ) { }
 
@@ -95,6 +98,18 @@ export class LoginComponent implements OnInit {
       this.successToast();
 
       // this.router.navigate(['./../../admin/home/homeA.component']);
+      const role = this.authService.getRole();
+      console.log(role);
+      if (role === Role.admin) {
+        console.log('vlizaa');
+        this.router.navigate(['./admin']);
+
+      } else if (role === Role.manager) {
+        this.router.navigate(['manager']);
+
+      }
+
+
     }, (err: HttpErrorResponse) => {
       this.errToast(err.message);
     });

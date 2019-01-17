@@ -17,17 +17,18 @@ export class RoleGuard implements CanActivate {
         public router: Router) {
     }
 
-    canActivate(): boolean {
+    canActivate(route: ActivatedRouteSnapshot): boolean {
 
+        const expectedRole = route.data.expectedRole;
 
-        if (this.auth.getRole() === Role.admin) {
-            this.router.navigate(['/admin']);
+        if (expectedRole === this.auth.getRole()) {
+            this.router.navigate(['admin']);
             return true;
-        } else if (this.auth.getRole() === Role.manager) {
-            this.router.navigate(['/manager']);
+        } else if (expectedRole === this.auth.getRole()) {
+            this.router.navigate(['manager']);
             return true;
         }
 
-        return true;
+        return false;
     }
 }

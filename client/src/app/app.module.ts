@@ -7,7 +7,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
-import { RoleGuard } from './shared/core/authentication/role-guard.guard';
+import { RoleGuard } from './shared/core/authentication/role-guard.service';
 import { JwtModule } from '@auth0/angular-jwt';
 
 @NgModule({
@@ -18,13 +18,12 @@ import { JwtModule } from '@auth0/angular-jwt';
     BrowserModule,
     AppRoutingModule,
     LoginModule,
-    ManagerModule,
     SharedModule,
-    JwtModule.forRoot({
-      config: {
-        tokenGetter: () => Promise.resolve(localStorage.getItem('token')),
-      }
-    })
+    //   JwtModule.forRoot({
+    //     config: {
+    //       tokenGetter: () => Promise.resolve(localStorage.getItem('token')),
+    //     }
+    //   })
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomeComponent } from './home/home.component';
+import { AdminRoutingModule } from '../admin/admin-route.module';
+import { ManagerRoutingModule } from './manager-route.module';
 
 @NgModule({
   declarations: [HomeComponent],
   imports: [
-    CommonModule
+    CommonModule,
+    ManagerRoutingModule
   ]
 })
 export class ManagerModule { }
