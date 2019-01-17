@@ -1,0 +1,32 @@
+<div class="container login-div">
+  <form [formGroup]="loginForm" (ngSubmit)="login()">
+
+    <mz-card class="blue-grey darken-1 white-text" [horizontal]="true" [hoverable]="true">
+      <!-- TITLE -->
+      <mz-card-title>
+        Log In
+      </mz-card-title>
+
+      <mz-card-content>
+        <!-- EMAIL -->
+        <mz-input-container>
+          <i mz-icon-mdi mz-input-prefix [icon]="'email'">
+          </i>
+          <input class="login-input" mz-input [label]="'Email'" [validate]="true" [dataError]="'Email is invalid'"
+            formControlName="email" [dataSuccess]="'Email is valid'" id="email-input" type="email">
+        </mz-input-container>
+        <!-- PASSWORD -->
+        <mz-input-container>
+          <i mz-icon-mdi mz-input-prefix [icon]="'security'">
+          </i>
+          <input class="login-input" mz-input [label]="'Password'" [validate]="true" [dataError]="'Password is invalid'"
+            formControlName="password" [dataSuccess]="'Password is valid'" id="password-input" type="password">
+        </mz-input-container>
+        <!-- LOGIN -->
+      </mz-card-content>
+      <mz-card-action>
+        <button mz-button>Login</button>
+      </mz-card-action>
+    </mz-card>
+  </form>
+</div>
