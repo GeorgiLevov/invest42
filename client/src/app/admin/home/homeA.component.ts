@@ -1,3 +1,4 @@
+import { AuthenticationService } from './../../shared/core/authentication/authentication.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeAComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private authService: AuthenticationService
+  ) { }
 
   ngOnInit() {
+  }
+
+
+  logout() {
+    this.authService.logout();
   }
 
 }

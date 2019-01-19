@@ -10,7 +10,7 @@ import { AuthenticationService } from './authentication.service';
 import { Role } from '../../../models/enums/role.enum';
 
 @Injectable()
-export class RoleGuard implements CanActivate {
+export class AdminGuard implements CanActivate {
 
     constructor(
         public auth: AuthenticationService,
@@ -19,20 +19,13 @@ export class RoleGuard implements CanActivate {
 
     canActivate(): boolean {
 
-        if (!this.auth.getToken()) {
+
+        if (Role.admin === this.auth.getRole()) {
+            // this.router.navigate(['admin']);
             return true;
         }
 
-        if (this.auth.getRole() === Role.admin) {
-            this.router.navigate(['admin']);
-            return false;
-        } else if (this.auth.getRole() === Role.manager) {
-            this.router.navigate(['manager']);
-            return false;
-        }
-
-
-        // this.router.navigate(['unauthorised']);  /// should be redirecte to another route :)
-        return true;
+        this.router.navigate(['unauthorised']);
+        return false;
     }
 }

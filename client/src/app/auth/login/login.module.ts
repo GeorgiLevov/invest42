@@ -7,7 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MzButtonModule, MzInputModule, MzIconModule, MzIconMdiModule, MzCardModule, MzToastModule } from 'ngx-materialize';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
-import {ToastrModule} from 'ngx-toastr';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [LoginComponent],
@@ -21,7 +21,6 @@ import {ToastrModule} from 'ngx-toastr';
     MzIconMdiModule,
     MzCardModule,
     HttpClientModule,
-    BrowserAnimationsModule,
     NoopAnimationsModule,
     ToastrModule.forRoot()
   ],

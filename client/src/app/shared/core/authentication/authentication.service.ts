@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 // import { JwtHelperService } from '@auth0/angular-jwt';
 import * as jwt_decode from 'jwt-decode';
@@ -11,6 +12,7 @@ export class AuthenticationService {
     constructor(
         // private jwtService: JwtHelperService,
         private toastr: ToastrService,
+        private router: Router,
     ) { }
 
     // public isAuthenticated(): boolean {
@@ -36,6 +38,7 @@ export class AuthenticationService {
 
     public logout(): void {
         this.toastr.success(`You are logged out!`);
+        this.router.navigate(['']);
         localStorage.removeItem('token');
         localStorage.clear();
     }

@@ -1,17 +1,21 @@
-import { AuthenticationService } from './shared/core/authentication/authentication.service';
-import { ManagerModule } from './manager/manager.module';
-import { AdminModule } from './admin/admin.module';
+import '../polyfills';
+import { MaterialModule } from './angular-material/angular-material.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ManagerGuard } from './shared/core/authentication/manager-guard.service';
+import { AdminGuard } from './shared/core/authentication/admin-guard.service';
 import { LoginModule } from './auth/login/login.module';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
-import { RoleGuard } from './shared/core/authentication/role-guard.service';
-import { JwtModule } from '@auth0/angular-jwt';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './shared/core/authentication/token.interceptor';
+import { RoleGuard } from './shared/core/authentication/role-guard.service';
+import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { MaterializeWrapModule } from './materialize-module/materialize.module';
 
 @NgModule({
   declarations: [
@@ -19,14 +23,11 @@ import { TokenInterceptor } from './shared/core/authentication/token.interceptor
   ],
   imports: [
     BrowserModule,
+    // BrowserAnimationsModule,
+    MaterializeWrapModule,
+    SharedModule,
     AppRoutingModule,
     LoginModule,
-    SharedModule,
-    //   JwtModule.forRoot({
-    //     config: {
-    //       tokenGetter: () => Promise.resolve(localStorage.getItem('token')),
-    //     }
-    //   })
   ],
   providers: [
     {
@@ -34,6 +35,9 @@ import { TokenInterceptor } from './shared/core/authentication/token.interceptor
       useClass: TokenInterceptor,
       multi: true
     },
+    AdminGuard,
+    ManagerGuard,
+    RoleGuard
   ],
   bootstrap: [AppComponent]
 })

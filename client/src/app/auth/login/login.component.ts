@@ -99,16 +99,14 @@ export class LoginComponent implements OnInit {
 
       // this.router.navigate(['./../../admin/home/homeA.component']);
       const role = this.authService.getRole();
-      console.log(role);
+
       if (role === Role.admin) {
-        console.log('vlizaa');
-        this.router.navigate(['./admin']);
+        this.router.navigate(['admin']);
 
       } else if (role === Role.manager) {
         this.router.navigate(['manager']);
 
       }
-
 
     }, (err: HttpErrorResponse) => {
       this.errToast(err.message);
