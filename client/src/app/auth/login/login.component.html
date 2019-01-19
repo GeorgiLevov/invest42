@@ -1,32 +1,37 @@
 <div class="container login-div">
   <form [formGroup]="loginForm" (ngSubmit)="login()">
 
-    <mz-card class="blue-grey darken-1 white-text" [horizontal]="true" [hoverable]="true">
-      <!-- TITLE -->
-      <mz-card-title>
-        Log In
-      </mz-card-title>
 
-      <mz-card-content>
+    <mat-card tabindex="0">
+
+      <mat-card-title>
+        <!-- TITLE -->
+        <h1>Log In</h1>
+      </mat-card-title>
+
+      <mat-card-content>
         <!-- EMAIL -->
-        <mz-input-container>
-          <i mz-icon-mdi mz-input-prefix [icon]="'email'">
-          </i>
-          <input class="login-input" mz-input [label]="'Email'" [validate]="true" [dataError]="'Email is invalid'"
-            formControlName="email" [dataSuccess]="'Email is valid'" id="email-input" type="email">
-        </mz-input-container>
+        <mat-form-field>
+          <input class="login-input" matInput formControlName="email" placeholder="Email" id="email-input" type="email"
+            required>
+        </mat-form-field>
         <!-- PASSWORD -->
-        <mz-input-container>
-          <i mz-icon-mdi mz-input-prefix [icon]="'security'">
-          </i>
-          <input class="login-input" mz-input [label]="'Password'" [validate]="true" [dataError]="'Password is invalid'"
-            formControlName="password" [dataSuccess]="'Password is valid'" id="password-input" type="password">
-        </mz-input-container>
+        <mat-form-field>
+          <input class="login-input" matInput formControlName="password" placeholder="Password" id="password-input"
+            type="password">
+        </mat-form-field>
+      </mat-card-content>
+
+      <mat-card-footer>
         <!-- LOGIN -->
-      </mz-card-content>
-      <mz-card-action>
-        <button mz-button>Login</button>
-      </mz-card-action>
-    </mz-card>
+        <button mat-button>Login</button>
+      </mat-card-footer>
+
+    </mat-card>
   </form>
 </div>
+
+<!-- <mat-progress-bar mode="intermediate">
+
+
+</mat-progress-bar> -->

@@ -1,20 +1,20 @@
 // import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-// import { HomeComponent } from './home.component';
+// import { ManageClientComponent } from './manage-client.component';
 
-// describe('HomeComponent', () => {
-//   let component: HomeComponent;
-//   let fixture: ComponentFixture<HomeComponent>;
+// describe('ManageClientComponent', () => {
+//   let component: ManageClientComponent;
+//   let fixture: ComponentFixture<ManageClientComponent>;
 
 //   beforeEach(async(() => {
 //     TestBed.configureTestingModule({
-//       declarations: [ HomeComponent ]
+//       declarations: [ ManageClientComponent ]
 //     })
 //     .compileComponents();
 //   }));
 
 //   beforeEach(() => {
-//     fixture = TestBed.createComponent(HomeComponent);
+//     fixture = TestBed.createComponent(ManageClientComponent);
 //     component = fixture.componentInstance;
 //     fixture.detectChanges();
 //   });

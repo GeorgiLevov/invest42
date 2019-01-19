@@ -1,9 +1,33 @@
-.login-input {
+/* .login-input {
   color: white;
-}
+} */
 
 .login-div {
   width: 30%;
   margin-top: 15%;
-  text-align: center
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+mat-card {
+  background-color: #00FF00;
+}
+
+
+.example-container > * {
+  width: 100%;
+}
+
+.example-right-align {
+  text-align: right;
+}
+
+input.example-right-align::-webkit-outer-spin-button,
+input.example-right-align::-webkit-inner-spin-button {
+  display: none;
+}
+
+input.example-right-align {
+  -moz-appearance: textfield;
 }

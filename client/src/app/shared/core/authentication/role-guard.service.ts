@@ -17,18 +17,22 @@ export class RoleGuard implements CanActivate {
         public router: Router) {
     }
 
-    canActivate(route: ActivatedRouteSnapshot): boolean {
+    canActivate(): boolean {
 
-        const expectedRole = route.data.expectedRole;
-
-        if (expectedRole === this.auth.getRole()) {
-            this.router.navigate(['admin']);
-            return true;
-        } else if (expectedRole === this.auth.getRole()) {
-            this.router.navigate(['manager']);
+        if (!this.auth.getToken()) {
             return true;
         }
 
-        return false;
+        if (this.auth.getRole() === Role.admin) {
+            this.router.navigate(['admin']);
+            return false;
+        } else if (this.auth.getRole() === Role.manager) {
+            this.router.navigate(['manager']);
+            return false;
+        }
+
+
+        // this.router.navigate(['unauthorised']);  /// should be redirecte to another route :)
+        return true;
     }
 }
