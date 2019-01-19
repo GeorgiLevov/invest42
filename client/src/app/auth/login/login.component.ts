@@ -19,30 +19,16 @@ import { Role } from '../../../../../server/src/models/enums/roles.enum';
 })
 export class LoginComponent implements OnInit {
 
-  public date: Date = new Date();
-
   public loginForm: FormGroup;
-  public email: AbstractControl;
-  public password: AbstractControl;
-
-  public genericErrorMsg = 'The field is required!';
-  public genMinLengthMsg = 'Min length should be more than 8 chars!';
-  public emailErrMsg = 'Invalid email! Eg. john.doe@gmail.com!';
-  public genMaxLengthMsg = 'Max length should be less than 50 chars!';
 
   // tslint:disable-next-line:max-line-length
   public emailPattern = '/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/';
 
   loading = false;
-  submitted = false;
-  returnUrl: string;
-
-  isLoggedIn: Observable<boolean>;
 
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
-    private route: ActivatedRoute,
     private loginService: LoginService,
     private toastService: ToastrService,
     private authService: AuthenticationService,
@@ -86,6 +72,7 @@ export class LoginComponent implements OnInit {
 
   public login(): void {
 
+    this.loading = true;
     const user = {
       email: this.loginForm.value.email,
       password: this.loginForm.value.password,
@@ -96,15 +83,17 @@ export class LoginComponent implements OnInit {
     }) => {
       localStorage.setItem('token', data.token);
       this.successToast();
-
       // this.router.navigate(['./../../admin/home/homeA.component']);
       const role = this.authService.getRole();
 
+
       if (role === Role.admin) {
         this.router.navigate(['admin']);
+        this.loading = false;
 
       } else if (role === Role.manager) {
         this.router.navigate(['manager']);
+        this.loading = false;
 
       }
 
