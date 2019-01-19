@@ -5,7 +5,14 @@ import { HomeComponent } from './home/home.component';
 import { OverviewComponent } from './overview/overview.component';
 
 const routes: Routes = [
-    { path: '', component: OverviewComponent }
+    {
+        path: '', component: OverviewComponent, children: [
+            { path: '', redirectTo: 'market' },
+            { path: 'market', component: HomeComponent }
+        ]
+    },
+
+
 ];
 
 @NgModule({
