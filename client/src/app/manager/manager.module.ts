@@ -1,35 +1,39 @@
-import { MatListModule } from '@angular/material/list';
-import { MatIconModule, MatToolbar, MatToolbarModule, MatSidenavModule } from '@angular/material';
-import { MzButtonModule, MzSidenavModule, MzSidenavComponent } from 'ngx-materialize';
+import { MarketComponent } from './market/market.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HomeComponent } from './home/home.component';
-import { AdminRoutingModule } from '../admin/admin-route.module';
 import { ManagerRoutingModule } from './manager-route.module';
 import { ManagerComponent } from './manager.component';
 import { SharedModule } from '../shared/shared.module';
 import { OverviewComponent } from './overview/overview.component';
 import { ManageClientComponent } from './manage-client/manage-client.component';
-import { RouterModule } from '@angular/router';
 import { MaterializeWrapModule } from '../materialize-module/materialize.module';
+import { ClientsComponent } from './clients/clients.component';
+import { PositionsComponent } from './positions/positions.component';
+import { ClientPositionsComponent } from './client-positions/client-positions.component';
+import { ClientMarketComponent } from './client-market/client-market.component';
+import { ClientWatchlistComponent } from './client-watchlist/client-watchlist.component';
+import { ClientHistoryComponent } from './client-history/client-history.component';
+import { ClientPortfolioComponent } from './client-portfolio/client-portfolio.component';
 
 @NgModule({
   declarations: [
-    HomeComponent,
     ManagerComponent,
     OverviewComponent,
     ManageClientComponent,
+    ClientsComponent,
+    PositionsComponent,
+    ClientPositionsComponent,
+    ClientMarketComponent,
+    ClientWatchlistComponent,
+    ClientHistoryComponent,
+    ClientPortfolioComponent,
+    MarketComponent
   ],
   imports: [
     CommonModule,
     SharedModule,
     ManagerRoutingModule,
-    // MatIconModule,
-    // MatToolbarModule,
-    // MatSidenavModule,
-    // MatListModule
     MaterializeWrapModule,
   ],
-  // exports: []
 })
 export class ManagerModule { }
