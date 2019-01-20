@@ -25,11 +25,11 @@ export class UsersController {
     return this.usersService.toggleArchiveUser(body.email);
   }
 
-  @Get('profile')
+  @Get('profile/:email')
   @Roles('ADMIN')
   @UseGuards(AuthGuard())
-  getProfile(@Body() body: any): Promise<object> {
-    return this.usersService.getManager(body.email);
+  getProfile(@Param() params): Promise<object> {
+    return this.usersService.getManager(params.email);
   }
 
   @Post('update')

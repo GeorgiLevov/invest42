@@ -1,3 +1,4 @@
+import { MarketService } from './market/market.serivice';
 import { MarketComponent } from './market/market.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -35,5 +36,7 @@ import { ClientPortfolioComponent } from './client-portfolio/client-portfolio.co
     ManagerRoutingModule,
     MaterializeWrapModule,
   ],
+
+  providers: [MarketService]
 })
 export class ManagerModule { }

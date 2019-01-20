@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { MzSidenavModule } from 'ngx-materialize';
+import { Component, OnInit, Input, OnChanges, ViewChild, ViewChildren } from '@angular/core';
+import {MatSidenav} from '@angular/material/sidenav';
 
 
 @Component({
@@ -9,9 +9,19 @@ import { MzSidenavModule } from 'ngx-materialize';
 })
 export class SideNavComponent implements OnInit, OnChanges {
 
+  constructor() { }
+  @ViewChildren('sidenav') sidenav: MatSidenav;
+
   @Input() navMenu;
 
-  constructor() { }
+
+  open() {
+    this.sidenav.open();
+  }
+
+  close() {
+    this.sidenav.close();
+  }
 
   ngOnInit() {
   }
@@ -19,5 +29,6 @@ export class SideNavComponent implements OnInit, OnChanges {
   ngOnChanges() {
 
   }
+
 
 }

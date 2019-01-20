@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from 'src/app/shared/core/authentication/authentication.service';
 
 @Component({
   selector: 'app-overview',
@@ -28,12 +29,12 @@ export class OverviewComponent implements OnInit {
     }
   ];
 
-  constructor() { }
+  constructor(
+    private authService: AuthenticationService,
+  ) { }
 
   ngOnInit() {
+
   }
-
-
-
 
 }

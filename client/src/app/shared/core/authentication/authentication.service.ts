@@ -36,6 +36,14 @@ export class AuthenticationService {
         return tokenPayload;
     }
 
+    tokenEmail(): string {
+        const token = localStorage.getItem('token');
+
+        const tokenPayload = jwt_decode(token);
+
+        return tokenPayload.email;
+    }
+
     public logout(): void {
         this.toastr.success(`You are logged out!`);
         this.router.navigate(['']);

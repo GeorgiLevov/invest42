@@ -10,13 +10,17 @@ import { RoleGuard } from './shared/core/authentication/role-guard.service';
 
 const routes: Routes = [
     {
-        path: '', component: LoginComponent, canActivate: [RoleGuard]
+        path: '', component: LoginComponent, canActivate: [RoleGuard], data: { animation: { value: '' } },
     },
     {
-        path: 'admin', loadChildren: './admin/admin.module#AdminModule', canActivate: [AdminGuard],
+        path: 'admin', loadChildren: './admin/admin.module#AdminModule',
+         canActivate: [AdminGuard],
+          data: { animation: { value: 'admin' } },
     },
     {
-        path: 'manager', loadChildren: './manager/manager.module#ManagerModule', canActivate: [ManagerGuard],
+        path: 'manager', loadChildren: './manager/manager.module#ManagerModule',
+         canActivate: [ManagerGuard],
+          data: { animation: { value: 'manager' } },
     },
     {
         path: 'unauthorised', component: UnauthorisedComponent,
@@ -26,7 +30,7 @@ const routes: Routes = [
     }
 ];
 
-
+//remove preload strategy
 @NgModule({
     imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
     exports: [RouterModule]

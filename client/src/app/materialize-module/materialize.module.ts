@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import {
     MatButtonModule, MatCheckboxModule, MatCardModule, MatExpansionModule, MatPaginatorModule, MatTableModule, MatInputModule
-    , MatAutocompleteModule, MatDatepickerModule, MatFormFieldModule, MatRadioModule, MatSelectModule, MatSliderModule,
+    , MatDatepickerModule, MatFormFieldModule, MatRadioModule, MatSelectModule, MatSliderModule,
     MatSlideToggleModule,
     MatMenuModule, MatSidenavModule, MatToolbarModule, MatListModule, MatGridListModule,
     MatStepperModule, MatTabsModule, MatButtonToggleModule,
@@ -15,7 +15,6 @@ const M_MODULES = [
     MatCheckboxModule,
     MatButtonModule,
     MatInputModule,
-    MatAutocompleteModule,
     MatDatepickerModule,
     MatFormFieldModule,
     MatRadioModule,

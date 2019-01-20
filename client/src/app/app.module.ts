@@ -8,22 +8,26 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { TokenInterceptor } from './shared/core/authentication/token.interceptor';
 import { RoleGuard } from './shared/core/authentication/role-guard.service';
-import { MaterializeWrapModule } from './materialize-module/materialize.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { LayoutModule } from '@angular/cdk/layout';
+
 
 @NgModule({
   declarations: [
     AppComponent,
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
-    // BrowserAnimationsModule,
-    MaterializeWrapModule,
     SharedModule,
     AppRoutingModule,
     LoginModule,
+    LayoutModule,
+    BrowserAnimationsModule,
   ],
   providers: [
     {

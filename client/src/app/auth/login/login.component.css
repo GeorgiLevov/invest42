@@ -1,33 +1,58 @@
 /* .login-input {
   color: white;
 } */
+html, body {margin: 0; height: 100%; overflow: hidden}
+
 
 .login-div {
-  width: 30%;
-  margin-top: 15%;
+  margin:0 auto;
+  margin-top: 10%;
   text-align: center;
-  display: flex;
-  flex-direction: column;
+  max-width: 400px;
+  min-width: 180px;
 }
 
-mat-card {
-  background-color: #00FF00;
+.mat-card {
+  background:   rgba(123, 199, 206, 0.8);
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+  text-align: center;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
-
-.example-container > * {
-  width: 100%;
+.mat-card:hover {
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
 
-.example-right-align {
-  text-align: right;
+.mat-card-content {
+  text-align: center;
+  display: inline-block;
+  font-size: 20px;
+  width: 90%;
+  color: white;
+  
 }
 
-input.example-right-align::-webkit-outer-spin-button,
-input.example-right-align::-webkit-inner-spin-button {
-  display: none;
+.mat-form-field {
+  text-align: center;
+  display: block;
+  color: white;
+}
+
+.mat-card-actions {
+  margin-left: 0px;
+  margin-right: 0px;
+  padding: 8px 0;
+  text-align: center;
 }
 
 input.example-right-align {
   -moz-appearance: textfield;
+}
+
+.login-button {
+  margin: 5%;
+  text-align: center;
 }

@@ -10,6 +10,7 @@ import { MzToastService } from 'ngx-materialize';
 import { ToastrService } from 'ngx-toastr';
 import { AuthenticationService } from '../../shared/core/authentication/authentication.service';
 import { Role } from '../../../../../server/src/models/enums/roles.enum';
+import { BreakpointObserver } from '@angular/cdk/layout';
 // import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -18,12 +19,11 @@ import { Role } from '../../../../../server/src/models/enums/roles.enum';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
-  public loginForm: FormGroup;
+   options: FormGroup;
+   public loginForm: FormGroup;
 
   // tslint:disable-next-line:max-line-length
-  public emailPattern = '/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/';
-
+  public emailPattern = ('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$');
   loading = false;
 
   constructor(
@@ -32,14 +32,13 @@ export class LoginComponent implements OnInit {
     private loginService: LoginService,
     private toastService: ToastrService,
     private authService: AuthenticationService,
-
+    private breakpointObserver: BreakpointObserver,
   ) { }
 
 
   ngOnInit() {
     this.buildLoginForm();
   }
-
 
   public buildLoginForm(): void {
     this.loginForm = this.formBuilder.group({

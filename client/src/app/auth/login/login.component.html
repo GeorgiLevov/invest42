@@ -1,37 +1,40 @@
-<div class="container login-div">
-  <form [formGroup]="loginForm" (ngSubmit)="login()">
-
-
-    <mat-card tabindex="0">
-
+<div class="container login-div" layout="row" layout-wrap>
+  <form [formGroup]="loginForm" (ngSubmit)="login()" autocomplete="off">
+    <mat-card tabindex="0" class="login-card">
       <mat-card-title>
         <!-- TITLE -->
-        <h1>Log In</h1>
+        <!-- <mat-icon svgIcon="thumbs-up"></mat-icon> -->
       </mat-card-title>
-
+      <mat-card-subtitle>
+          <h2>Log In</h2>
+      </mat-card-subtitle>
       <mat-card-content>
         <!-- EMAIL -->
-        <mat-form-field>
-          <input class="login-input" matInput formControlName="email" placeholder="Email" id="email-input" type="email"
-            required>
+    
+        <input autocomplete="false" name="hidden" type="text" style="display:none;">
+ 
+        <mat-form-field >
+          <mat-placeholder class="placeholder">Email</mat-placeholder>
+          <input class="login-input" matInput formControlName="email" id="email-input" type="email"/>
         </mat-form-field>
         <!-- PASSWORD -->
         <mat-form-field>
-          <input class="login-input" matInput formControlName="password" placeholder="Password" id="password-input"
-            type="password">
+          <mat-placeholder class="placeholder">Password</mat-placeholder>
+          <input class="login-input" matInput formControlName="password" id="password-input"
+            type="password"/>
         </mat-form-field>
       </mat-card-content>
-
       <mat-card-footer>
         <!-- LOGIN -->
-        <button mat-button>Login</button>
+        <mat-card-actions>
+            <button mat-raised-button color="primary" class="login-button">Login</button>
+          </mat-card-actions>
       </mat-card-footer>
-
     </mat-card>
   </form>
 </div>
 
-<!-- <mat-progress-bar mode="intermediate">
 
+<!-- <mat-progress-bar mode="intermediate">
 
 </mat-progress-bar> -->
