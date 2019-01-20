@@ -1,35 +1,47 @@
-<p>
-  admin works!
-</p>
+<div class="sidenav-container">
 
-<div class="example-container">
-
-
-  <button mat-raised-button (click)="snav.toggle()">
+  <button class="sidenav-btn" mat-raised-button (click)="snav.toggle()">
     <mat-icon>menu</mat-icon>
   </button>
 
-
-  <mat-sidenav-container class="example-sidenav-container">
+  <mat-sidenav-container class="body-sidenav-container">
 
     <mat-sidenav #snav>
 
-      <mat-toolbar>
-        <H1>HERE SHOULD BE PROFILE</H1>
+
+      <div class="sidebar-content">
+
+        <div class="sidebav-image">
+          <img class="profile-img" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/53474/atom_profile_01.jpg">
+        </div>
+
+        <div class="user-info">
+          <mat-divider></mat-divider>
+          <p>ADMIN</p>
+          <mat-divider></mat-divider>
+          <p>Hristo Mirchev</p>
+          <mat-divider></mat-divider>
+        </div>
+
+      </div>
+
+      <!-- testt -->
+      <button (click)="getUserInfo()">TEST</button>
+
+
+      <mat-toolbar class="logout-content">
+
+        <div id="logout">
+          <button mat-raised-button color="warn">Logout</button>
+        </div>
+
+        <a id="logout-btn" class="material-icons">exit_to_app</a>
+
       </mat-toolbar>
 
-      <mat-divider></mat-divider>
-
-      <mat-toolbar>
-        <span>ADMIN Overview</span>
-      </mat-toolbar>
-
-      <mat-divider></mat-divider>
 
       <mat-nav-list>
-
         <app-side-nav [navMenu]="navMenu"></app-side-nav>
-
       </mat-nav-list>
 
     </mat-sidenav>

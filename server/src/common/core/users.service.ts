@@ -13,6 +13,7 @@ import * as bcrypt from 'bcrypt';
 import { JwtPayload } from './../../interfaces/jwt-payload';
 import { validate } from 'class-validator';
 import { BasicStatus } from '../../models/enums/basicstatus.enum';
+import { Role } from '../../models/enums/roles.enum';
 
 @Injectable()
 export class UsersService {
@@ -151,6 +152,10 @@ export class UsersService {
       return { result: `User${userFound.fullname} was changed` };
     }
 
+  }
+
+  async getAdmins(): Promise<User[]> {
+    return await this.usersRepository.find({ where: { role: Role.admin } });
   }
 
 }
