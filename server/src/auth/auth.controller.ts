@@ -50,7 +50,6 @@ export class AuthController {
   async registerUser(
     @Body() user: UserRegisterDTO,
     @UploadedFile() file): Promise<UserRegisterDTO[]> {
-    // console.log(user);
     const folder = join('.', 'images');
     if (!file) {
       user.avatar = join(folder, 'default.png');

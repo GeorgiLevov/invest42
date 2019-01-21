@@ -102,7 +102,7 @@ export class UsersService {
   }
 
   async addClientToManager(managerEmail: string, clientEmail: string): Promise<object> {
-    const managerFound = await this.usersRepository.findOne({ email: managerEmail }, { relations: ['clients'] });
+    const managerFound = await this.usersRepository.findOne({ email: managerEmail });
     if (!managerFound) {
       throw new HttpException('Manager with this e-mail does not exist', HttpStatus.BAD_REQUEST);
     }
@@ -160,6 +160,28 @@ export class UsersService {
 
   async getManagers(): Promise<User[]> {
     return await this.usersRepository.find({ where: { role: Role.manager } });
+  }
+
+  async getClients(): Promise<Client[]> {
+    return await this.clientsRepository.find({});
+  }
+
+  async getClientsManager(clientEmail: string): Promise<User> {
+    const managers = await this.usersRepository.find({ where: { role: Role.manager } });
+
+    let clientManager: User;
+
+    managers.forEach((manager: User) => {
+
+      manager.clients.forEach((client: Client) => {
+        if (client.email === clientEmail) {
+          clientManager = manager;
+        }
+      });
+
+    });
+
+    return clientManager;
   }
 
 }

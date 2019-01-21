@@ -3,7 +3,7 @@ import { AdminGuard } from './../shared/core/authentication/admin-guard.service'
 import { RoleGuard } from './../shared/core/authentication/role-guard.service';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './home/home.component';
+import { HomeComponent } from './admin-home/home.component';
 import { AdminsListComponent } from './admins-list/admins-list.component';
 import { ManagersListComponent } from './managers-list/managers-list.component';
 import { ClientsListComponent } from './clients-list/clients-list.component';

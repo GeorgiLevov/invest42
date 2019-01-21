@@ -37,7 +37,7 @@ export class Client {
   @JoinTable()
   watchlist: Promise<Company[]>;
 
-    @Column({enum: [BasicStatus.active, BasicStatus.acrhived], type: 'enum', default: BasicStatus.active})
-    status: string;
+  @Column({ enum: [BasicStatus.active, BasicStatus.acrhived], type: 'enum', default: BasicStatus.active })
+  status: string;
 
 }
