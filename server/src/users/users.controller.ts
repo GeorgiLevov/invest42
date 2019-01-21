@@ -47,4 +47,11 @@ export class UsersController {
     return this.usersService.getAdmins();
   }
 
+  @Get('managers')
+  @Roles('ADMIN')
+  @UseGuards(AuthGuard())
+  getManagers(): Promise<User[]> {
+    return this.usersService.getManagers();
+  }
+
 }

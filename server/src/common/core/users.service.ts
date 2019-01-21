@@ -158,4 +158,8 @@ export class UsersService {
     return await this.usersRepository.find({ where: { role: Role.admin } });
   }
 
+  async getManagers(): Promise<User[]> {
+    return await this.usersRepository.find({ where: { role: Role.manager } });
+  }
+
 }

@@ -19,6 +19,7 @@ export class ClientRegisterDTO {
   @Optional()
   icon: string;
 
+  @Optional()
   @IsString()
   managerId: string;
 

@@ -1,3 +1,4 @@
+import { AddManagerComponent } from './admin-modals/add-manager/add-manager.component';
 import { SharedModule } from './../shared/shared.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -11,8 +12,8 @@ import { ClientRegisterComponent } from './client-register/client-register.compo
 import { MaterializeWrapModule } from '../materialize-module/materialize.module';
 import { AdminComponent } from './admin.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { EditAdminComponent } from './admin-modals/edit-modal/edit-admin.component';
-import { AddAdminComponent } from './admin-modals/add-modal/add-admin.component';
+import { EditAdminComponent } from './admin-modals/edit-admin/edit-admin.component';
+import { AddAdminComponent } from './admin-modals/add-admin/add-admin.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { AddAdminComponent } from './admin-modals/add-modal/add-admin.component'
     AdminComponent,
     EditAdminComponent,
     AddAdminComponent,
+    AddManagerComponent,
   ],
   imports: [
     CommonModule,
@@ -37,6 +39,7 @@ import { AddAdminComponent } from './admin-modals/add-modal/add-admin.component'
   entryComponents: [
     AddAdminComponent,
     EditAdminComponent,
+    AddManagerComponent,
   ],
 })
 export class AdminModule { }

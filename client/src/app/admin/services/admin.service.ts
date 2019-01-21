@@ -9,6 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 import * as decode from 'jwt-decode';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { UserData } from '../../models/interfaces/user-data.model';
+import { ManagerData } from '../../models/interfaces/manager-data.model';
 
 @Injectable({
     providedIn: 'root'
@@ -35,6 +36,10 @@ export class AdminService {
 
     getAdmins(): Observable<UserData[]> {
         return this.http.get<UserData[]>(`${this.apiUrl}/user/admins`);
+    }
+
+    getManagers(): Observable<ManagerData[]> {
+        return this.http.get<ManagerData[]>(`${this.apiUrl}/user/managers`);
     }
 
     updateUser(user): void {  // added
