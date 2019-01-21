@@ -1,3 +1,4 @@
+import { EditManagerComponent } from './admin-modals/edit-manager/edit-manager.component';
 import { AddManagerComponent } from './admin-modals/add-manager/add-manager.component';
 import { SharedModule } from './../shared/shared.module';
 import { NgModule } from '@angular/core';
@@ -27,6 +28,7 @@ import { AddAdminComponent } from './admin-modals/add-admin/add-admin.component'
     EditAdminComponent,
     AddAdminComponent,
     AddManagerComponent,
+    EditManagerComponent,
   ],
   imports: [
     CommonModule,
@@ -40,6 +42,7 @@ import { AddAdminComponent } from './admin-modals/add-admin/add-admin.component'
     AddAdminComponent,
     EditAdminComponent,
     AddManagerComponent,
+    EditManagerComponent,
   ],
 })
 export class AdminModule { }

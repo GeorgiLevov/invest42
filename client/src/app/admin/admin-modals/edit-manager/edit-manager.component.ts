@@ -1,18 +1,19 @@
-import { UserRegisterData } from './../../../models/user-register.model';
-import { AdminService } from './../../services/admin.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Component, Inject } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { AdminService } from '../../services/admin.service';
 
 @Component({
-    selector: 'app-add-manager',
-    templateUrl: './add-manager.component.html',
-    styleUrls: ['./add-manager.component.css']
+    selector: 'app-edit-manager',
+    templateUrl: './edit-manager.component.html',
+    styleUrls: ['./edit-manager.component.css']
 })
-export class AddManagerComponent {
+export class EditManagerComponent {
+
+
     constructor(
-        public dialogRef: MatDialogRef<AddManagerComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: UserRegisterData,
+        public dialogRef: MatDialogRef<EditManagerComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: any,
         public adminService: AdminService,
     ) { }
 
@@ -26,15 +27,15 @@ export class AddManagerComponent {
             this.formControl.hasError('email') ? 'Not a valid email' : '';
     }
 
-    submit() {
-        // emppty stuff
-    }
+    // submit() {
+    //     // emppty stuff
+    // }
 
     onNoClick(): void {
         this.dialogRef.close();
     }
 
-    public confirmAdd(): void {
-        this.adminService.addUser(this.data);
+    stopEdit(): void {
+        this.adminService.updateUser(this.data);
     }
 }

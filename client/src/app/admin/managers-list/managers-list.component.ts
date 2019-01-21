@@ -4,6 +4,7 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
 import { AdminService } from '../services/admin.service';
 import { AddAdminComponent } from '../admin-modals/add-admin/add-admin.component';
+import { EditManagerComponent } from '../admin-modals/edit-manager/edit-manager.component';
 
 
 @Component({
@@ -68,8 +69,22 @@ export class ManagersListComponent implements OnInit, AfterViewInit {
     });
   }
 
-  startEdit() {
-    // should be impl
+  startEdit(i, id, email, password) {
+    this.id = id;
+    this.index = i;
+    // console.log(this.index); // for debugging / can be removed
+
+    const dialogRef = this.dialog.open(EditManagerComponent, {
+      data: { id: id, email: email, password: password }
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 1) {
+        const foundIndex = this.adminService.dataChange.value.findIndex((x: any) => x.id === this.id);
+        this.adminService.dataChange.value[foundIndex] = this.adminService.getDialogData();
+        // this.refreshTable();
+      }
+    });
   }
 
   private refreshTable() {
