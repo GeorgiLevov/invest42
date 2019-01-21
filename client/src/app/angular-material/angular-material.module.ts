@@ -43,8 +43,7 @@ import {
         MatSnackBarModule,
         MatTableModule,
         MatSortModule,
-        MatPaginatorModule
-
+        MatPaginatorModule,
     ]
 })
 export class MaterialModule { }

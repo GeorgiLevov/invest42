@@ -10,6 +10,9 @@ import { UserRegisterComponent } from './user-register/user-register.component';
 import { ClientRegisterComponent } from './client-register/client-register.component';
 import { MaterializeWrapModule } from '../materialize-module/materialize.module';
 import { AdminComponent } from './admin.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { EditAdminComponent } from './admin-modals/edit-modal/edit-admin.component';
+import { AddAdminComponent } from './admin-modals/add-modal/add-admin.component';
 
 @NgModule({
   declarations: [
@@ -20,12 +23,20 @@ import { AdminComponent } from './admin.component';
     UserRegisterComponent,
     ClientRegisterComponent,
     AdminComponent,
+    EditAdminComponent,
+    AddAdminComponent,
   ],
   imports: [
     CommonModule,
     SharedModule,
     AdminRoutingModule,
-    MaterializeWrapModule
-  ]
+    MaterializeWrapModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
+  entryComponents: [
+    AddAdminComponent,
+    EditAdminComponent,
+  ],
 })
 export class AdminModule { }

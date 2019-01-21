@@ -1,3 +1,4 @@
+import { UserLogin } from '../../models/user-login.model';
 import { LoginService } from './../services/login.service';
 import { AuthService } from './../../../../../server/src/auth/auth.service';
 import { Component, OnInit } from '@angular/core';
@@ -72,7 +73,7 @@ export class LoginComponent implements OnInit {
   public login(): void {
 
     this.loading = true;
-    const user = {
+    const user: UserLogin = {
       email: this.loginForm.value.email,
       password: this.loginForm.value.password,
     };

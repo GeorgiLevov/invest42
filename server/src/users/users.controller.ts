@@ -1,3 +1,4 @@
+import { User } from './../data/entities/user.entity';
 import { AuthGuard } from '@nestjs/passport';
 import { Controller, Get, UseGuards, Post, Req, Body, Put, Delete, Param, Patch } from '@nestjs/common';
 import { UsersService } from './../common/core/users.service';
@@ -36,7 +37,14 @@ export class UsersController {
   @Roles('ADMIN')
   @UseGuards(AuthGuard())
   updateManager(@Body() body: any): Promise<object> {
-    return this.usersService.updateManager(body.email, body.manager);
+    return this.usersService.updateManager(body.id, body.manager);
+  }
+
+  @Get('admins')
+  @Roles('ADMIN')
+  @UseGuards(AuthGuard())
+  getAdmins(): Promise<User[]> {
+    return this.usersService.getAdmins();
   }
 
 }

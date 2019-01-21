@@ -13,6 +13,7 @@ import * as bcrypt from 'bcrypt';
 import { JwtPayload } from './../../interfaces/jwt-payload';
 import { validate } from 'class-validator';
 import { BasicStatus } from '../../models/enums/basicstatus.enum';
+import { Role } from '../../models/enums/roles.enum';
 
 @Injectable()
 export class UsersService {
@@ -86,9 +87,9 @@ export class UsersService {
     return managerFound;
   }
 
-  async updateManager(managerEmail: string, newManagerDetails: ManagerUpdateDTO): Promise<object> {
+  async updateManager(managerId: string, newManagerDetails: ManagerUpdateDTO): Promise<object> {
 
-    const oldManagerDetails = await this.usersRepository.findOne({ email: managerEmail });
+    const oldManagerDetails = await this.usersRepository.findOne({ id: managerId });
 
     newManagerDetails.password = await bcrypt.hash(newManagerDetails.password, 10);
 
@@ -151,6 +152,10 @@ export class UsersService {
       return { result: `User${userFound.fullname} was changed` };
     }
 
+  }
+
+  async getAdmins(): Promise<User[]> {
+    return await this.usersRepository.find({ where: { role: Role.admin } });
   }
 
 }

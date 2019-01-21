@@ -28,6 +28,13 @@ export class AuthenticationService {
         return role;
     }
 
+    public getEmail(): string {
+        const token = localStorage.getItem('token');
+        const email = decode(token).email;
+
+        return email;
+    }
+
     tokenData(): { id: number, role: string } {
         const token = localStorage.getItem('token');
 
