@@ -14,6 +14,7 @@ import { RoleGuard } from './shared/core/authentication/role-guard.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { LayoutModule } from '@angular/cdk/layout';
+import { MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/material';
 
 
 @NgModule({
@@ -28,6 +29,9 @@ import { LayoutModule } from '@angular/cdk/layout';
     LoginModule,
     LayoutModule,
     BrowserAnimationsModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
   ],
   providers: [
     {

@@ -28,7 +28,7 @@ import { ClientPortfolioComponent } from './client-portfolio/client-portfolio.co
     ClientWatchlistComponent,
     ClientHistoryComponent,
     ClientPortfolioComponent,
-    MarketComponent
+    MarketComponent,
   ],
   imports: [
     CommonModule,

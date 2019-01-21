@@ -1,50 +1,54 @@
-import { MarketService } from './market.serivice';
 import { DataSource } from '@angular/cdk/collections';
 import { MatPaginator, MatSort } from '@angular/material';
 import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
 
 // TODO: Replace this with your own data model type
-export interface CompanyData {
+export interface DataTableItem {
   name: string;
   icon: string;
   abbr: string;
+  price: number;
 }
+
+// TODO: replace this with real data from your application
+const EXAMPLE_DATA: DataTableItem[] = [
+  {name: 'Hydrogen', icon: 'icon', abbr: 'HYD', price: 1000},
+  {name: 'Helium', icon: 'icon', abbr: 'HEL', price: 1000},
+  {name: 'Lithium', icon: 'icon', abbr: 'LIT', price: 1000},
+];
 
 /**
  * Data source for the DataTable view. This class should
  * encapsulate all logic for fetching and manipulating the displayed data
  * (including sorting, pagination, and filtering).
  */
-export class DataTableDataSource extends DataSource<CompanyData> {
+export class DataTableDataSource extends DataSource<DataTableItem> {
+  data: DataTableItem[] = EXAMPLE_DATA;
 
-  private companies = [];
-
-  constructor(private paginator: MatPaginator, private sort: MatSort, private marketService: MarketService) {
+  constructor(private paginator: MatPaginator, private sort: MatSort) {
     super();
-
   }
+
   /**
    * Connect this data source to the table. The table will only update when
    * the returned stream emits new items.
    * @returns A stream of the items to be rendered.
    */
-  connect(): Observable<CompanyData[]> {
+  connect(): Observable<DataTableItem[]> {
     // Combine everything that affects the rendered data into one update
     // stream for the data-table to consume.
-
     const dataMutations = [
-      observableOf(this.companies),
+      observableOf(this.data),
       this.paginator.page,
       this.sort.sortChange
     ];
 
     // Set the paginator's length
-    this.paginator.length = this.companies.length;
+    this.paginator.length = this.data.length;
 
     return merge(...dataMutations).pipe(map(() => {
-      return this.getPagedData(this.getSortedData([...this.companies]));
+      return this.getPagedData(this.getSortedData([...this.data]));
     }));
   }
 
@@ -58,7 +62,7 @@ export class DataTableDataSource extends DataSource<CompanyData> {
    * Paginate the data (client-side). If you're using server-side pagination,
    * this would be replaced by requesting the appropriate data from the server.
    */
-  private getPagedData(data: CompanyData[]) {
+  private getPagedData(data: DataTableItem[]) {
     const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
     return data.splice(startIndex, this.paginator.pageSize);
   }
@@ -67,7 +71,7 @@ export class DataTableDataSource extends DataSource<CompanyData> {
    * Sort the data (client-side). If you're using server-side sorting,
    * this would be replaced by requesting the appropriate data from the server.
    */
-  private getSortedData(data: CompanyData[]) {
+  private getSortedData(data: DataTableItem[]) {
     if (!this.sort.active || this.sort.direction === '') {
       return data;
     }
@@ -76,7 +80,7 @@ export class DataTableDataSource extends DataSource<CompanyData> {
       const isAsc = this.sort.direction === 'asc';
       switch (this.sort.active) {
         case 'name': return compare(a.name, b.name, isAsc);
-        // case 'price': return compare(+a.price, +b.price, isAsc);
+        case 'price': return compare(+a.price, +b.price, isAsc);
         default: return 0;
       }
     });

@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { MatPaginator, MatSort } from '@angular/material';
+import { DataTableDataSource } from './data-table-datasource';
 
 @Component({
   selector: 'app-data-table',
@@ -6,15 +8,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./data-table.component.css']
 })
 export class DataTableComponent implements OnInit {
+  // @ViewChild(MatPaginator) paginator: MatPaginator;
+  // @ViewChild(MatSort) sort: MatSort;
+  @Input() dataSource: any;
 
-  constructor() { }
- public displayedColumns = ['icon', 'name', 'abbr', 'address'];
+  /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
+  displayedColumns = ['name'];
 
   ngOnInit() {
+    // this.dataSource = new DataTableDataSource(this.paginator, this.sort);
   }
-
-  onRowClicked(row) {
-    console.log('Row clicked: ', row);
-}
-
 }

@@ -12,24 +12,23 @@ export class MarketService {
 
     constructor(private http: HttpClient, private appConfig: AppConfig) {}
 
-
-//     public getCompanies (): Observable<Object> {
-//         const url = `${this.appConfig.apiUrl}/view/market`;
-//         return this.http.get(url);
-//   }
-
-    public getCompanies( filtering = '', sortOrder = 'asc',
-    pageNumber = 0, pageSize = 3):  Observable<object> {
-
+    public getCompanies (): Observable<Object> {
         const url = `${this.appConfig.apiUrl}/view/market`;
-        return this.http.get(url, {
-            params: new HttpParams()
-            .set('filtering', filtering)
-            .set('sortOrder', sortOrder)
-            .set('pageNumber', pageNumber.toString())
-            .set('pageSize', pageSize.toString())
-        }).pipe(
-            map(res => res['payload'])
-        );
-    }
+        return this.http.get(url);
+  }
+
+    // public getCompanies( filtering = '', sortOrder = 'asc',
+    // pageNumber = 0, pageSize = 3):  Observable<object> {
+
+    //     const url = `${this.appConfig.apiUrl}/view/market`;
+    //     return this.http.get(url, {
+    //         params: new HttpParams()
+    //         .set('filtering', filtering)
+    //         .set('sortOrder', sortOrder)
+    //         .set('pageNumber', pageNumber.toString())
+    //         .set('pageSize', pageSize.toString())
+    //     }).pipe(
+    //         map(res => res)
+    //     );
+    // }
 }
