@@ -37,7 +37,7 @@ export class UsersController {
   @Roles('ADMIN')
   @UseGuards(AuthGuard())
   updateManager(@Body() body: any): Promise<object> {
-    return this.usersService.updateManager(body.email, body.manager);
+    return this.usersService.updateManager(body.id, body.manager);
   }
 
   @Get('admins')
