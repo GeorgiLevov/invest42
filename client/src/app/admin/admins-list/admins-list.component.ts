@@ -1,9 +1,11 @@
+import { AddAdminComponent } from './../admin-modals/add-modal/add-admin.component';
+import { UserRegisterData } from './../../models/user-register.model';
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
 import { BehaviorSubject } from 'rxjs';
-import { EditDialogComponent } from '../edit-modal/edit.dialog.component';
 import { AdminService } from '../services/admin.service';
 import { UserData } from '../../models/interfaces/user-data.model';
+import { EditAdminComponent } from '../admin-modals/edit-modal/edit-admin.component';
 
 @Component({
   selector: 'app-admins-list',
@@ -39,8 +41,7 @@ export class AdminsListComponent implements OnInit, AfterViewInit {
     this.adminService.getAdmins()
       .subscribe((res) => {
         this.dataSource.data = res as UserData[];
-        // this.addataChange.next(res); // added
-        this.adminService.dataChange.next(res);
+        this.adminService.dataChange.next(res); // added
       });
   }
 
@@ -48,18 +49,6 @@ export class AdminsListComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }
-
-  refresh() {
-    this.getAdmins();
-  }
-
-  // get data(): UserData[] { // added
-  //   return this.dataChange.value;
-  // }
-
-  // getDialogData() {   // added
-  //   return this.dialogData;
-  // }
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -69,25 +58,25 @@ export class AdminsListComponent implements OnInit, AfterViewInit {
     }
   }
 
-  // addUser(user: UserData): void { // added
-  //   this.dialogData = user;
-  // }
-
-  // updateUser(user: UserData): void {  // added
-  //   this.dialogData = user;
-  // }
-
   addNewUser() {
-    // should be implemented
+    const dialogRef = this.dialog.open(AddAdminComponent, {
+      data: {}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 1) {
+        this.adminService.dataChange.value.push(this.adminService.getDialogData());
+        // this.refreshTable();
+      }
+    });
   }
 
   startEdit(i, id, email, password) {
-    // implementing
     this.id = id;
     this.index = i;
-    console.log(this.index); // for debugging / can be removed
+    // console.log(this.index); // for debugging / can be removed
 
-    const dialogRef = this.dialog.open(EditDialogComponent, {
+    const dialogRef = this.dialog.open(EditAdminComponent, {
       data: { id: id, email: email, password: password }
     });
 
@@ -95,13 +84,13 @@ export class AdminsListComponent implements OnInit, AfterViewInit {
       if (result === 1) {
         const foundIndex = this.adminService.dataChange.value.findIndex((x: any) => x.id === this.id);
         this.adminService.dataChange.value[foundIndex] = this.adminService.getDialogData();
-        this.refreshTable();
+        // this.refreshTable();
       }
     });
   }
 
   private refreshTable() {
-    this.paginator._changePageSize(this.paginator.pageSize);
+    this.getAdmins();
   }
 
 }

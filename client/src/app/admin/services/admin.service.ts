@@ -1,3 +1,4 @@
+import { UserRegisterData } from './../../models/user-register.model';
 
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -46,12 +47,19 @@ export class AdminService {
             this.toastService.success('', 'Successfully edited!', { timeOut: 2000 });
         },
             (err: HttpErrorResponse) => {
-                this.toastService.error('', 'Error occurred', { timeOut: 5000 });
+                this.toastService.error('', 'Error occurred!', { timeOut: 5000 });
             });
     }
 
-    addUser(user: UserData): void { // added
-        this.dialogData = user;
+    addUser(user: UserRegisterData): void { // added
+        // this.dialogData = user;
+        // console.log(user);
+        this.http.post(`${this.apiUrl}/register/user`, user).subscribe((data) => {
+            this.toastService.success('', 'Successfully added', { timeOut: 3000 });
+        },
+            (err: HttpErrorResponse) => {
+                this.toastService.error('', 'Error occurred!', { timeOut: 8000 });
+            });
     }
 
     getDialogData() {

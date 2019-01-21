@@ -1,20 +1,20 @@
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Component, Inject } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { AdminService } from '../services/admin.service';
+import { AdminService } from '../../services/admin.service';
 
 @Component({
-    selector: 'app-baza.dialog',
-    templateUrl: './edit.dialog.component.html',
-    styleUrls: ['./edit.dialog.component.css']
+    selector: 'app-edit-admin',
+    templateUrl: './edit-admin.component.html',
+    styleUrls: ['./edit-admin.component.css']
 })
-export class EditDialogComponent {
+export class EditAdminComponent {
 
 
     constructor(
-        public dialogRef: MatDialogRef<EditDialogComponent>,
+        public dialogRef: MatDialogRef<EditAdminComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any,
-        public adminService: AdminService
+        public adminService: AdminService,
     ) { }
 
     formControl = new FormControl('', [

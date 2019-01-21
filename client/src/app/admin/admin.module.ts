@@ -11,7 +11,8 @@ import { ClientRegisterComponent } from './client-register/client-register.compo
 import { MaterializeWrapModule } from '../materialize-module/materialize.module';
 import { AdminComponent } from './admin.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { EditDialogComponent } from './edit-modal/edit.dialog.component';
+import { EditAdminComponent } from './admin-modals/edit-modal/edit-admin.component';
+import { AddAdminComponent } from './admin-modals/add-modal/add-admin.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { EditDialogComponent } from './edit-modal/edit.dialog.component';
     UserRegisterComponent,
     ClientRegisterComponent,
     AdminComponent,
-    EditDialogComponent,
+    EditAdminComponent,
+    AddAdminComponent,
   ],
   imports: [
     CommonModule,
@@ -33,7 +35,8 @@ import { EditDialogComponent } from './edit-modal/edit.dialog.component';
     ReactiveFormsModule,
   ],
   entryComponents: [
-    EditDialogComponent,
+    AddAdminComponent,
+    EditAdminComponent,
   ],
 })
 export class AdminModule { }
