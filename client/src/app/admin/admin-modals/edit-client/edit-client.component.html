@@ -1,19 +1,17 @@
 <div class="container">
-  <h3 mat-dialog-title>Manager id: {{data.id}}</h3>
+  <h3 mat-dialog-title>Client id: {{data.id}}</h3>
 
   <form class="mat-dialog-content" (ngSubmit)="submit" #formControl="ngForm">
 
-    <div class="form">
-      <mat-form-field color="accent">
-        <input matInput #input class="form-control" placeholder="Email" [(ngModel)]="data.email" name="email" required>
-        <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
-      </mat-form-field>
+    <div>
+      <p>Current Manager Email:</p>
+      <p>{{data.managerEmail}}</p>
     </div>
 
     <div class="form">
       <mat-form-field color="accent">
-        <input matInput #input class="form-control" placeholder="Password" [(ngModel)]="data.password" name="password"
-          required>
+        <input matInput #input class="form-control" placeholder="New Manager Email" [(ngModel)]="data.newManagerEmail"
+          name="email" required>
         <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
       </mat-form-field>
     </div>

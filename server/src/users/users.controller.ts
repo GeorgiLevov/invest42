@@ -17,7 +17,7 @@ export class UsersController {
   @UseGuards(AuthGuard())
   addClientToManager(@Body() body: any): Promise<object> {
 
-    return this.usersService.addClientToManager(body.manageremail, body.clientemail);
+    return this.usersService.addClientToManager(body.managerEmail, body.clientEmail);
   }
 
   @Put('status/toggle')

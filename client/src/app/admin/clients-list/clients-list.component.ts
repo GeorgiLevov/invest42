@@ -4,6 +4,7 @@ import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/m
 import { AdminService } from '../services/admin.service';
 import { ClientData } from '../../models/interfaces/client-data.model';
 import { AddClientComponent } from '../admin-modals/add-client/add-client.component';
+import { EditClientComponent } from '../admin-modals/edit-client/edit-client.component';
 
 @Component({
   selector: 'app-clients-list',
@@ -67,8 +68,22 @@ export class ClientsListComponent implements OnInit, AfterViewInit {
     });
   }
 
-  startEdit() {
-    // should be impl
+  startEdit(i, id, email, managerEmail) {
+    this.id = id;
+    this.index = i;
+    // console.log(this.index); // for debugging / can be removed
+
+    const dialogRef = this.dialog.open(EditClientComponent, {
+      data: { id: id, email: email, managerEmail: managerEmail }
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 1) {
+        const foundIndex = this.adminService.dataChange.value.findIndex((x: any) => x.id === this.id);
+        this.adminService.dataChange.value[foundIndex] = this.adminService.getDialogData();
+        // this.refreshTable();
+      }
+    });
   }
 
   private refreshTable() {

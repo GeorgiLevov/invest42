@@ -86,6 +86,19 @@ export class AdminService {
             });
     }
 
+    updateClient(client): void {
+        const managerEmail = client.newManagerEmail;
+        const clientEmail = client.email;
+
+        this.http.post(`${this.apiUrl}/user/assign-to-manager`, { managerEmail, clientEmail }).subscribe((data) => {
+            this.dialogData = data;
+            this.toastService.success('', 'Successfully edited!', { timeOut: 2000 });
+        },
+            (err: HttpErrorResponse) => {
+                this.toastService.error('', 'Error occurred!', { timeOut: 5000 });
+            });
+    }
+
     getDialogData() {
         return this.dialogData;
     }
