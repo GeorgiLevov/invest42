@@ -1,12 +1,7 @@
 import { UserRegisterData } from './../../models/user-register.model';
-
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
-// import { JwtHelperService } from '@auth0/angular-jwt';
-import * as jwt_decode from 'jwt-decode';
 import { ToastrService } from 'ngx-toastr';
-import * as decode from 'jwt-decode';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { UserData } from '../../models/interfaces/user-data.model';
 import { ManagerData } from '../../models/interfaces/manager-data.model';
@@ -102,7 +97,6 @@ export class AdminService {
     getDialogData() {
         return this.dialogData;
     }
-
     get data(): UserData[] { // added
         return this.dataChange.value;
     }

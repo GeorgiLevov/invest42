@@ -1,4 +1,3 @@
-import { UserRegisterData } from './../../../models/user-register.model';
 import { AdminService } from './../../services/admin.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Component, Inject } from '@angular/core';
@@ -27,10 +26,6 @@ export class AddClientComponent {
         return this.formControl.hasError('required') ? 'Required field' :
             this.formControl.hasError('email') ? 'Not a valid email' :
                 '';
-    }
-
-    submit() {
-        // emppty stuff
     }
 
     onNoClick(): void {

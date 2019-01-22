@@ -50,7 +50,7 @@ export class AdminComponent implements OnInit {
   ngOnInit() {
   }
 
-  public getUserInfo() {
+  public getUserInfo() {    // should be fixedddd
     this.adminService.getUserInfo('georgelevov@gmail.com').subscribe(
       (data) => {
         console.log(data);

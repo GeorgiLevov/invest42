@@ -24,12 +24,7 @@ export class AddAdminComponent {
 
     getErrorMessage() {
         return this.formControl.hasError('required') ? 'Required field' :
-            this.formControl.hasError('email') ? 'Not a valid email' :
-                '';
-    }
-
-    submit() {
-        // emppty stuff
+            this.formControl.hasError('email') ? 'Not a valid email' : '';
     }
 
     onNoClick(): void {

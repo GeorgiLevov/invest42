@@ -20,8 +20,8 @@ import { BreakpointObserver } from '@angular/cdk/layout';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-   options: FormGroup;
-   public loginForm: FormGroup;
+  options: FormGroup;
+  public loginForm: FormGroup;
 
   // tslint:disable-next-line:max-line-length
   public emailPattern = ('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$');
@@ -65,7 +65,7 @@ export class LoginComponent implements OnInit {
     this.toastService.success('', 'Login successfull!', { timeOut: 1000 });
   }
 
-  errToast(err) {
+  errToast() {
     this.toastService.error('', 'Wrong credentials!', { timeOut: 1000 });
   }
 
@@ -77,28 +77,27 @@ export class LoginComponent implements OnInit {
       email: this.loginForm.value.email,
       password: this.loginForm.value.password,
     };
+
     this.loginService.login(user, { observe: 'response', responseType: 'json' }).subscribe((data: {
       message: string,
       token: string,
     }) => {
       localStorage.setItem('token', data.token);
       this.successToast();
-      // this.router.navigate(['./../../admin/home/homeA.component']);
       const role = this.authService.getRole();
-
 
       if (role === Role.admin) {
         this.router.navigate(['admin']);
         this.loading = false;
 
       } else if (role === Role.manager) {
+
         this.router.navigate(['manager']);
         this.loading = false;
-
       }
 
-    }, (err: HttpErrorResponse) => {
-      this.errToast(err.message);
+    }, (err) => {
+      this.errToast();
     });
     this.loginForm.reset();
   }

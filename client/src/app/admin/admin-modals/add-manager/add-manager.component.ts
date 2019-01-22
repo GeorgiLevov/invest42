@@ -26,10 +26,6 @@ export class AddManagerComponent {
             this.formControl.hasError('email') ? 'Not a valid email' : '';
     }
 
-    submit() {
-        // emppty stuff
-    }
-
     onNoClick(): void {
         this.dialogRef.close();
     }

@@ -1,4 +1,3 @@
-import { ManagerData } from './../../models/interfaces/manager-data.model';
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
 import { AdminService } from '../services/admin.service';
@@ -28,7 +27,6 @@ export class ClientsListComponent implements OnInit, AfterViewInit {
     private adminService: AdminService,
     private dialog: MatDialog,
   ) { }
-
 
   ngOnInit() {
     this.getClients();
@@ -63,7 +61,6 @@ export class ClientsListComponent implements OnInit, AfterViewInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
         this.adminService.dataChange.value.push(this.adminService.getDialogData());
-        // this.refreshTable();
       }
     });
   }
@@ -81,7 +78,6 @@ export class ClientsListComponent implements OnInit, AfterViewInit {
       if (result === 1) {
         const foundIndex = this.adminService.dataChange.value.findIndex((x: any) => x.id === this.id);
         this.adminService.dataChange.value[foundIndex] = this.adminService.getDialogData();
-        // this.refreshTable();
       }
     });
   }
