@@ -118,6 +118,8 @@ export class UsersService {
     managerFound.clients.push(clientFound);
     await this.usersRepository.save(managerFound);
 
+    // clientFound.manager = null;
+
     return { result: `Manager: ${managerFound.fullname} is assigned to Client: ${clientFound.fullname}` };
 
   }
@@ -182,6 +184,49 @@ export class UsersService {
     });
 
     return clientManager;
+  }
+
+  async getClientEditInfo() {
+    const clients: Client[] = await this.getClients();
+
+    const clientsInfo =
+      clients.map(async (client) => {
+        const manager = await this.getClientsManager(client.email);
+        let clientInfo;
+
+        if (!manager) {
+
+          clientInfo = {
+            id: client.id,
+            fullname: client.fullname,
+            email: client.email,
+            address: client.address,
+            availableBalance: client.availableBalance,
+            icon: client.icon,
+            status: client.status,
+            managerName: 'No manager',
+            managerEmail: 'No manager',
+          };
+
+          return clientInfo;
+        }
+
+        clientInfo = {
+          id: client.id,
+          fullname: client.fullname,
+          email: client.email,
+          address: client.address,
+          availableBalance: client.availableBalance,
+          icon: client.icon,
+          status: client.status,
+          managerName: manager.fullname,
+          managerEmail: manager.email,
+        };
+
+        return clientInfo;
+      });
+
+    return Promise.all(clientsInfo);
   }
 
 }

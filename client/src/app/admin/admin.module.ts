@@ -1,3 +1,4 @@
+import { AddClientComponent } from './admin-modals/add-client/add-client.component';
 import { EditManagerComponent } from './admin-modals/edit-manager/edit-manager.component';
 import { AddManagerComponent } from './admin-modals/add-manager/add-manager.component';
 import { SharedModule } from './../shared/shared.module';
@@ -25,6 +26,7 @@ import { AddAdminComponent } from './admin-modals/add-admin/add-admin.component'
     AddAdminComponent,
     AddManagerComponent,
     EditManagerComponent,
+    AddClientComponent,
   ],
   imports: [
     CommonModule,
@@ -39,6 +41,7 @@ import { AddAdminComponent } from './admin-modals/add-admin/add-admin.component'
     EditAdminComponent,
     AddManagerComponent,
     EditManagerComponent,
+    AddClientComponent,
   ],
 })
 export class AdminModule { }

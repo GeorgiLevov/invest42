@@ -1,0 +1,44 @@
+<div class="container">
+  <h3 mat-dialog-title>Add new Client</h3>
+
+  <form class="mat-dialog-content" (ngSubmit)="submit" #formControl="ngForm">
+
+    <div class="form">
+      <mat-form-field color="accent">
+        <input matInput #input class="form-control" placeholder="Full Name" [(ngModel)]="data.fullname" name="fullname"
+          required>
+        <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form">
+      <mat-form-field color="accent">
+        <input matInput #input class="form-control" placeholder="Email" [(ngModel)]="data.email" name="email" required>
+        <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form">
+      <mat-form-field color="accent">
+        <input matInput #input class="form-control" placeholder="Address" [(ngModel)]="data.address" name="address"
+          required>
+        <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form">
+      <mat-form-field color="accent">
+        <input matInput #input class="form-control" placeholder="Balance" [(ngModel)]="data.availableBalance" name="availableBalance"
+          required>
+        <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+      </mat-form-field>
+    </div>
+
+
+    <div mat-dialog-actions>
+      <button mat-button type="button" [disabled]="!formControl.valid" [mat-dialog-close]="1" (click)="confirmAdd()">Save</button>
+      <button mat-button type="button" (click)="onNoClick()" tabindex="-1">Cancel</button>
+    </div>
+
+  </form>
+</div>

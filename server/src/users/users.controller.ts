@@ -69,4 +69,11 @@ export class UsersController {
     return this.usersService.getClientsManager(params.email);
   }
 
+  @Get('get-client-info')
+  @Roles('ADMIN')
+  @UseGuards(AuthGuard())
+  getClientInfo(): Promise<any[]> {
+    return this.usersService.getClientEditInfo();
+  }
+
 }

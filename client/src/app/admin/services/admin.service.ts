@@ -10,6 +10,8 @@ import * as decode from 'jwt-decode';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { UserData } from '../../models/interfaces/user-data.model';
 import { ManagerData } from '../../models/interfaces/manager-data.model';
+import { ClientData } from '../../models/interfaces/client-data.model';
+import { ClientRegisterData } from '../../models/client-register.model';
 
 @Injectable({
     providedIn: 'root'
@@ -42,6 +44,10 @@ export class AdminService {
         return this.http.get<ManagerData[]>(`${this.apiUrl}/user/managers`);
     }
 
+    getClientsInfo(): Observable<ClientData[]> {
+        return this.http.get<ClientData[]>(`${this.apiUrl}/user/get-client-info`);
+    }
+
     updateUser(user): void {  // added
         this.dialogData = user;
         const id = user.id;
@@ -60,6 +66,19 @@ export class AdminService {
         // this.dialogData = user;
         // console.log(user);
         this.http.post(`${this.apiUrl}/register/user`, user).subscribe((data) => {
+            this.toastService.success('', 'Successfully added', { timeOut: 3000 });
+        },
+            (err: HttpErrorResponse) => {
+                this.toastService.error('', 'Error occurred!', { timeOut: 8000 });
+            });
+    }
+
+    addClient(client: ClientRegisterData): void {
+
+        const balance = +client.availableBalance;
+        client.availableBalance = balance;
+
+        this.http.post(`${this.apiUrl}/register/client`, client).subscribe((data) => {
             this.toastService.success('', 'Successfully added', { timeOut: 3000 });
         },
             (err: HttpErrorResponse) => {
