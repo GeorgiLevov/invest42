@@ -129,7 +129,7 @@ export class UsersService {
     const userFound = await this.usersRepository.findOne({ where: { email: userEmail } });
 
     if (!(clientFound || userFound)) {
-      throw new HttpException('Email does not exist', HttpStatus.BAD_REQUEST);
+      throw new HttpException('Email does not exist', HttpStatus.NOT_FOUND);
     }
 
     if (clientFound) {

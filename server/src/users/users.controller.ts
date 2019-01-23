@@ -28,7 +28,7 @@ export class UsersController {
   }
 
   @Get('profile/:email')
-  @Roles('ADMIN')
+  @Roles('ADMIN', 'MANAGER')
   @UseGuards(AuthGuard())
   getProfile(@Param() params): Promise<object> {
     return this.usersService.getManager(params.email);

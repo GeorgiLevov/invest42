@@ -33,7 +33,7 @@ export class AuthController {
   async sign(@Body() user: UserLoginDTO): Promise<object> {
     const generatedToken = await this.authService.signIn(user);
     if (!generatedToken) {
-      throw new HttpException('Wrong credentials!', HttpStatus.BAD_REQUEST);
+      throw new HttpException('Wrong credentials!', HttpStatus.NOT_FOUND);
     }
 
     return { token: generatedToken };

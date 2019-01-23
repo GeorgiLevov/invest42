@@ -29,25 +29,25 @@ export class MarketComponent implements AfterViewInit, OnInit {
   companies: CompanyModel[];
 
   public logCompanies() {
-    console.log(this.companies);
+    // console.log(this.companies);
   }
 
   public returnCompanies() {
     this.marketService.getCompanies()
-    .subscribe( 
-    (companies: CompanyModel[]) => {
-      if (companies === undefined || companies === null) { return; }
-      this.companies = companies;
-      console.log(this.companies);
-      this.dataSource = new MatTableDataSource(companies);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-      console.log(this.dataSource);
-      },
-    error => console.log(error),
-    () => {
-      console.log('companies finished loading');
-    });
+      .subscribe(
+        (companies: CompanyModel[]) => {
+          if (companies === undefined || companies === null) { return; }
+          this.companies = companies;
+          // console.log(this.companies);
+          this.dataSource = new MatTableDataSource(companies);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+          // console.log(this.dataSource);
+        },
+        error => // console.log(error),
+          () => {
+            // console.log('companies finished loading');
+          });
   }
 
   ngOnInit() {
@@ -58,7 +58,7 @@ export class MarketComponent implements AfterViewInit, OnInit {
   }
 
   onRowClicked(row) {
-    console.log('Row clicked: ', row);
-}
+    // console.log('Row clicked: ', row);
+  }
 
 }

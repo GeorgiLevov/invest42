@@ -9,7 +9,7 @@ import { BasicStatus } from '../../models/enums/basicstatus.enum';
 })
 export class Client {
 
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   id: string;
 
   @Column()
@@ -17,6 +17,12 @@ export class Client {
 
   @Column()
   email: string;
+
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  dateOfCreation: Date;
+
+  @Column()
+  age: number;
 
   @Column()
   address: string;

@@ -16,7 +16,7 @@ import {
   name: 'users',
 })
 export class User {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   id: string;
 
   @Column()
@@ -40,10 +40,4 @@ export class User {
   @Column({ enum: [BasicStatus.acrhived, BasicStatus.active], type: 'enum', default: BasicStatus.active })
   status: string;
 
-  // @OneToOne(type => Funds, funds => funds.client, { eager: true})
-  // @JoinColumn()
-  // funds: Funds;
-
-  // @Column()
-  // dateregistered: Date;
 }

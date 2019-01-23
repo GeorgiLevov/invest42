@@ -6,6 +6,8 @@ export class ClientRegisterData {
 
     address: string;
 
+    age: number;
+
     availableBalance: number;
 
 }
