@@ -69,11 +69,10 @@ export class AdminService {
     }
 
     addClient(client: ClientRegisterData): void {
-
         const balance = +client.availableBalance;
         client.availableBalance = balance;
         const age = +client.age;
-        client.availableBalance = age;
+        client.age = age;
 
         this.http.post(`${this.apiUrl}/register/client`, client).subscribe((data) => {
             this.toastService.success('', 'Successfully added', { timeOut: 3000 });

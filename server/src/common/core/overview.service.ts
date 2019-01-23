@@ -40,7 +40,7 @@ export class OverviewService {
       throw new HttpException('Manager account not found', HttpStatus.BAD_REQUEST);
     }
 
-    const assignedClients = await this.clientsRepository.find({ where: { manager: managerFound.id } });
+    const assignedClients = await this.clientsRepository.find({ where: { manager: managerFound.id, status: BasicStatus.active } });
     // console.log(assignedClients);
     if (!assignedClients) {
       throw new HttpException('No clients found', HttpStatus.BAD_REQUEST);
@@ -55,6 +55,10 @@ export class OverviewService {
     const allClients = await this.getAllClients(manager);
 
     return await Promise.all(allClients.map(client => client.orders));
+  }
+
+  async getAllClientWithOrders(manager: User): Promise<Client[]> {
+    return await this.getAllClients(manager);
   }
 
   async getClientOrdersHistory(manager: User): Promise<Order[][]> {

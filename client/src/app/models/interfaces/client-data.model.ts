@@ -8,4 +8,5 @@ export class ClientData {
     status: string;
     managerName: string;
     managerEmail: string;
+
 }

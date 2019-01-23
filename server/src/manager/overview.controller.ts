@@ -40,9 +40,9 @@ export class OverviewController {
   @Get('clients/orders')
   @Roles('MANAGER')
   @UseGuards(AuthGuard(), RolesGuard)
-  getAllClientsOrders(@Req() request): Promise<Order[][]> {
+  getAllClientsOrders(@Req() request): Promise<Client[]> {
     const user = request.user;
-    return this.overviewService.getAllClientsOrders(user);
+    return this.overviewService.getAllClientWithOrders(user);
   }
 
   @Get('clients/orders/sold')

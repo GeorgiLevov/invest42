@@ -16,27 +16,43 @@ const routes: Routes = [
         path: '', component: OverviewComponent,
         data: { animation: { value: 'manager' } }, children: [
             { path: '', redirectTo: 'market' },
-            { path: 'market', component: MarketComponent,
-            data: { animation: { value: 'manager' } }, },
-            { path: 'positions', component: PositionsComponent,
-            data: { animation: { value: 'manager' } }, },
-            { path: 'clients', component: ClientsComponent,
-            data: { animation: { value: 'manager' } }, },
+            {
+                path: 'market', component: MarketComponent,
+                data: { animation: { value: 'manager' } },
+            },
+            {
+                path: 'positions', component: PositionsComponent,
+                data: { animation: { value: 'manager' } },
+            },
+            {
+                path: 'clients', component: ClientsComponent,
+                data: { animation: { value: 'manager' } },
+            },
         ]
     },
     {
         path: 'client/:clientId', component: ManageClientComponent, children: [
             { path: '', redirectTo: 'portfolio' },
-            { path: 'portfolio', component: ClientPortfolioComponent,
-            data: { animation: { value: 'manager' } } },
-            { path: 'positions', component: ClientPositionsComponent,
-            data: { animation: { value: 'manager' } }, },
-            { path: 'market', component: ClientMarketComponent,
-            data: { animation: { value: 'manager' } }, },
-            { path: 'watchlist', component: ClientWatchlistComponent,
-            data: { animation: { value: 'manager' } }, },
-            { path: 'history', component: ClientHistoryComponent,
-            data: { animation: { value: 'manager' } }, },
+            {
+                path: 'portfolio', component: ClientPortfolioComponent,
+                data: { animation: { value: 'manager' } }
+            },
+            {
+                path: 'positions', component: ClientPositionsComponent,
+                data: { animation: { value: 'manager' } },
+            },
+            {
+                path: 'market', component: ClientMarketComponent,
+                data: { animation: { value: 'manager' } },
+            },
+            {
+                path: 'watchlist', component: ClientWatchlistComponent,
+                data: { animation: { value: 'manager' } },
+            },
+            {
+                path: 'history', component: ClientHistoryComponent,
+                data: { animation: { value: 'manager' } },
+            },
         ]
     }
 ];

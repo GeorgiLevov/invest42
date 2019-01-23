@@ -1,3 +1,28 @@
-<p>
-  positions works!
-</p>
+<h1>TITLEEEE</h1>
+<ul>
+  <li *ngFor="let client of clients; let i = index">
+    <h1>id: {{client.id}}</h1>
+    <h1>fullname: {{client.fullname}}</h1>
+    <h1>email: {{client.email}}</h1>
+    <h1>icon: {{client.icon}}</h1>
+    <h1>index: {{i}}</h1>
+
+    <h1>Orders: </h1>
+    <table matSort (matSortChange)="sortData($event, i)">
+      <tr>
+        <th mat-sort-header="id">Id</th>
+        <th mat-sort-header="units">Units</th>
+        <th mat-sort-header="closedate">Close Date</th>
+        <th mat-sort-header="buyprice">Buy Price</th>
+      </tr>
+
+      <tr *ngFor="let order of client.orders">
+        <td>{{order.id}}</td>
+        <td>{{order.units}}</td>
+        <td>{{order.closedate}}</td>
+        <td>{{order.buyprice}}</td>
+      </tr>
+    </table>
+
+  </li>
+</ul>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Sort } from '@angular/material';
 
 @Component({
   selector: 'app-client-positions',
@@ -11,5 +12,6 @@ export class ClientPositionsComponent implements OnInit {
 
   ngOnInit() {
   }
+
 
 }
