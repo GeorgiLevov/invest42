@@ -30,7 +30,6 @@ const routes: Routes = [
     }
 ];
 
-//remove preload strategy
 @NgModule({
     imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
     exports: [RouterModule]

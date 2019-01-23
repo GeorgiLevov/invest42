@@ -3,7 +3,7 @@ import { Client } from './../data/entities/client.entity';
 import { Company } from './../data/entities/company.entity';
 import { OverviewService } from './../common/core/overview.service';
 import { AuthGuard } from '@nestjs/passport';
-import { Controller, Get, UseGuards, Req} from '@nestjs/common';
+import { Controller, Get, UseGuards, Req, Param, Query} from '@nestjs/common';
 import { UsersService } from '../common/core/users.service';
 import { Roles, RolesGuard } from 'src/common';
 
@@ -19,6 +19,21 @@ export class OverviewController {
   @UseGuards(AuthGuard(), RolesGuard)
   getAllCompanies(): Promise<Company[]> {
     return this.overviewService.getAllCompanies();
+  }
+
+  @Get('market/company')
+  @Roles('MANAGER')
+  @UseGuards(AuthGuard(), RolesGuard)
+  companyDetais(@Query() query: any): Promise<object> {
+    console.log('params:', query);
+    return this.overviewService.companyDetais(query.id);
+  }
+
+  @Get('market/prices')
+  @Roles('MANAGER')
+  @UseGuards(AuthGuard(), RolesGuard)
+  getCompaniesAndPrices(): Promise<object> {
+    return this.overviewService.getCompaniesAndPrices();
   }
 
   @Get('clients')

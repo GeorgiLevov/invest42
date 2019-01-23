@@ -1,6 +1,7 @@
+import { Company } from './../../data/entities/company.entity';
+import { Price } from './../../data/entities/prices.entity';
 import { Order } from './../../data/entities/order.entity';
 import { UserRegisterDTO } from './../../models/user/user-register.dto';
-import { Company } from '../../data/entities/company.entity';
 import { Client } from '../../data/entities/client.entity';
 import { User } from 'src/data/entities/user.entity';
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
@@ -22,11 +23,36 @@ export class OverviewService {
     @InjectRepository(Company)
     private readonly companyRepository: Repository<Company>,
 
+    @InjectRepository(Price)
+    private readonly pricesRepository: Repository<Price>,
+
   ) { }
 
   async getAllCompanies(): Promise<Company[]> {
-    const companiesOnMarket = await this.companyRepository.find({ where: { status: BasicStatus.active } });
+    const companiesOnMarket = await this.companyRepository.find( { where: { status: BasicStatus.active} });
+
     return companiesOnMarket;
+  }
+
+  async companyDetais(companyId: string): Promise<Company> {
+    // console.log(companyId);
+    const foundCompany: Company = await this.companyRepository.findOne( { where: { id: companyId} });
+    if (!foundCompany){
+      throw new HttpException('Company not found', HttpStatus.NOT_FOUND);
+    }
+    return foundCompany;
+  }
+
+  async getCompaniesAndPrices(): Promise<object> {
+    const companiesOnMarket = await this.companyRepository.find( { where: { status: BasicStatus.active} });
+
+    const companyPrices = await this.pricesRepository.find({
+      order: { opendate: 'DESC' },
+      relations: ['company'],
+      take: companiesOnMarket.length});
+
+    const toREturn = {companies: companiesOnMarket, prices: companyPrices };
+    return toREturn;
   }
 
   async getAllClients(user: User): Promise<Client[]> {

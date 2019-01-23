@@ -26,7 +26,6 @@ import {
 import { MaterialModule } from '../angular-material/angular-material.module';
 import { LayoutModule } from '@angular/cdk/layout';
 import { ProfileComponent } from './profile/profile.component';
-import { DataTableComponent } from './data-table/data-table.component';
 
 const sharedModules = [
     MatToolbarModule,
@@ -55,7 +54,6 @@ const sharedModules = [
         UnauthorisedComponent,
         SideNavComponent,
         ProfileComponent,
-        DataTableComponent,
     ],
     imports: [
         ...sharedModules,
@@ -68,7 +66,6 @@ const sharedModules = [
         ...sharedModules,
         SideNavComponent,
         ProfileComponent,
-        DataTableComponent,
     ],
     providers: [ProfileService, AppConfig],
 })

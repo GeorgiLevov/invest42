@@ -18,6 +18,8 @@ const routes: Routes = [
             { path: '', redirectTo: 'market' },
             { path: 'market', component: MarketComponent,
             data: { animation: { value: 'manager' } }, },
+            { path: 'company', component: ManageClientComponent,
+            data: { animation: { value: 'manager' } }, },
             { path: 'positions', component: PositionsComponent,
             data: { animation: { value: 'manager' } }, },
             { path: 'clients', component: ClientsComponent,
