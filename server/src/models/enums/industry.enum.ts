@@ -4,6 +4,6 @@ export enum Industry {
     retail = 'Retail',
     health = 'Healthcare',
     manufacturing = 'Manufacturing',
-    goods = 'Goods &amp; Services',
-
+    goods = 'Goods & Services',
+    finance = 'Banks and Finantial Institutions',
 }

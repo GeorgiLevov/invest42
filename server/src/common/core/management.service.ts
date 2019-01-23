@@ -173,7 +173,7 @@ export class ManagementService {
             throw new HttpException('No companies found', HttpStatus.BAD_REQUEST);
         }
 
-        const companies = await getManager().query(`SELECT companies.name,
+        const orders = await getManager().query(`SELECT companies.name,
         prices.opendate,
         prices.startprice,
         prices.endprice,
@@ -184,7 +184,7 @@ export class ManagementService {
         WHERE prices.opendate
         BETWEEN NOW() - interval 60 minute AND NOW()
         LIMIT 10;`);
-        return {result: companies};
+        return {result: orders};
     }
 
 }

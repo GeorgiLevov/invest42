@@ -1,3 +1,42 @@
 h3 {
     color: white;
 }
+
+.full-width-table {
+    width: 100%;
+  }
+.company-details {
+    max-width: 100px !important;
+    box-shadow: none;
+  }
+
+.mat-table {
+  width: 95%;
+  float: right;
+}
+
+.mat-card {
+  max-width: 80px;
+  box-shadow: none;
+  margin: none;
+  padding-left:0px;
+}
+
+.mat-header-cell {
+    font-size: 1rem;
+}
+
+.company-content {
+    display: inline-block;
+}
+
+.company-avatar {
+    width: 64px;
+    height: 64px;
+    margin: 0;
+}
+.company-image {
+    width: inherit;
+    height: inherit;
+    margin: inherit;
+}

@@ -15,6 +15,7 @@ import { ClientMarketComponent } from './client-market/client-market.component';
 import { ClientWatchlistComponent } from './client-watchlist/client-watchlist.component';
 import { ClientHistoryComponent } from './client-history/client-history.component';
 import { ClientPortfolioComponent } from './client-portfolio/client-portfolio.component';
+import { CompanyPortfolioComponent } from './company-portfolio/company-portfolio.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { ClientPortfolioComponent } from './client-portfolio/client-portfolio.co
     ClientHistoryComponent,
     ClientPortfolioComponent,
     MarketComponent,
+    CompanyPortfolioComponent,
   ],
   imports: [
     CommonModule,
