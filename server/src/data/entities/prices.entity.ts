@@ -5,7 +5,7 @@ import { Column, PrimaryGeneratedColumn, Entity, ManyToOne } from 'typeorm';
   name: 'prices',
 })
 export class Price {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   id: string;
 
   @Column()

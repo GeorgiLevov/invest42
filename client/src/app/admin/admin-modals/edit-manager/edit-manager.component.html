@@ -1,5 +1,5 @@
 <div class="container">
-  <h3 mat-dialog-title>Admin id: {{data.id}}</h3>
+  <h3 mat-dialog-title>Manager id: {{data.id}}</h3>
 
   <form class="mat-dialog-content" (ngSubmit)="submit" #formControl="ngForm">
 
@@ -12,8 +12,8 @@
 
     <div class="form">
       <mat-form-field color="accent">
-        <textarea matInput #input class="form-control" placeholder="Password" [(ngModel)]="data.password" name="password"
-          required></textarea>
+        <input matInput #input class="form-control" placeholder="Password" [(ngModel)]="data.password" name="password"
+          required>
         <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
       </mat-form-field>
     </div>

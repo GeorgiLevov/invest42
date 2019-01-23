@@ -102,7 +102,7 @@ export class UsersService {
   }
 
   async addClientToManager(managerEmail: string, clientEmail: string): Promise<object> {
-    const managerFound = await this.usersRepository.findOne({ email: managerEmail }, { relations: ['clients'] });
+    const managerFound = await this.usersRepository.findOne({ email: managerEmail });
     if (!managerFound) {
       throw new HttpException('Manager with this e-mail does not exist', HttpStatus.BAD_REQUEST);
     }
@@ -118,6 +118,8 @@ export class UsersService {
     managerFound.clients.push(clientFound);
     await this.usersRepository.save(managerFound);
 
+    // clientFound.manager = null;
+
     return { result: `Manager: ${managerFound.fullname} is assigned to Client: ${clientFound.fullname}` };
 
   }
@@ -127,7 +129,7 @@ export class UsersService {
     const userFound = await this.usersRepository.findOne({ where: { email: userEmail } });
 
     if (!(clientFound || userFound)) {
-      throw new HttpException('Email does not exist', HttpStatus.BAD_REQUEST);
+      throw new HttpException('Email does not exist', HttpStatus.NOT_FOUND);
     }
 
     if (clientFound) {
@@ -156,6 +158,75 @@ export class UsersService {
 
   async getAdmins(): Promise<User[]> {
     return await this.usersRepository.find({ where: { role: Role.admin } });
+  }
+
+  async getManagers(): Promise<User[]> {
+    return await this.usersRepository.find({ where: { role: Role.manager } });
+  }
+
+  async getClients(): Promise<Client[]> {
+    return await this.clientsRepository.find({});
+  }
+
+  async getClientsManager(clientEmail: string): Promise<User> {
+    const managers = await this.usersRepository.find({ where: { role: Role.manager } });
+
+    let clientManager: User;
+
+    managers.forEach((manager: User) => {
+
+      manager.clients.forEach((client: Client) => {
+        if (client.email === clientEmail) {
+          clientManager = manager;
+        }
+      });
+
+    });
+
+    return clientManager;
+  }
+
+  async getClientEditInfo() {
+    const clients: Client[] = await this.getClients();
+
+    const clientsInfo =
+      clients.map(async (client) => {
+        const manager = await this.getClientsManager(client.email);
+        let clientInfo;
+
+        if (!manager) {
+
+          clientInfo = {
+            id: client.id,
+            fullname: client.fullname,
+            email: client.email,
+            address: client.address,
+            availableBalance: client.availableBalance,
+            icon: client.icon,
+            status: client.status,
+            managerName: 'No manager',
+            managerEmail: 'No manager',
+          };
+
+          return clientInfo;
+        }
+
+        clientInfo = {
+          id: client.id,
+          fullname: client.fullname,
+          email: client.email,
+          address: client.address,
+          availableBalance: client.availableBalance,
+          icon: client.icon,
+          status: client.status,
+          managerName: manager.fullname,
+          managerEmail: manager.email,
+        };
+
+        return clientInfo;
+      });
+
+    return Promise.all(clientsInfo);
   }
 
 }

@@ -29,7 +29,12 @@ export class OverviewService {
   ) { }
 
   async getAllCompanies(): Promise<Company[]> {
-    const companiesOnMarket = await this.companyRepository.find( { where: { status: BasicStatus.active} });
+    const companiesOnMarket = await this.companyRepository.find({ where: { status: BasicStatus.active } });
+
+    if (!companiesOnMarket) {
+      throw new HttpException('No companies found!', HttpStatus.NOT_FOUND);
+    }
+
 
     return companiesOnMarket;
   }
@@ -61,8 +66,9 @@ export class OverviewService {
       throw new HttpException('Manager account not found', HttpStatus.BAD_REQUEST);
     }
 
-    const assignedClients = await this.clientsRepository.find({ where: { managerId: managerFound.id , status: BasicStatus.active } });
-    if (!assignedClients){
+    const assignedClients = await this.clientsRepository.find({ where: { manager: managerFound.id } });
+    // console.log(assignedClients);
+    if (!assignedClients) {
       throw new HttpException('No clients found', HttpStatus.BAD_REQUEST);
     }
     if (assignedClients.length < 1) {
@@ -72,15 +78,15 @@ export class OverviewService {
   }
 
   async getAllClientsOrders(manager: User): Promise<Order[][]> {
-    const allClients =  await this.getAllClients(manager);
+    const allClients = await this.getAllClients(manager);
 
-    return await Promise.all(allClients.map(client =>  client.orders));
+    return await Promise.all(allClients.map(client => client.orders));
   }
 
-  async getClientOrdersHistory(manager: User): Promise<Order[][]>{
+  async getClientOrdersHistory(manager: User): Promise<Order[][]> {
     const allClientsOrders = await this.getAllClientsOrders(manager);
 
-    return await Promise.all(allClientsOrders.map( (orders) => orders.filter(order => order.status === OrderStatus.sold) ) );
+    return await Promise.all(allClientsOrders.map((orders) => orders.filter(order => order.status === OrderStatus.sold)));
   }
 
   // PLEASE LOOK AT THIS !!!

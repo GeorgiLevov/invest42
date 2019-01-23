@@ -8,7 +8,7 @@ import { UsersService } from '../common/core/users.service';
 import { AuthService } from './auth.service';
 import {
   Get, Controller, UseGuards, Post, Body, FileInterceptor,
-  UseInterceptors, UploadedFile, BadRequestException,
+  UseInterceptors, UploadedFile, BadRequestException, HttpException, HttpStatus,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { join } from 'path';
@@ -33,7 +33,7 @@ export class AuthController {
   async sign(@Body() user: UserLoginDTO): Promise<object> {
     const generatedToken = await this.authService.signIn(user);
     if (!generatedToken) {
-      throw new BadRequestException('Wrong credentials!');
+      throw new HttpException('Wrong credentials!', HttpStatus.NOT_FOUND);
     }
 
     return { token: generatedToken };
@@ -50,7 +50,6 @@ export class AuthController {
   async registerUser(
     @Body() user: UserRegisterDTO,
     @UploadedFile() file): Promise<UserRegisterDTO[]> {
-    // console.log(user);
     const folder = join('.', 'images');
     if (!file) {
       user.avatar = join(folder, 'default.png');

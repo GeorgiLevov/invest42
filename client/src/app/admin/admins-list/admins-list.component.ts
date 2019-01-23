@@ -1,11 +1,9 @@
-import { AddAdminComponent } from './../admin-modals/add-modal/add-admin.component';
-import { UserRegisterData } from './../../models/user-register.model';
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
-import { BehaviorSubject } from 'rxjs';
 import { AdminService } from '../services/admin.service';
 import { UserData } from '../../models/interfaces/user-data.model';
-import { EditAdminComponent } from '../admin-modals/edit-modal/edit-admin.component';
+import { EditAdminComponent } from '../admin-modals/edit-admin/edit-admin.component';
+import { AddAdminComponent } from '../admin-modals/add-admin/add-admin.component';
 
 @Component({
   selector: 'app-admins-list',
@@ -24,6 +22,8 @@ export class AdminsListComponent implements OnInit, AfterViewInit {
   index: number;
 
   id: number;
+
+  role: string;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -59,6 +59,7 @@ export class AdminsListComponent implements OnInit, AfterViewInit {
   }
 
   addNewUser() {
+
     const dialogRef = this.dialog.open(AddAdminComponent, {
       data: {}
     });
@@ -66,7 +67,6 @@ export class AdminsListComponent implements OnInit, AfterViewInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
         this.adminService.dataChange.value.push(this.adminService.getDialogData());
-        // this.refreshTable();
       }
     });
   }
@@ -84,7 +84,6 @@ export class AdminsListComponent implements OnInit, AfterViewInit {
       if (result === 1) {
         const foundIndex = this.adminService.dataChange.value.findIndex((x: any) => x.id === this.id);
         this.adminService.dataChange.value[foundIndex] = this.adminService.getDialogData();
-        // this.refreshTable();
       }
     });
   }

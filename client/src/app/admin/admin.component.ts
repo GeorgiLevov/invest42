@@ -51,7 +51,7 @@ export class AdminComponent implements OnInit {
   }
 
   public getUserInfo() {
-    this.adminService.getUserInfo('georgelevov@gmail.com').subscribe(
+    this.adminService.getUserInfo(this.authService.getEmail()).subscribe(
       (data) => {
         console.log(data);
       },

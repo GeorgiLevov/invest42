@@ -9,7 +9,7 @@ import { BasicStatus } from '../../models/enums/basicstatus.enum';
 })
 export class Client {
 
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   id: string;
 
   @Column()
@@ -17,6 +17,12 @@ export class Client {
 
   @Column()
   email: string;
+
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  dateOfCreation: Date;
+
+  @Column()
+  age: number;
 
   @Column()
   address: string;
@@ -37,7 +43,7 @@ export class Client {
   @JoinTable()
   watchlist: Promise<Company[]>;
 
-    @Column({enum: [BasicStatus.active, BasicStatus.acrhived], type: 'enum', default: BasicStatus.active})
-    status: string;
+  @Column({ enum: [BasicStatus.active, BasicStatus.acrhived], type: 'enum', default: BasicStatus.active })
+  status: string;
 
 }

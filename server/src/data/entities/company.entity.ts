@@ -17,7 +17,7 @@ import { News } from './news.entity';
   name: 'companies',
 })
 export class Company {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   id: string;
 
   @Column({ unique: true })

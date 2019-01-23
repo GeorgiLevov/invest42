@@ -1,6 +1,7 @@
 import { IsString, Length, Matches, IsOptional, IsEmail, IsNumber } from 'class-validator';
 import { Optional } from '@nestjs/common';
 import { Column } from 'typeorm';
+import { agent } from 'supertest';
 
 export class ClientRegisterDTO {
 
@@ -16,10 +17,13 @@ export class ClientRegisterDTO {
   @IsNumber()
   availableBalance: number;
 
+  @IsNumber()
+  age: number;
+
   @Optional()
   icon: string;
 
-  @IsString()
+  @Optional()
   managerId: string;
 
 }

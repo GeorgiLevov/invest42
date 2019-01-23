@@ -4,15 +4,15 @@ import { FormControl, Validators } from '@angular/forms';
 import { AdminService } from '../../services/admin.service';
 
 @Component({
-    selector: 'app-edit-admin',
-    templateUrl: './edit-admin.component.html',
-    styleUrls: ['./edit-admin.component.css']
+    selector: 'app-edit-manager',
+    templateUrl: './edit-manager.component.html',
+    styleUrls: ['./edit-manager.component.css']
 })
-export class EditAdminComponent {
+export class EditManagerComponent {
 
 
     constructor(
-        public dialogRef: MatDialogRef<EditAdminComponent>,
+        public dialogRef: MatDialogRef<EditManagerComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any,
         public adminService: AdminService,
     ) { }
@@ -26,10 +26,6 @@ export class EditAdminComponent {
         return this.formControl.hasError('required') ? 'Required field' :
             this.formControl.hasError('email') ? 'Not a valid email' : '';
     }
-
-    // submit() {
-    //     // emppty stuff
-    // }
 
     onNoClick(): void {
         this.dialogRef.close();

@@ -14,7 +14,8 @@ import {
   name: 'orders',
 })
 export class Order {
-  @PrimaryGeneratedColumn('uuid')
+
+  @PrimaryGeneratedColumn()
   id: string;
 
   @Column()
