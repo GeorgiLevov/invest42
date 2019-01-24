@@ -1,4 +1,4 @@
-<h1>TITLEEEE</h1>
+<!-- <h1>TITLEEEE</h1>
 <ul>
   <li *ngFor="let client of clients; let i = index">
     <h1>id: {{client.id}}</h1>
@@ -25,4 +25,87 @@
     </table>
 
   </li>
-</ul>
+</ul> -->
+
+
+<!-- <div class="dropup">
+  <h1>Clients: </h1>
+  <li *ngFor="let client of clients; let i = index">
+
+    <button class="dropbtn">
+      <span>id: {{client.id}}</span>
+      <span>fullname: {{client.fullname}}</span>
+      <span>email: {{client.email}}</span>
+      <span>icon: {{client.icon}}</span>
+    </button>
+
+    <div class="dropup-content">
+
+      <h1>Orders: </h1>
+      <table matSort (matSortChange)="sortData($event, i)">
+        <tr>
+          <th mat-sort-header="id">Id</th>
+          <th mat-sort-header="units">Units</th>
+          <th mat-sort-header="closedate">Close Date</th>
+          <th mat-sort-header="buyprice">Buy Price</th>
+        </tr>
+
+        <tr *ngFor="let order of client.orders">
+          <td>{{order.id}}</td>
+          <td>{{order.units}}</td>
+          <td>{{order.closedate}}</td>
+          <td>{{order.buyprice}}</td>
+        </tr>
+      </table>
+      
+    </div>
+  </li>
+</div> -->
+
+<li *ngFor="let client of clients; let i = index">
+
+  <mat-accordion>
+    <mat-expansion-panel>
+
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{client.id}}
+        </mat-panel-title>
+        <mat-panel-title>
+          {{client.fullname}}
+        </mat-panel-title>
+        <mat-panel-title>
+          {{client.email}}
+        </mat-panel-title>
+        <mat-panel-title>
+          {{client.icon}}
+        </mat-panel-title>
+        <mat-panel-description>
+          View Orders:
+        </mat-panel-description>
+
+      </mat-expansion-panel-header>
+
+      <h3>Orders: </h3>
+      <table matSort (matSortChange)="sortData($event, i)">
+        <tr>
+          <th mat-sort-header="id">Id</th>
+          <th mat-sort-header="units">Units</th>
+          <th mat-sort-header="closedate">Close Date</th>
+          <th mat-sort-header="buyprice">Buy Price</th>
+        </tr>
+
+        <!-- to be fixed !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+        <!-- {{generateTable(clients.orders)}} -->
+        <tr *ngFor="let order of client.orders">
+          <td>{{order.id}}</td>
+          <td>{{order.units}}</td>
+          <td>{{order.closedate}}</td>
+          <td>{{order.buyprice}}</td>
+        </tr>
+        <!-- to be fixed !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+      </table>
+
+    </mat-expansion-panel>
+  </mat-accordion>
+</li>

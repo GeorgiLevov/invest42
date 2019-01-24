@@ -60,6 +60,13 @@ export class PositionsComponent implements OnInit {
     this.clients[index].orders = this.sortedData;
   }
 
+
+  generateTable(orders): string {
+
+    // return `<h1>TEST</h1>`;
+    return orders;
+  }
+
 }
 
 function compare(a: number | string, b: number | string, isAsc: boolean) {
