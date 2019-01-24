@@ -3,12 +3,8 @@ import { Client } from './../data/entities/client.entity';
 import { Company } from './../data/entities/company.entity';
 import { OverviewService } from './../common/core/overview.service';
 import { AuthGuard } from '@nestjs/passport';
-<<<<<<< HEAD
-import { Controller, Get, UseGuards, Req } from '@nestjs/common';
-=======
 
-import { Controller, Get, UseGuards, Req, Param, Query} from '@nestjs/common';
->>>>>>> 367e5cefb30514111ea359b1d106ab14873720ec
+import { Controller, Get, UseGuards, Req, Param, Query } from '@nestjs/common';
 import { UsersService } from '../common/core/users.service';
 import { Roles, RolesGuard } from 'src/common';
 
