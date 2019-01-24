@@ -1,4 +1,86 @@
 
 
+<<<<<<< HEAD
 
 <h1>TADAAA</h1>
+=======
+<div class="page-container">
+    <mat-chip-list >
+            <mat-chip color="primary" selected>Company Details</mat-chip>
+    </mat-chip-list>
+<div class="company-details-container">
+
+    <mat-card class="company-card" *ngIf="companyObject">
+        <mat-card-header>
+            <mat-card-title-group>
+                <img mat-card-lg-image class="company-image" [src]="'http://localhost:5500/'+companyObject.icon" alt="Company Photo">
+                    <mat-card-title>{{companyObject.name}}</mat-card-title>
+                    <mat-card-subtitle>{{companyObject.abbr}}</mat-card-subtitle>
+                </mat-card-title-group>
+        </mat-card-header>
+        <mat-divider [inset]="true"></mat-divider>
+        <mat-card-content>
+            <mat-list role="list">
+                <mat-list-item role="listitem"><span class="preposition">CEO: </span>{{companyObject.ceo}}</mat-list-item>
+                <mat-list-item role="listitem"><span class="preposition">Industry: </span>{{companyObject.industry}}</mat-list-item>   
+                <mat-list-item role="listitem"><span class="preposition">Address: </span>{{companyObject.address}}</mat-list-item>
+                <mat-list-item role="listitem"><span class="preposition">Compay founded: </span>{{companyObject.startdate.substring(0, 10)}}</mat-list-item>
+            </mat-list>
+        </mat-card-content>
+    </mat-card>
+</div>
+<span *ngIf="companyNews">
+<mat-chip-list *ngIf="companyNews[0]" >
+        <mat-chip color="primary" selected>Recent News</mat-chip>
+</mat-chip-list>
+</span>
+<div class="news-container" *ngIf="companyNews">
+
+    <mat-accordion class="news-accordion" >
+
+        <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle *ngIf="companyNews[0]">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{companyNews[0].title}}
+                </mat-panel-title>
+                <mat-panel-description>
+                    <mat-icon>date_range</mat-icon> 
+                    {{companyNews[0].datePublished.substring(0, 10)}}
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+
+                <div body-2> {{companyNews[0].description}} </div>
+
+        </mat-expansion-panel>
+
+        <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle *ngIf="companyNews[1]">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{companyNews[1].title}}
+                </mat-panel-title>
+                <mat-panel-description>
+                    <mat-icon>date_range</mat-icon> 
+                    {{companyNews[1].datePublished.substring(0, 10)}}
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+
+                <div body-2> {{companyNews[1].description}} </div>
+        </mat-expansion-panel>
+            
+        <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle *ngIf="companyNews[2]">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{companyNews[2].title}}
+                </mat-panel-title>
+                <mat-panel-description>
+                    <mat-icon>date_range</mat-icon> 
+                    {{companyNews[2].datePublished.substring(0, 10)}}
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+    
+                <div body-2> {{companyNews[2].description}} </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>
+</div>
+>>>>>>> 367e5cefb30514111ea359b1d106ab14873720ec

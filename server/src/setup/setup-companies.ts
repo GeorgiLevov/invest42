@@ -12,7 +12,11 @@ createConnection().then(async (conn) => {
       const company1 = new Company();
       company1.name = 'Prison-Escobar';
       company1.abbr = 'PBR';
+<<<<<<< HEAD
       company1.icon = 'images\\escobar.png';
+=======
+      company1.icon = 'images\\companies\\escobar.png';
+>>>>>>> 367e5cefb30514111ea359b1d106ab14873720ec
       company1.ceo = 'CEO of Prison Escobar';
       company1.address = 'Prison Escobar Address';
       company1.industry = Industry.health;
@@ -29,7 +33,11 @@ createConnection().then(async (conn) => {
       company2.abbr = 'T42';
       company2.address = 'Tick-42 Address';
       company2.ceo = 'CEO of Tick-42';
+<<<<<<< HEAD
       company2.icon = 'images\\tick-42.jpg';
+=======
+      company2.icon = 'images\\companies\\tick42.png';
+>>>>>>> 367e5cefb30514111ea359b1d106ab14873720ec
       // market2.prices = Promise.resolve([]);
       // market2.orders = Promise.resolve([]);
       // market2.clients = Promise.resolve([]);
@@ -40,7 +48,11 @@ createConnection().then(async (conn) => {
       const company3 = new Company();
       company3.name = 'Tesla';
       company3.abbr = 'TSA';
+<<<<<<< HEAD
       company3.icon = 'images\\tesla.png';
+=======
+      company3.icon = 'images\\companies\\tesla.png';
+>>>>>>> 367e5cefb30514111ea359b1d106ab14873720ec
       company3.ceo = 'CEO of Tesla Escobar';
       company3.address = 'Tesla Address';
       company3.industry = Industry.tech;
@@ -57,7 +69,11 @@ createConnection().then(async (conn) => {
       company4.abbr = 'AZN';
       company4.address = 'Amazon Address';
       company4.ceo = 'CEO of Amazon';
+<<<<<<< HEAD
       company4.icon = 'images\\amazon.png';
+=======
+      company4.icon = 'images\\companies\\amazon.png';
+>>>>>>> 367e5cefb30514111ea359b1d106ab14873720ec
       // market4.prices = Promise.resolve([]);
       // market4.orders = Promise.resolve([]);
       // market4.clients = Promise.resolve([]);
@@ -68,7 +84,11 @@ createConnection().then(async (conn) => {
       const company5 = new Company();
       company5.name = 'Telerik Academy';
       company5.abbr = 'TKA';
+<<<<<<< HEAD
       company5.icon = 'images\\telerik.png';
+=======
+      company5.icon = 'images\\companies\\telerik.png';
+>>>>>>> 367e5cefb30514111ea359b1d106ab14873720ec
       company5.ceo = 'CEO of Telerik';
       company5.address = 'Telerik Address';
       company5.industry = Industry.tech;
@@ -85,7 +105,11 @@ createConnection().then(async (conn) => {
       company6.abbr = 'GOOG';
       company6.address = 'Google Address';
       company6.ceo = 'CEO of Google';
+<<<<<<< HEAD
       company6.icon = 'images\\google.png';
+=======
+      company6.icon = 'images\\companies\\google.png';
+>>>>>>> 367e5cefb30514111ea359b1d106ab14873720ec
       // market6.prices = Promise.resolve([]);
       // market6.orders = Promise.resolve([]);
       // market6.clients = Promise.resolve([]);
@@ -99,7 +123,11 @@ createConnection().then(async (conn) => {
       company7.abbr = 'FCB';
       company7.address = 'Facebook Address';
       company7.ceo = 'CEO of Facebook';
+<<<<<<< HEAD
       company7.icon = 'images\\facebook.png';
+=======
+      company7.icon = 'images\\companies\\facebook.png';
+>>>>>>> 367e5cefb30514111ea359b1d106ab14873720ec
       // market7.prices = Promise.resolve([]);
       // market7.orders = Promise.resolve([]);
       // market7.clients = Promise.resolve([]);
@@ -113,7 +141,11 @@ createConnection().then(async (conn) => {
       company8.abbr = 'MRS';
       company8.address = 'Microsoft Address';
       company8.ceo = 'CEO of Microsoft';
+<<<<<<< HEAD
       company8.icon = 'images\\amazon.png';
+=======
+      company8.icon = 'images\\companies\\microsoft.png';
+>>>>>>> 367e5cefb30514111ea359b1d106ab14873720ec
       // market8.prices = Promise.resolve([]);
       // market8.orders = Promise.resolve([]);
       // market8.clients = Promise.resolve([]);
@@ -127,7 +159,11 @@ createConnection().then(async (conn) => {
       company9.abbr = 'APPL';
       company9.address = 'Apple Address';
       company9.ceo = 'CEO of Apple';
+<<<<<<< HEAD
       company9.icon = 'images\\amazon.png';
+=======
+      company9.icon = 'images\\companies\\apple.png';
+>>>>>>> 367e5cefb30514111ea359b1d106ab14873720ec
       // market9.prices = Promise.resolve([]);
       // market9.orders = Promise.resolve([]);
       // market9.clients = Promise.resolve([]);
@@ -141,7 +177,11 @@ createConnection().then(async (conn) => {
       company10.abbr = 'HSBC';
       company10.address = 'HSBC Address';
       company10.ceo = 'CEO of HSBC';
+<<<<<<< HEAD
       company10.icon = 'images\\hsbc.png';
+=======
+      company10.icon = 'images\\companies\\hsbc.png';
+>>>>>>> 367e5cefb30514111ea359b1d106ab14873720ec
       // market9.prices = Promise.resolve([]);
       // market9.orders = Promise.resolve([]);
       // market9.clients = Promise.resolve([]);

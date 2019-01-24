@@ -16,7 +16,11 @@ h3 {
 }
 
 .mat-card {
+<<<<<<< HEAD
   max-width: 80px;
+=======
+  max-width: 120px;
+>>>>>>> 367e5cefb30514111ea359b1d106ab14873720ec
   box-shadow: none;
   margin: none;
   padding-left:0px;
@@ -26,6 +30,14 @@ h3 {
     font-size: 1rem;
 }
 
+<<<<<<< HEAD
+=======
+.td.mat-cell {
+    min-width: 200px;;
+    width: 250px;
+}
+
+>>>>>>> 367e5cefb30514111ea359b1d106ab14873720ec
 .company-content {
     display: inline-block;
 }

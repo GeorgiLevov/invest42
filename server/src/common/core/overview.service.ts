@@ -1,6 +1,7 @@
+import { Company } from './../../data/entities/company.entity';
+import { Price } from './../../data/entities/prices.entity';
 import { Order } from './../../data/entities/order.entity';
 import { UserRegisterDTO } from './../../models/user/user-register.dto';
-import { Company } from '../../data/entities/company.entity';
 import { Client } from '../../data/entities/client.entity';
 import { User } from 'src/data/entities/user.entity';
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
@@ -22,6 +23,9 @@ export class OverviewService {
     @InjectRepository(Company)
     private readonly companyRepository: Repository<Company>,
 
+    @InjectRepository(Price)
+    private readonly pricesRepository: Repository<Price>,
+
   ) { }
 
   async getAllCompanies(): Promise<Company[]> {
@@ -34,13 +38,38 @@ export class OverviewService {
     return companiesOnMarket;
   }
 
+  async companyDetais(companyId: string): Promise<Company> {
+    // console.log(companyId);
+    const foundCompany: Company = await this.companyRepository.findOne( { where: { id: companyId} });
+    if (!foundCompany){
+      throw new HttpException('Company not found', HttpStatus.NOT_FOUND);
+    }
+    return foundCompany;
+  }
+
+  async getCompaniesAndPrices(): Promise<object> {
+    const companiesOnMarket = await this.companyRepository.find( { where: { status: BasicStatus.active} });
+
+    const companyPrices = await this.pricesRepository.find({
+      order: { opendate: 'DESC' },
+      relations: ['company'],
+      take: companiesOnMarket.length});
+
+    const toREturn = {companies: companiesOnMarket, prices: companyPrices };
+    return toREturn;
+  }
+
   async getAllClients(user: User): Promise<Client[]> {
     const managerFound = await this.usersRepository.findOne({ where: { email: user.email } });
     if (!managerFound) {
       throw new HttpException('Manager account not found', HttpStatus.BAD_REQUEST);
     }
 
+<<<<<<< HEAD
     const assignedClients = await this.clientsRepository.find({ where: { manager: managerFound.id, status: BasicStatus.active } });
+=======
+    const assignedClients = await this.clientsRepository.find({ where: { manager: managerFound.id } });
+>>>>>>> 367e5cefb30514111ea359b1d106ab14873720ec
     // console.log(assignedClients);
     if (!assignedClients) {
       throw new HttpException('No clients found', HttpStatus.BAD_REQUEST);
@@ -53,12 +82,17 @@ export class OverviewService {
 
   async getAllClientsOrders(manager: User): Promise<Order[][]> {
     const allClients = await this.getAllClients(manager);
+<<<<<<< HEAD
 
     return await Promise.all(allClients.map(client => client.orders));
   }
 
   async getAllClientWithOrders(manager: User): Promise<Client[]> {
     return await this.getAllClients(manager);
+=======
+
+    return await Promise.all(allClients.map(client => client.orders));
+>>>>>>> 367e5cefb30514111ea359b1d106ab14873720ec
   }
 
   async getClientOrdersHistory(manager: User): Promise<Order[][]> {

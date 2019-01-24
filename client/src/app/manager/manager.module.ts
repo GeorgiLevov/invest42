@@ -1,3 +1,4 @@
+import { CompanyPortfolioService } from './company-portfolio/company-portfolio.service';
 import { MarketService } from './market/market.serivice';
 import { MarketComponent } from './market/market.component';
 import { NgModule } from '@angular/core';
@@ -39,6 +40,6 @@ import { CompanyPortfolioComponent } from './company-portfolio/company-portfolio
     MaterializeWrapModule,
   ],
 
-  providers: [MarketService]
+  providers: [MarketService, CompanyPortfolioService]
 })
 export class ManagerModule { }
