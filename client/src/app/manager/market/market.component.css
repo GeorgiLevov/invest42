@@ -16,7 +16,7 @@ h3 {
 }
 
 .mat-card {
-  max-width: 80px;
+  max-width: 120px;
   box-shadow: none;
   margin: none;
   padding-left:0px;
@@ -24,6 +24,11 @@ h3 {
 
 .mat-header-cell {
     font-size: 1rem;
+}
+
+.td.mat-cell {
+    min-width: 200px;;
+    width: 250px;
 }
 
 .company-content {

@@ -35,7 +35,6 @@ export class OverviewService {
       throw new HttpException('No companies found!', HttpStatus.NOT_FOUND);
     }
 
-
     return companiesOnMarket;
   }
 

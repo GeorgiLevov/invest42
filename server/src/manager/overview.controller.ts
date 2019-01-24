@@ -22,12 +22,11 @@ export class OverviewController {
     return this.overviewService.getAllCompanies();
   }
 
-  @Get('market/company')
+  @Get('market/company/:id')
   @Roles('MANAGER')
   @UseGuards(AuthGuard(), RolesGuard)
-  companyDetais(@Query() query: any): Promise<object> {
-    console.log('params:', query);
-    return this.overviewService.companyDetais(query.id);
+  companyDetais(@Param() params): Promise<object> {
+    return this.overviewService.companyDetais(params.id);
   }
 
   @Get('market/prices')

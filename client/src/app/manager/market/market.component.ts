@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { PricesModel } from './../../models/prices/prices.model';
 import { MarketService } from './market.serivice';
 import { CompanyModel } from './../../models/companies/company.model';
@@ -14,6 +15,7 @@ export class MarketComponent implements AfterViewInit, OnInit {
   dataSource: MatTableDataSource<CompanyModel>;
   constructor(
     private marketService: MarketService,
+    private router: Router,
   ) { }
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -58,6 +60,7 @@ export class MarketComponent implements AfterViewInit, OnInit {
   .subscribe(
     (companiesWithPrice: any) => {
       this.companies = companiesWithPrice.companies as CompanyModel[] ;
+      console.log(this.companies);
       this.prices = companiesWithPrice.prices as PricesModel[] ;
       this.dataSource = new MatTableDataSource(this.uprateCompanyObjects(this.companies, this.prices));
     },
@@ -65,16 +68,22 @@ export class MarketComponent implements AfterViewInit, OnInit {
     // () => console.log('ReturnWithPricesIsReady')
     );
 }
+
+    companyProfile(id) {
+      this.marketService.goToCompanyProfilePage(id);
+      console.log('component');
+    }
+
   ngOnInit() {
     this.returnWithPrices();
+
+
     // this.returnWithPrices();
   }
 
   ngAfterViewInit() {
   }
 
-  onRowClicked(row) {
-    console.log('Row clicked: ', row);
-}
+
 
 }

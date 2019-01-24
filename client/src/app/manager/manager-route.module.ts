@@ -1,3 +1,4 @@
+import { CompanyPortfolioComponent } from './company-portfolio/company-portfolio.component';
 import { ClientHistoryComponent } from './client-history/client-history.component';
 import { ClientWatchlistComponent } from './client-watchlist/client-watchlist.component';
 import { ClientMarketComponent } from './client-market/client-market.component';
@@ -21,6 +22,8 @@ const routes: Routes = [
             { path: 'positions', component: PositionsComponent,
             data: { animation: { value: 'manager' } }, },
             { path: 'clients', component: ClientsComponent,
+            data: { animation: { value: 'manager' } }, },
+            { path: 'market/company/:id', component: CompanyPortfolioComponent,
             data: { animation: { value: 'manager' } }, },
         ]
     },
