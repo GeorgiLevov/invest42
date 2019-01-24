@@ -25,7 +25,7 @@ export class CompanyPortfolioComponent implements OnInit {
   }
 
   showProfile(companyId) {
-    this.portfolioService.getCompanies(companyId)
+    this.portfolioService.getCompany(companyId)
       .subscribe(
         (company: any) => {
           this.companyObject = company;

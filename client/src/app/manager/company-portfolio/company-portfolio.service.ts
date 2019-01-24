@@ -11,7 +11,7 @@ export class CompanyPortfolioService {
     constructor(private http: HttpClient, private appConfig: AppConfig, private router: Router) { }
 
 
-    public getCompanies(companyId: string): Observable<object> {
+    public getCompany(companyId: string): Observable<object> {
         const url = `${this.appConfig.apiUrl}/view/market/company/${companyId}`;
         return this.http.get(url);
     }
