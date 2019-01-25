@@ -58,14 +58,14 @@ export class CompanyPortfolioComponent implements OnInit, AfterViewInit, OnDestr
       const valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
       valueAxis.tooltip.disabled = true;
 
-      const series = chart.series.push(new am4charts.CandlestickSeries());
+      const series = chart.series.push(new am4charts.OHLCSeries());
       series.dataFields.dateX = 'date';
       series.dataFields.valueY = 'close';
       series.dataFields.openValueY = 'open';
       series.dataFields.lowValueY = 'low';
       series.dataFields.highValueY = 'high';
-      series.simplifiedProcessing = true;
       series.tooltipText = 'Open:${openValueY.value}\nLow:${lowValueY.value}\nHigh:${highValueY.value}\nClose:${valueY.value}';
+      series.strokeWidth = 2;
 
       chart.cursor = new am4charts.XYCursor();
 
@@ -84,6 +84,42 @@ export class CompanyPortfolioComponent implements OnInit, AfterViewInit, OnDestr
       const scrollbarX = new am4charts.XYChartScrollbar();
       scrollbarX.series.push(lineSeries);
       chart.scrollbarX = scrollbarX;
+
+      // ------------------------------------------------------------------------- WORK WITH BOTH VIEW OF TABLE
+      // chart.dateFormatter.inputDateFormat = 'YYYY-MM-dd';
+
+      // const dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+      // dateAxis.renderer.grid.template.location = 0;
+
+      // const valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+      // valueAxis.tooltip.disabled = true;
+
+      // const series = chart.series.push(new am4charts.CandlestickSeries());
+      // series.dataFields.dateX = 'date';
+      // series.dataFields.valueY = 'close';
+      // series.dataFields.openValueY = 'open';
+      // series.dataFields.lowValueY = 'low';
+      // series.dataFields.highValueY = 'high';
+      // series.simplifiedProcessing = true;
+      // series.tooltipText = 'Open:${openValueY.value}\nLow:${lowValueY.value}\nHigh:${highValueY.value}\nClose:${valueY.value}';
+
+      // chart.cursor = new am4charts.XYCursor();
+
+      // // a separate series for scrollbar
+      // const lineSeries = chart.series.push(new am4charts.LineSeries());
+      // lineSeries.dataFields.dateX = 'date';
+      // lineSeries.dataFields.valueY = 'close';
+      // // need to set on default state, as initially series is 'show'
+      // lineSeries.defaultState.properties.visible = false;
+
+      // // hide from legend too (in case there is one)
+      // lineSeries.hiddenInLegend = true;
+      // lineSeries.fillOpacity = 0.5;
+      // lineSeries.strokeOpacity = 0.5;
+
+      // const scrollbarX = new am4charts.XYChartScrollbar();
+      // scrollbarX.series.push(lineSeries);
+      // chart.scrollbarX = scrollbarX;
 
       this.portfolioService.getCompanyPrices(this.params.id)
         .subscribe((prices) => {
@@ -109,7 +145,7 @@ export class CompanyPortfolioComponent implements OnInit, AfterViewInit, OnDestr
       .subscribe(
         (company: any) => {
           this.companyObject = company;
-          this.companyNews = company.__news__.slice(0, 3);
+          this.companyNews = company.news.slice(0, 3);
         },
         error => console.log(error));
   }

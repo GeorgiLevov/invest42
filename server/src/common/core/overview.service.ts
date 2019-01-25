@@ -38,13 +38,35 @@ export class OverviewService {
     return companiesOnMarket;
   }
 
-  async companyDetais(companyId: string): Promise<Company> {
+  async companyDetais(companyId: string): Promise<object> {
     // console.log(companyId);
-    const foundCompany: Company = await this.companyRepository.findOne({ where: { id: companyId } });
+    const foundCompany: Company = await this.companyRepository.findOne(
+      // {
+      //   select: ['id', 'name', 'abbr', 'icon', 'ceo', 'address', 'startdate', 'status', 'industry'],
+      //   relations: ['Company_news'], where: { id: companyId },
+      // }
+      { where: { id: companyId } },
+    );
     if (!foundCompany) {
       throw new HttpException('Company not found', HttpStatus.NOT_FOUND);
     }
-    return foundCompany;
+
+    const companyNews = await foundCompany.news;
+
+    const companyInfo = {
+      id: foundCompany.id,
+      name: foundCompany.name,
+      abbr: foundCompany.abbr,
+      icon: foundCompany.icon,
+      ceo: foundCompany.ceo,
+      address: foundCompany.address,
+      startdate: foundCompany.startdate,
+      status: foundCompany.status,
+      industry: foundCompany.industry,
+      news: companyNews,
+    };
+
+    return companyInfo;
   }
 
   async getCompaniesAndPrices(): Promise<object> {
@@ -57,6 +79,7 @@ export class OverviewService {
     });
 
     const toREturn = { companies: companiesOnMarket, prices: companyPrices };
+    // console.log(toREturn);
     return toREturn;
   }
 
@@ -74,7 +97,7 @@ export class OverviewService {
         FROM
             prices AS p
         WHERE
-            p.companyId = ${companyId} AND (p.id % 250) = 0;`);
+            p.companyId = ${companyId} AND (p.id % 1440) = 0;`);
 
     companyPrices.forEach((price) => {
       const newDate = price.opendate.toISOString().slice(0, 10);
