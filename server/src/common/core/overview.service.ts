@@ -40,37 +40,20 @@ export class OverviewService {
 
   async companyDetais(companyId: string): Promise<object> {
     // console.log(companyId);
-    const foundCompany: Company = await this.companyRepository.findOne(
-      // {
-      //   select: ['id', 'name', 'abbr', 'icon', 'ceo', 'address', 'startdate', 'status', 'industry'],
-      //   relations: ['Company_news'], where: { id: companyId },
-      // }
-      { where: { id: companyId } },
-    );
+    const foundCompany: Company = await this.companyRepository.findOne({ where: { id: companyId } });
     if (!foundCompany) {
       throw new HttpException('Company not found', HttpStatus.NOT_FOUND);
     }
 
-    const companyNews = await foundCompany.news;
-
-    const companyInfo = {
-      id: foundCompany.id,
-      name: foundCompany.name,
-      abbr: foundCompany.abbr,
-      icon: foundCompany.icon,
-      ceo: foundCompany.ceo,
-      address: foundCompany.address,
-      startdate: foundCompany.startdate,
-      status: foundCompany.status,
-      industry: foundCompany.industry,
-      news: companyNews,
-    };
-
-    return companyInfo;
+    return foundCompany;
   }
 
   async getCompaniesAndPrices(): Promise<object> {
-    const companiesOnMarket = await this.companyRepository.find({ where: { status: BasicStatus.active } });
+    const companiesOnMarket = await this.companyRepository.find(
+      {
+        // select: ['id', 'name', 'abbr', 'icon', 'ceo', 'address', 'startdate', 'status', 'industry'],
+        where: { status: BasicStatus.active },
+      });
 
     const companyPrices = await this.pricesRepository.find({
       order: { opendate: 'DESC' },
@@ -80,6 +63,39 @@ export class OverviewService {
 
     const toREturn = companyPrices;
     return toREturn;
+  }
+
+  async getCompanyPrices(companyId): Promise<object[]> {
+
+    const prices = [];
+    const companyPrices = await this.pricesRepository.query(`
+        SELECT
+            p.id,
+            p.opendate,
+            p.startprice,
+            p.endprice,
+            p.highprice,
+            p.lowprice
+        FROM
+            prices AS p
+        WHERE
+            p.companyId = ${companyId} AND (p.id % 1440) = 0;`);
+
+    companyPrices.forEach((price) => {
+      const newDate = price.opendate.toISOString().slice(0, 10);
+
+      const obj = {
+        date: newDate,
+        open: `${price.startprice}`,
+        high: `${price.endprice}`,
+        low: `${price.lowprice}`,
+        close: `${price.highprice}`,
+      };
+      prices.push(obj);
+
+    });
+
+    return prices;
   }
 
   async getAllClients(user: User): Promise<Client[]> {
@@ -97,6 +113,10 @@ export class OverviewService {
       throw new HttpException('You have no assigned clients.', HttpStatus.BAD_REQUEST);
     }
     return assignedClients;
+  }
+
+  async getAllClientWithOrders(manager: User): Promise<Client[]> {
+    return await this.getAllClients(manager);
   }
 
   async getAllClientsOrders(manager: User): Promise<Order[][]> {

@@ -56,7 +56,7 @@ export class Company {
   })
   industry: string;
 
-  @OneToMany(type => Price, price => price.company, { eager: true })
+  @OneToMany(type => Price, price => price.company)
   prices: Promise<Price[]>;
 
   @OneToMany(type => Order, order => order.company)

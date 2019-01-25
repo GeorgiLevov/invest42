@@ -12,23 +12,22 @@ import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 })
 export class MarketComponent implements AfterViewInit, OnInit {
 
+
+  companies: CompanyModel[];
+  prices: PricesModel[];
+  displayedColumns = ['name', 'industry', 'price', 'more'];
   dataSource: MatTableDataSource<any>;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
   constructor(
     private marketService: MarketService,
     private router: Router,
   ) { }
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
-
-  companies: CompanyModel[];
-
-  prices: PricesModel[];
-
-  displayedColumns = ['name', 'industry', 'price', 'more'];
-
-  public logCompanies() {
-    console.log(this.companies);
+  ngOnInit() {
+    this.returnWithPrices();
   }
 
   // public returnCompanies() {
@@ -62,8 +61,11 @@ export class MarketComponent implements AfterViewInit, OnInit {
           this.companies = PricesWithCompanies.__company__ as CompanyModel[];
           // console.log(this.companies);
           this.prices = PricesWithCompanies as PricesModel[];
-          console.log(this.prices);
+          // console.log(PricesWithCompanies);
           this.dataSource = new MatTableDataSource(this.prices);
+          // this.dataSource.data = PricesWithCompanies;
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
         },
         error => console.log(error),
         // () => console.log('ReturnWithPricesIsReady')
@@ -72,22 +74,15 @@ export class MarketComponent implements AfterViewInit, OnInit {
 
   companyProfile(id) {
     this.marketService.goToCompanyProfilePage(id);
-    console.log('component');
-  }
-
-  ngOnInit() {
-    this.returnWithPrices();
-
-
-    // this.returnWithPrices();
+    // console.log('component');
   }
 
   ngAfterViewInit() {
+
+    // this.dataSource.paginator = this.paginator;
+    // this.dataSource.sort = this.sort;
   }
 
-  private refreshTable() {
-    this.returnWithPrices();
-  }
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -97,5 +92,8 @@ export class MarketComponent implements AfterViewInit, OnInit {
     }
   }
 
+  private refreshTable() {
+    this.returnWithPrices();
+  }
 
 }
