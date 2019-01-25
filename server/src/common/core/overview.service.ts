@@ -60,6 +60,39 @@ export class OverviewService {
     return toREturn;
   }
 
+  async getCompanyPrices(companyId): Promise<object[]> {
+
+    const prices = [];
+    const companyPrices = await this.pricesRepository.query(`
+        SELECT
+            p.id,
+            p.opendate,
+            p.startprice,
+            p.endprice,
+            p.highprice,
+            p.lowprice
+        FROM
+            prices AS p
+        WHERE
+            p.companyId = ${companyId} AND (p.id % 250) = 0;`);
+
+    companyPrices.forEach((price) => {
+      const newDate = price.opendate.toISOString().slice(0, 10);
+
+      const obj = {
+        date: newDate,
+        open: `${price.startprice}`,
+        high: `${price.endprice}`,
+        low: `${price.lowprice}`,
+        close: `${price.highprice}`,
+      };
+      prices.push(obj);
+
+    });
+
+    return prices;
+  }
+
   async getAllClients(user: User): Promise<Client[]> {
     const managerFound = await this.usersRepository.findOne({ where: { email: user.email } });
     if (!managerFound) {

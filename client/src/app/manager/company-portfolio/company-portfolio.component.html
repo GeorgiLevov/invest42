@@ -1,9 +1,10 @@
 <div class="page-container">
+
   <mat-chip-list>
     <mat-chip color="primary" selected>Company Details</mat-chip>
   </mat-chip-list>
-  <div class="company-details-container">
 
+  <div class="company-details-container">
     <mat-card class="company-card" *ngIf="companyObject">
       <mat-card-header>
         <mat-card-title-group>
@@ -24,11 +25,13 @@
       </mat-card-content>
     </mat-card>
   </div>
+
   <span *ngIf="companyNews">
     <mat-chip-list *ngIf="companyNews[0]">
       <mat-chip color="primary" selected>Recent News</mat-chip>
     </mat-chip-list>
   </span>
+
   <div class="news-container" *ngIf="companyNews">
 
     <mat-accordion class="news-accordion">
@@ -77,4 +80,10 @@
       </mat-expansion-panel>
     </mat-accordion>
   </div>
+
 </div>
+
+
+
+
+<div id="chartdiv" style="width: 98%; height: 500px; border: 12px solid rgb(216, 31, 31); background-color: white"></div>

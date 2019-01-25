@@ -44,17 +44,19 @@ export class Company {
   @OneToMany(type => News, news => news.company, { eager: true })
   news: Promise<News[]>;
 
-  @Column({ enum: [
-     Industry.tech,
-     Industry.pharma,
-     Industry.health,
-     Industry.manufacturing,
-     Industry.retail,
-     Industry.goods,
-     Industry.finance], type: 'enum' })
+  @Column({
+    enum: [
+      Industry.tech,
+      Industry.pharma,
+      Industry.health,
+      Industry.manufacturing,
+      Industry.retail,
+      Industry.goods,
+      Industry.finance], type: 'enum',
+  })
   industry: string;
 
-  @OneToMany(type => Price, price => price.company)
+  @OneToMany(type => Price, price => price.company, { eager: true })
   prices: Promise<Price[]>;
 
   @OneToMany(type => Order, order => order.company)
