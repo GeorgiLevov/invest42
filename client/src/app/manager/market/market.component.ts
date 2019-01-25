@@ -58,12 +58,19 @@ export class MarketComponent implements AfterViewInit, OnInit {
     this.marketService.getCompaniesAndPrices()
       .subscribe(
         (PricesWithCompanies: any) => {
-          this.companies = PricesWithCompanies.__company__ as CompanyModel[];
+          // this.companies = PricesWithCompanies.__company__ as CompanyModel[];
           // console.log(this.companies);
+          this.companies = PricesWithCompanies.map((price) => {
+            return price.__company__;
+          });
+          // console.log(this.companies);
+          // THIS SHOULD BE FIXED !!!!!
+
           this.prices = PricesWithCompanies as PricesModel[];
           // console.log(PricesWithCompanies);
           this.dataSource = new MatTableDataSource(this.prices);
-          // this.dataSource.data = PricesWithCompanies;
+          // this.dataSource.data = this.companies;
+          // console.log(PricesWithCompanies.__company__);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
         },
