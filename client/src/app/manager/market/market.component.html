@@ -8,10 +8,10 @@
                <mat-card class="comapny-details">
                 <mat-card-header>
                     <div mat-card-avatar class="company-avatar">
-                        <img class="company-image" [src]="'http://localhost:5500//'+row.icon" alt="Company Photo">
+                        <img class="company-image" [src]="'http://localhost:5500//'+row.__company__.icon" alt="Company Photo">
                     </div>
-                    <mat-card-title>{{row.name}}</mat-card-title>
-                    <mat-card-subtitle>{{row.abbr}}</mat-card-subtitle>
+                    <mat-card-title>{{row.__company__.name}}</mat-card-title>
+                    <mat-card-subtitle>{{row.__company__.abbr}}</mat-card-subtitle>
                 </mat-card-header>  
             </mat-card>
         </td>
@@ -20,7 +20,7 @@
       <!-- Industry Column -->
       <ng-container matColumnDef="industry">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Industry</th>
-            <td mat-cell *matCellDef="let row">{{row.industry}}</td>
+            <td mat-cell *matCellDef="let row">{{row.__company__.industry}}</td>
           </ng-container>
 
       <!-- CurrentPrice Column --> 

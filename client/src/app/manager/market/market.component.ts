@@ -12,7 +12,7 @@ import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 })
 export class MarketComponent implements AfterViewInit, OnInit {
 
-  dataSource: MatTableDataSource<CompanyModel>;
+  dataSource: MatTableDataSource<any>;
   constructor(
     private marketService: MarketService,
     private router: Router,
@@ -49,20 +49,21 @@ export class MarketComponent implements AfterViewInit, OnInit {
   //   });
   // }
 
-  public uprateCompanyObjects(companies, prices) {
-    const findId = (id) => prices.find( price => price.__company__.id === id);
-    companies.forEach(company => Object.assign(company, findId(company.id)));
-    return companies;
-    }
+  // public uprateCompanyObjects(companies, prices) {
+  //   const findId = (id) => prices.find( price => price.__company__.id === id);
+  //   companies.forEach(company => Object.assign(company, findId(company.id)));
+  //   return companies;
+  //   }
 
   public returnWithPrices() {
   this.marketService.getCompaniesAndPrices()
   .subscribe(
-    (companiesWithPrice: any) => {
-      this.companies = companiesWithPrice.companies as CompanyModel[] ;
-      console.log(this.companies);
-      this.prices = companiesWithPrice.prices as PricesModel[] ;
-      this.dataSource = new MatTableDataSource(this.uprateCompanyObjects(this.companies, this.prices));
+    (PricesWithCompanies: any) => {
+      this.companies = PricesWithCompanies.__company__ as CompanyModel[] ;
+      // console.log(this.companies);
+      this.prices = PricesWithCompanies as PricesModel[] ;
+      console.log(this.prices);
+      this.dataSource = new MatTableDataSource(this.prices);
     },
     error => console.log(error),
     // () => console.log('ReturnWithPricesIsReady')

@@ -55,7 +55,7 @@ export class OverviewService {
       relations: ['company'],
       take: companiesOnMarket.length});
 
-    const toREturn = {companies: companiesOnMarket, prices: companyPrices };
+    const toREturn = companyPrices;
     return toREturn;
   }
 

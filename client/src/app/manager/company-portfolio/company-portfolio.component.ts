@@ -36,14 +36,4 @@ export class CompanyPortfolioComponent implements OnInit {
 
   }
 
-  // News service
-  setStep(index: number) {
-    this.step = index;
-  }
-  nextStep() {
-    this.step++;
-  }
-  prevStep() {
-    this.step--;
-  }
 }
