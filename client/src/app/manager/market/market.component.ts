@@ -12,7 +12,7 @@ import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 })
 export class MarketComponent implements AfterViewInit, OnInit {
 
-  dataSource: MatTableDataSource<CompanyModel>;
+  dataSource: MatTableDataSource<any>;
   constructor(
     private marketService: MarketService,
     private router: Router,
@@ -27,36 +27,59 @@ export class MarketComponent implements AfterViewInit, OnInit {
 
   displayedColumns = ['name', 'industry', 'price', 'more'];
 
-  public uprateCompanyObjects(companies, prices) {
-    const findId = (id) => prices.find(price => price.__company__.id === id);
-    companies.forEach(company => Object.assign(company, findId(company.id)));
-    return companies;
+  public logCompanies() {
+    console.log(this.companies);
   }
+
+  // public returnCompanies() {
+  //   this.marketService.getCompanies()
+  //   .subscribe(
+  //   (companies: CompanyModel[]) => {
+  //     if (companies === undefined || companies === null) { return; }
+  //     this.companies = companies;
+  //     console.log(this.companies);
+  //     this.dataSource = new MatTableDataSource(companies);
+  //     this.dataSource.paginator = this.paginator;
+  //     this.dataSource.sort = this.sort;
+  //     console.log(this.dataSource);
+  //     },
+  //   error => console.log(error),
+  //   () => {
+  //     console.log('companies finished loading');
+  //   });
+  // }
+
+  // public uprateCompanyObjects(companies, prices) {
+  //   const findId = (id) => prices.find( price => price.__company__.id === id);
+  //   companies.forEach(company => Object.assign(company, findId(company.id)));
+  //   return companies;
+  //   }
 
   public returnWithPrices() {
     this.marketService.getCompaniesAndPrices()
       .subscribe(
-        (companiesWithPrice: any) => {
-          this.companies = companiesWithPrice.companies as CompanyModel[];
+        (PricesWithCompanies: any) => {
+          this.companies = PricesWithCompanies.__company__ as CompanyModel[];
           // console.log(this.companies);
-          this.prices = companiesWithPrice.prices as PricesModel[];
-          this.dataSource = new MatTableDataSource(this.uprateCompanyObjects(this.companies, this.prices));
-
-          this.dataSource.sort = this.sort;
-          this.dataSource.paginator = this.paginator;
-
+          this.prices = PricesWithCompanies as PricesModel[];
+          console.log(this.prices);
+          this.dataSource = new MatTableDataSource(this.prices);
         },
         error => console.log(error),
+        // () => console.log('ReturnWithPricesIsReady')
       );
   }
 
   companyProfile(id) {
     this.marketService.goToCompanyProfilePage(id);
-    // console.log('component');
+    console.log('component');
   }
 
   ngOnInit() {
     this.returnWithPrices();
+
+
+    // this.returnWithPrices();
   }
 
   ngAfterViewInit() {

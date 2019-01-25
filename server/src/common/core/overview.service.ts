@@ -78,42 +78,8 @@ export class OverviewService {
       take: companiesOnMarket.length,
     });
 
-    const toREturn = { companies: companiesOnMarket, prices: companyPrices };
-    // console.log(toREturn);
+    const toREturn = companyPrices;
     return toREturn;
-  }
-
-  async getCompanyPrices(companyId): Promise<object[]> {
-
-    const prices = [];
-    const companyPrices = await this.pricesRepository.query(`
-        SELECT
-            p.id,
-            p.opendate,
-            p.startprice,
-            p.endprice,
-            p.highprice,
-            p.lowprice
-        FROM
-            prices AS p
-        WHERE
-            p.companyId = ${companyId} AND (p.id % 1440) = 0;`);
-
-    companyPrices.forEach((price) => {
-      const newDate = price.opendate.toISOString().slice(0, 10);
-
-      const obj = {
-        date: newDate,
-        open: `${price.startprice}`,
-        high: `${price.endprice}`,
-        low: `${price.lowprice}`,
-        close: `${price.highprice}`,
-      };
-      prices.push(obj);
-
-    });
-
-    return prices;
   }
 
   async getAllClients(user: User): Promise<Client[]> {
@@ -137,10 +103,6 @@ export class OverviewService {
     const allClients = await this.getAllClients(manager);
 
     return await Promise.all(allClients.map(client => client.orders));
-  }
-
-  async getAllClientWithOrders(manager: User): Promise<Client[]> {
-    return await this.getAllClients(manager);
   }
 
   async getClientOrdersHistory(manager: User): Promise<Order[][]> {

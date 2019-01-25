@@ -1,10 +1,9 @@
 <div class="page-container">
-
   <mat-chip-list>
     <mat-chip color="primary" selected>Company Details</mat-chip>
   </mat-chip-list>
-
   <div class="company-details-container">
+
     <mat-card class="company-card" *ngIf="companyObject">
       <mat-card-header>
         <mat-card-title-group>
@@ -25,18 +24,16 @@
       </mat-card-content>
     </mat-card>
   </div>
-
   <span *ngIf="companyNews">
     <mat-chip-list *ngIf="companyNews[0]">
       <mat-chip color="primary" selected>Recent News</mat-chip>
     </mat-chip-list>
   </span>
-
   <div class="news-container" *ngIf="companyNews">
 
     <mat-accordion class="news-accordion">
 
-      <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle *ngIf="companyNews[0]">
+      <mat-expansion-panel hideToggle *ngIf="companyNews[0]">
         <mat-expansion-panel-header>
           <mat-panel-title>
             {{companyNews[0].title}}
@@ -51,7 +48,7 @@
 
       </mat-expansion-panel>
 
-      <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle *ngIf="companyNews[1]">
+      <mat-expansion-panel hideToggle *ngIf="companyNews[1]">
         <mat-expansion-panel-header>
           <mat-panel-title>
             {{companyNews[1].title}}
@@ -65,7 +62,7 @@
         <div body-2> {{companyNews[1].description}} </div>
       </mat-expansion-panel>
 
-      <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle *ngIf="companyNews[2]">
+      <mat-expansion-panel hideToggle *ngIf="companyNews[2]">
         <mat-expansion-panel-header>
           <mat-panel-title>
             {{companyNews[2].title}}
@@ -80,10 +77,4 @@
       </mat-expansion-panel>
     </mat-accordion>
   </div>
-
 </div>
-
-
-
-
-<div id="chartdiv" style="width: 98%; height: 500px; border: 12px solid rgb(216, 31, 31); background-color: white"></div>

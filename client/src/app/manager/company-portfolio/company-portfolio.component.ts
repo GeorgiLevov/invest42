@@ -141,13 +141,15 @@ export class CompanyPortfolioComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   showProfile(companyId) {
-    this.portfolioService.getCompany(companyId)
+    this.portfolioService.getCompanies(companyId)
       .subscribe(
         (company: any) => {
           this.companyObject = company;
-          this.companyNews = company.news.slice(0, 3);
+          this.companyNews = company.__news__.slice(0, 3);
         },
-        error => console.log(error));
+        error => console.log(error)
+      );
+
   }
 
   // News service
