@@ -99,4 +99,8 @@ export class ManagerService {
 
         return this.http.post(`${this.apiUrl}/client/units/update`, info);
     }
+
+    getMarketInfo(): Observable<object[]> {
+        return this.http.get<object[]>(`${this.apiUrl}/client/market`);
+    }
 }

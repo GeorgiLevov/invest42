@@ -37,7 +37,6 @@ export class ManagementService {
     }
 
     async getAllActiveClientOrders(clientId: string): Promise<Order[]> {
-        // const clientActiveOrders = await this.clientsRepository.findOne({ id: `${clientId}` });
         const orders = await this.clientsRepository.query(
             `SELECT
             DISTINCT
@@ -60,17 +59,31 @@ export class ManagementService {
         JOIN clients as cl ON ${clientId} = o.clientId;`,
         );
 
-        // if (!clientActiveOrders) {
-        //     throw new HttpException('There is no such client!', HttpStatus.NOT_FOUND);
-        // }
-
-        // const activeOrders = await clientActiveOrders.orders;
-
-        // const orders = activeOrders.filter((order) => {
-        //     return order.status === OrderStatus.open;
-        // });
-
         return orders;
+    }
+
+    async getMarketInfo(): Promise<object[]> {
+        const market = await this.companyRepository.query(
+            `SELECT
+            c.id,
+            c.name,
+            c.abbr,
+            c.icon,
+            c.ceo,
+            c.address,
+            c.industry,
+            Max(p.opendate),
+            p.startprice,
+            p.endprice,
+            p.highprice,
+            p.lowprice,
+            p.endprice as currentprice
+        FROM companies as c
+        JOIN prices as p ON c.id = p.companyId
+        GROUP BY(c.id);`,
+        );
+
+        return market;
     }
 
     async getClientWatchlist(clientEmail: string): Promise<Company[]> {
@@ -214,7 +227,7 @@ export class ManagementService {
         return { result: 'Successfully sold stock!' };
     }
 
-    async getClientMarket(): Promise<object> {
+    async getClientMarket(): Promise<object> {  // THIS IS ANOTHER OPTION !!!
         const foundCompanies = await this.companyRepository.find({ select: ['name', 'abbr', 'industry'] });
         if (!foundCompanies) {
             throw new HttpException('No companies found', HttpStatus.BAD_REQUEST);

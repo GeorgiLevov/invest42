@@ -39,7 +39,7 @@ export class ManagementController {
     @Get('market')
     @Roles(Role.manager)
     getClientMarket(): Promise<object> {
-        return this.managementService.getClientMarket();
+        return this.managementService.getMarketInfo();
     }
 
     @Get('watchlist')
