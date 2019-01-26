@@ -247,4 +247,53 @@ export class ManagementService {
         return { result: orders };
     }
 
+    async clientBuyOrder(orderInfo): Promise<object> {
+
+        const clientFound = await this.clientsRepository.findOne({ id: orderInfo.clientId });
+
+        if (!clientFound) {
+            throw new HttpException('There is no such client!', HttpStatus.NOT_FOUND);
+        }
+
+        const orders = await clientFound.orders;
+
+        let orderId = 0;
+        orders.forEach((order: any) => {
+            if (order.clientId === orderInfo.clientId &&
+                order.companyId === orderInfo.companyId) {
+                orderId = order.id;
+            }
+        });
+
+        if (orderId) {
+            const orderFound = await this.ordersRepository.findOne({ id: `${orderId}` });
+
+            await this.ordersRepository.update(orderFound.id, { units: orderFound.units + orderInfo.quantity });
+        } else {
+            const order = {
+                opendate: new Date(),
+                closedate: new Date(),
+                buyprice: orderInfo.currentprice,
+                sellprice: orderInfo.sellprice,
+                units: orderInfo.quantity,
+                companyId: orderInfo.companyId,
+                clientId: orderInfo.clientId,
+            };
+            const createOrder = this.ordersRepository.create(order);
+            const newOrder = await this.ordersRepository.save(createOrder);
+
+            const companyFound = await this.companyRepository.findOne({ id: orderInfo.companyId });
+
+            const com = await companyFound.orders;
+            com.push(newOrder);
+            await this.companyRepository.save(companyFound);
+            // console.log(newOrder);
+            clientFound.orders.push(newOrder);
+            await this.clientsRepository.save(clientFound);
+
+        }
+
+        return { result: 'Successfully buy stocks!' };
+    }
+
 }

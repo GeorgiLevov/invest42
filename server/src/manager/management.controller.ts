@@ -95,7 +95,8 @@ export class ManagementController {
     @Roles(Role.manager)
     @UseGuards(AuthGuard(), RolesGuard)
     buyStock(@Body() info): Promise<object> {
-        return this.managementService.buyStock(info.orderId);
+        // return this.managementService.buyStock(info.orderId);
+        return this.managementService.clientBuyOrder(info);
     }
 
     @Post('sell')

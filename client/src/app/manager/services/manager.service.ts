@@ -103,4 +103,20 @@ export class ManagerService {
     getMarketInfo(): Observable<object[]> {
         return this.http.get<object[]>(`${this.apiUrl}/client/market`);
     }
+
+    buyStocks(data): Observable<object> {
+
+        const info = {
+            clientId: data.clientId,
+            companyId: data.companyId,
+            currentprice: +data.currentprice,
+            quantity: +data.quantity,
+            sellprice: +data.sellprice,
+            stopLoss: +data.stopLoss,
+            takeProfit: +data.takeProfit
+        };
+
+        return this.http.post(`${this.apiUrl}/client/buy`, info);
+    }
+
 }

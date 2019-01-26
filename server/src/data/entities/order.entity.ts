@@ -40,5 +40,5 @@ export class Order {
   status: string;
 
   @ManyToOne(type => Company, company => company.orders)
-  company: Promise<Company>;
+  company: Company; // this was changed
 }

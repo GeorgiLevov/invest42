@@ -1,3 +1,4 @@
+import { BuyOrderComponent } from './../manager-modals/buy-modal/buy-order.component';
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
 import { ManagerService } from '../services/manager.service';
@@ -54,7 +55,15 @@ export class ClientMarketComponent implements OnInit, AfterViewInit {
   }
 
   buy(companyId, currentprice) {
-    // should be impl
+    const dialogRef = this.dialog.open(BuyOrderComponent, {
+      data: { clientId: this.router.url.split('/')[3], companyId: companyId, currentprice: currentprice }
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 1) {
+        this.getMarketInfo();
+      }
+    });
   }
 
   private refreshTable() {

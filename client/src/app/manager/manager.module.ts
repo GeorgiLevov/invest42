@@ -21,6 +21,7 @@ import { CompanyPortfolioComponent } from './company-portfolio/company-portfolio
 import { UpdateBalanceComponent } from './manager-modals/update-balance/update-balance.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { UpdateOrderComponent } from './manager-modals/update-order/update-order.component';
+import { BuyOrderComponent } from './manager-modals/buy-modal/buy-order.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { UpdateOrderComponent } from './manager-modals/update-order/update-order
     UpdateBalanceComponent,
     UpdateClientInfoComponent,
     UpdateOrderComponent,
+    BuyOrderComponent,
   ],
   imports: [
     CommonModule,
@@ -52,6 +54,7 @@ import { UpdateOrderComponent } from './manager-modals/update-order/update-order
     UpdateBalanceComponent,
     UpdateClientInfoComponent,
     UpdateOrderComponent,
+    BuyOrderComponent,
   ],
   providers: [MarketService, CompanyPortfolioService]
 })
