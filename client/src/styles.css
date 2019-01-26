@@ -7,5 +7,17 @@ body {
    margin: 0;
    font-family: Roboto, "Helvetica Neue", sans-serif;
    background-image: url("./assets/background.jpg");
-   background-color: #65a9da;
-   background-repeat: no-repeat; }
+   /* Set a specific height */
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
+
+ * {
+    box-sizing: border-box;
+  }
+  
+  

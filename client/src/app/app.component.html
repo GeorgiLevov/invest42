@@ -1,4 +1,10 @@
  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
- <div id="content" class="content page" [@routerAnimations]="prepareRouteTransition(outlet)"> 
-    <router-outlet #outlet="outlet"></router-outlet>
-  </div>
+
+<div id="container">
+  <div id="content" class="content page" [@routerAnimations]="prepareRouteTransition(outlet)">
+      <router-outlet #outlet="outlet"></router-outlet>
+</div>
+</div>
+    
+    <!-- our parallax stuff -->
+    <!-- <div appParallax [ratio]="1" id="thepage"></div> -->

@@ -5,7 +5,17 @@
     left: 0;
     right: 0;
   }
+
+.mat-sidenav {
+  z-index: 99;
+}
   
+#sidenav-button {
+    z-index: 98;
+    top: 1%;
+    position: fixed;
+}
+
    .mat-drawer-container {
     position: static;
   }

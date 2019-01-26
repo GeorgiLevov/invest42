@@ -1,0 +1,20 @@
+#content{
+    overflow: visible;
+    font-size: 1.5rem;
+}
+
+#thepage {
+     width: 90%;
+     margin-left: auto;
+     margin-right: auto;
+     margin-top:10%;
+ }
+#container{
+    /* The image used */
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    /* background-image: url("../assets/tactile_noise_@2X.png"); */
+    
+}

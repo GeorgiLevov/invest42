@@ -1,1 +1,25 @@
 
+
+.first-div {
+    max-width: 400px;
+    display: inline-block;
+    margin-left: 5%;
+}
+
+.mat-card {
+    margin: 15px;
+}
+
+.app-tree {
+    max-width: 600px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+
+      /* display: inline-block; */
+
+  .example-header-image {
+    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-size: cover;
+  }

@@ -15,11 +15,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/material';
+import { ParallaxDirective } from './parallax.directive';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    ParallaxDirective,
   ],
   imports: [
     HttpClientModule,
