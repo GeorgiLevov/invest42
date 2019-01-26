@@ -17,7 +17,7 @@ import { News } from './news.entity';
   name: 'companies',
 })
 export class Company {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   id: string;
 
   @Column({ unique: true })
@@ -44,7 +44,16 @@ export class Company {
   @OneToMany(type => News, news => news.company, { eager: true })
   news: Promise<News[]>;
 
-  @Column({ enum: [Industry.tech, Industry.pharma, Industry.health, Industry.manufacturing, Industry.retail, Industry.goods], type: 'enum' })
+  @Column({
+    enum: [
+      Industry.tech,
+      Industry.pharma,
+      Industry.health,
+      Industry.manufacturing,
+      Industry.retail,
+      Industry.goods,
+      Industry.finance], type: 'enum',
+  })
   industry: string;
 
   @OneToMany(type => Price, price => price.company)

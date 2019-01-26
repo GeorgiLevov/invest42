@@ -26,8 +26,8 @@ export class ManagementService {
 
     ) { }
 
-    async getClientPortfolio(email: string): Promise<Client> {
-        const clientPortfolio = await this.clientsRepository.findOne({ email: `${email}` });
+    async getClientPortfolio(clientId: string): Promise<Client> {
+        const clientPortfolio = await this.clientsRepository.findOne({ id: `${clientId}` });
 
         if (!clientPortfolio) {
             throw new HttpException('There is no such client!', HttpStatus.NOT_FOUND);
@@ -36,20 +36,54 @@ export class ManagementService {
         return clientPortfolio;
     }
 
-    async getAllActiveClientOrders(email: string): Promise<Order[]> {
-        const clientActiveOrders = await this.clientsRepository.findOne({ email: `${email}` });
-
-        if (!clientActiveOrders) {
-            throw new HttpException('There is no such client!', HttpStatus.NOT_FOUND);
-        }
-
-        const activeOrders = await clientActiveOrders.orders;
-
-        const orders = activeOrders.filter((order) => {
-            return order.status === OrderStatus.open;
-        });
+    async getAllActiveClientOrders(clientId: string): Promise<Order[]> {
+        const orders = await this.clientsRepository.query(
+            `SELECT
+            DISTINCT
+            c.id,
+            c.name,
+            c.abbr,
+            c.icon,
+            c.ceo,
+            c.address,
+            c.industry,
+            o.opendate,
+            o.closedate,
+            o.buyprice,
+            o.sellprice,
+            o.units,
+            o.status,
+            o.id
+        FROM companies as c
+        JOIN orders as o ON c.id = o.companyId
+        JOIN clients as cl ON ${clientId} = o.clientId;`,
+        );
 
         return orders;
+    }
+
+    async getMarketInfo(): Promise<object[]> {
+        const market = await this.companyRepository.query(
+            `SELECT
+            c.id,
+            c.name,
+            c.abbr,
+            c.icon,
+            c.ceo,
+            c.address,
+            c.industry,
+            Max(p.opendate),
+            p.startprice,
+            p.endprice,
+            p.highprice,
+            p.lowprice,
+            p.endprice as currentprice
+        FROM companies as c
+        JOIN prices as p ON c.id = p.companyId
+        GROUP BY(c.id);`,
+        );
+
+        return market;
     }
 
     async getClientWatchlist(clientEmail: string): Promise<Company[]> {
@@ -122,9 +156,9 @@ export class ManagementService {
         return { result: 'Company was successfully removed from client watchlist!' };
     }
 
-    async updateBalance(clientEmail: string, balance: number): Promise<object> {
+    async updateBalance(clientId: string, balance: number): Promise<object> {
 
-        const clientFound = await this.clientsRepository.findOne({ email: `${clientEmail}` });
+        const clientFound = await this.clientsRepository.findOne({ id: `${clientId}` });
 
         if (!clientFound) {
             throw new HttpException('There is no such client!', HttpStatus.NOT_FOUND);
@@ -133,6 +167,32 @@ export class ManagementService {
         await this.clientsRepository.update(clientFound.id, { availableBalance: clientFound.availableBalance + balance });
 
         return { result: 'Balance was updated successfully!' };
+    }
+
+    async updateOrder(orderId: string, units: number): Promise<object> {
+
+        const orderFound = await this.ordersRepository.findOne({ id: `${orderId}` });
+
+        if (!orderFound) {
+            throw new HttpException('There is no such order!', HttpStatus.NOT_FOUND);
+        }
+
+        await this.ordersRepository.update(orderFound.id, { units: orderFound.units + units });
+
+        return { result: 'Units was updated successfully!' };
+    }
+
+    async updateClient(clientId, newEmail, newAddress): Promise<object> {
+
+        const clientFound = await this.clientsRepository.findOne({ id: `${clientId}` });
+
+        if (!clientFound) {
+            throw new HttpException('There is no such client!', HttpStatus.NOT_FOUND);
+        }
+
+        await this.clientsRepository.update(clientFound.id, { email: newEmail, address: newAddress });
+
+        return { result: 'Successfully updated client information!' };
     }
 
     async getOpenCompanies(): Promise<Company[]> {
@@ -153,7 +213,7 @@ export class ManagementService {
 
         const foundCompany = await this.ordersRepository.findOne({ id: `${orderId}` });
 
-        await this.ordersRepository.update(foundCompany.id, { status: OrderStatus.closed });
+        await this.ordersRepository.update(foundCompany.id, { status: OrderStatus.open });
 
         return { result: 'Successfully bought stock!' };
     }
@@ -162,18 +222,18 @@ export class ManagementService {
 
         const foundCompany = await this.ordersRepository.findOne({ id: `${orderId}` });
 
-        await this.ordersRepository.update(foundCompany.id, { status: OrderStatus.sold });
+        await this.ordersRepository.update(foundCompany.id, { status: OrderStatus.closed });
 
         return { result: 'Successfully sold stock!' };
     }
 
-    async getClientMarket(): Promise<object> {
+    async getClientMarket(): Promise<object> {  // THIS IS ANOTHER OPTION !!!
         const foundCompanies = await this.companyRepository.find({ select: ['name', 'abbr', 'industry'] });
-        if (! foundCompanies){
+        if (!foundCompanies) {
             throw new HttpException('No companies found', HttpStatus.BAD_REQUEST);
         }
 
-        const companies = await getManager().query(`SELECT companies.name,
+        const orders = await getManager().query(`SELECT companies.name,
         prices.opendate,
         prices.startprice,
         prices.endprice,
@@ -184,7 +244,56 @@ export class ManagementService {
         WHERE prices.opendate
         BETWEEN NOW() - interval 60 minute AND NOW()
         LIMIT 10;`);
-        return {result: companies};
+        return { result: orders };
+    }
+
+    async clientBuyOrder(orderInfo): Promise<object> {
+
+        const clientFound = await this.clientsRepository.findOne({ id: orderInfo.clientId });
+
+        if (!clientFound) {
+            throw new HttpException('There is no such client!', HttpStatus.NOT_FOUND);
+        }
+
+        const orders = await clientFound.orders;
+
+        let orderId = 0;
+        orders.forEach((order: any) => {
+            if (order.clientId === orderInfo.clientId &&
+                order.companyId === orderInfo.companyId) {
+                orderId = order.id;
+            }
+        });
+
+        if (orderId) {
+            const orderFound = await this.ordersRepository.findOne({ id: `${orderId}` });
+
+            await this.ordersRepository.update(orderFound.id, { units: orderFound.units + orderInfo.quantity });
+        } else {
+            const order = {
+                opendate: new Date(),
+                closedate: new Date(),
+                buyprice: orderInfo.currentprice,
+                sellprice: orderInfo.sellprice,
+                units: orderInfo.quantity,
+                companyId: orderInfo.companyId,
+                clientId: orderInfo.clientId,
+            };
+            const createOrder = this.ordersRepository.create(order);
+            const newOrder = await this.ordersRepository.save(createOrder);
+
+            const companyFound = await this.companyRepository.findOne({ id: orderInfo.companyId });
+
+            const com = await companyFound.orders;
+            com.push(newOrder);
+            await this.companyRepository.save(companyFound);
+            // console.log(newOrder);
+            clientFound.orders.push(newOrder);
+            await this.clientsRepository.save(clientFound);
+
+        }
+
+        return { result: 'Successfully buy stocks!' };
     }
 
 }

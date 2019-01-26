@@ -52,7 +52,7 @@ export class ManagerComponent implements OnInit {
   ngOnInit() {
 
     this.route.parent.url.subscribe(() => {
-      let activePath;
+    let activePath;
 
       const urlSubject = this.route.firstChild.url.subscribe((value) => {
         activePath = value[0].path;

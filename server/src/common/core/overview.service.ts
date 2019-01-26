@@ -1,6 +1,7 @@
+import { Company } from './../../data/entities/company.entity';
+import { Price } from './../../data/entities/prices.entity';
 import { Order } from './../../data/entities/order.entity';
 import { UserRegisterDTO } from './../../models/user/user-register.dto';
-import { Company } from '../../data/entities/company.entity';
 import { Client } from '../../data/entities/client.entity';
 import { User } from 'src/data/entities/user.entity';
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
@@ -22,11 +23,79 @@ export class OverviewService {
     @InjectRepository(Company)
     private readonly companyRepository: Repository<Company>,
 
+    @InjectRepository(Price)
+    private readonly pricesRepository: Repository<Price>,
+
   ) { }
 
   async getAllCompanies(): Promise<Company[]> {
     const companiesOnMarket = await this.companyRepository.find({ where: { status: BasicStatus.active } });
+
+    if (!companiesOnMarket) {
+      throw new HttpException('No companies found!', HttpStatus.NOT_FOUND);
+    }
+
     return companiesOnMarket;
+  }
+
+  async companyDetais(companyId: string): Promise<object> {
+    // console.log(companyId);
+    const foundCompany: Company = await this.companyRepository.findOne({ where: { id: companyId } });
+    if (!foundCompany) {
+      throw new HttpException('Company not found', HttpStatus.NOT_FOUND);
+    }
+
+    return foundCompany;
+  }
+
+  async getCompaniesAndPrices(): Promise<object> {
+    const companiesOnMarket = await this.companyRepository.find(
+      {
+        // select: ['id', 'name', 'abbr', 'icon', 'ceo', 'address', 'startdate', 'status', 'industry'],
+        where: { status: BasicStatus.active },
+      });
+
+    const companyPrices = await this.pricesRepository.find({
+      order: { opendate: 'DESC' },
+      relations: ['company'],
+      take: companiesOnMarket.length,
+    });
+
+    const toREturn = companyPrices;
+    return toREturn;
+  }
+
+  async getCompanyPrices(companyId): Promise<object[]> {
+
+    const prices = [];
+    const companyPrices = await this.pricesRepository.query(`
+        SELECT
+            p.id,
+            p.opendate,
+            p.startprice,
+            p.endprice,
+            p.highprice,
+            p.lowprice
+        FROM
+            prices AS p
+        WHERE
+            p.companyId = ${companyId} AND (p.id % 1440) = 0;`);
+
+    companyPrices.forEach((price) => {
+      const newDate = price.opendate.toISOString().slice(0, 10);
+
+      const obj = {
+        date: newDate,
+        open: `${price.startprice}`,
+        high: `${price.endprice}`,
+        low: `${price.lowprice}`,
+        close: `${price.highprice}`,
+      };
+      prices.push(obj);
+
+    });
+
+    return prices;
   }
 
   async getAllClients(user: User): Promise<Client[]> {
@@ -35,8 +104,9 @@ export class OverviewService {
       throw new HttpException('Manager account not found', HttpStatus.BAD_REQUEST);
     }
 
-    const assignedClients = await this.clientsRepository.find({ where: { managerId: managerFound.id , status: BasicStatus.active } });
-    if (!assignedClients){
+    const assignedClients = await this.clientsRepository.find({ where: { manager: managerFound.id, status: BasicStatus.active } });
+    // console.log(assignedClients);
+    if (!assignedClients) {
       throw new HttpException('No clients found', HttpStatus.BAD_REQUEST);
     }
     if (assignedClients.length < 1) {
@@ -45,16 +115,20 @@ export class OverviewService {
     return assignedClients;
   }
 
-  async getAllClientsOrders(manager: User): Promise<Order[][]> {
-    const allClients =  await this.getAllClients(manager);
-
-    return await Promise.all(allClients.map(client =>  client.orders));
+  async getAllClientWithOrders(manager: User): Promise<Client[]> {
+    return await this.getAllClients(manager);
   }
 
-  async getClientOrdersHistory(manager: User): Promise<Order[][]>{
+  async getAllClientsOrders(manager: User): Promise<Order[][]> {
+    const allClients = await this.getAllClients(manager);
+
+    return await Promise.all(allClients.map(client => client.orders));
+  }
+
+  async getClientOrdersHistory(manager: User): Promise<Order[][]> {
     const allClientsOrders = await this.getAllClientsOrders(manager);
 
-    return await Promise.all(allClientsOrders.map( (orders) => orders.filter(order => order.status === OrderStatus.sold) ) );
+    return await Promise.all(allClientsOrders.map((orders) => orders.filter(order => order.status === OrderStatus.sold)));
   }
 
   // PLEASE LOOK AT THIS !!!

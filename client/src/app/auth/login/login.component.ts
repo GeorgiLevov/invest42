@@ -1,3 +1,4 @@
+import { UserLogin } from '../../models/user-login.model';
 import { LoginService } from './../services/login.service';
 import { AuthService } from './../../../../../server/src/auth/auth.service';
 import { Component, OnInit } from '@angular/core';
@@ -10,6 +11,7 @@ import { MzToastService } from 'ngx-materialize';
 import { ToastrService } from 'ngx-toastr';
 import { AuthenticationService } from '../../shared/core/authentication/authentication.service';
 import { Role } from '../../../../../server/src/models/enums/roles.enum';
+import { BreakpointObserver } from '@angular/cdk/layout';
 // import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -18,12 +20,21 @@ import { Role } from '../../../../../server/src/models/enums/roles.enum';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
+  options: FormGroup;
   public loginForm: FormGroup;
 
-  // tslint:disable-next-line:max-line-length
-  public emailPattern = '/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/';
 
+  public genericErrorMsg = 'The field is required!';
+  public genMinLengthMsg = 'Min length should be more than 8 chars!';
+  public emailErrMsg = 'Invalid email! Eg. john.doe@gmail.com!';
+  public genMaxLengthMsg = 'Max length should be less than 50 chars!';
+
+  // tslint:disable-next-line:max-line-length
+  public emailPattern = ('/^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$/');
+
+  public passwordPattern = ('([A-Za-z0-9@#$%&*]+)$');
+
+  public loginChekEmail = ('([a-z_.0-9]+@(?:[a-z])+\.[a-z]{2,})$');
   loading = false;
 
   constructor(
@@ -32,14 +43,13 @@ export class LoginComponent implements OnInit {
     private loginService: LoginService,
     private toastService: ToastrService,
     private authService: AuthenticationService,
-
+    private breakpointObserver: BreakpointObserver,
   ) { }
 
 
   ngOnInit() {
     this.buildLoginForm();
   }
-
 
   public buildLoginForm(): void {
     this.loginForm = this.formBuilder.group({
@@ -49,15 +59,15 @@ export class LoginComponent implements OnInit {
           Validators.email,
           Validators.minLength(10),
           Validators.maxLength(50),
-          Validators.pattern(this.emailPattern),
-        ]
-        )],
+          Validators.pattern(this.loginChekEmail),
+        ])],
       'password': [null,
         Validators.compose([
           Validators.required,
           Validators.minLength(8),
-          Validators.maxLength(50)]
-        )],
+          Validators.maxLength(50),
+          Validators.pattern(this.passwordPattern)
+        ])],
     });
   }
 
@@ -65,7 +75,7 @@ export class LoginComponent implements OnInit {
     this.toastService.success('', 'Login successfull!', { timeOut: 1000 });
   }
 
-  errToast(err) {
+  errToast() {
     this.toastService.error('', 'Wrong credentials!', { timeOut: 1000 });
   }
 
@@ -73,35 +83,46 @@ export class LoginComponent implements OnInit {
   public login(): void {
 
     this.loading = true;
-    const user = {
+    const user: UserLogin = {
       email: this.loginForm.value.email,
       password: this.loginForm.value.password,
     };
-    this.loginService.login(user, { observe: 'response', responseType: 'json' }).subscribe((data: {
-      message: string,
-      token: string,
-    }) => {
-      localStorage.setItem('token', data.token);
-      this.successToast();
-      // this.router.navigate(['./../../admin/home/homeA.component']);
-      const role = this.authService.getRole();
 
+    if (!user.email || !user.password) {
+      this.errToast();
+      this.loginForm.reset();
+      return;
+    }
 
-      if (role === Role.admin) {
-        this.router.navigate(['admin']);
-        this.loading = false;
+    if (!(user.email.match(this.loginChekEmail)) || !(user.password.match(this.passwordPattern))) {
+      this.errToast();
+      this.loginForm.reset();
+      return;
+    }
 
-      } else if (role === Role.manager) {
-        this.router.navigate(['manager']);
-        this.loading = false;
+    this.loginService.login(user, { observe: 'response', responseType: 'json' })
+      .subscribe((data: { message: string, token: string }) => {
+        localStorage.setItem('token', data.token);
+        this.successToast();
+        const role = this.authService.getRole();
 
-      }
+        if (role === Role.admin) {
+          this.router.navigate(['admin']);
+          this.loading = false;
 
-    }, (err: HttpErrorResponse) => {
-      this.errToast(err.message);
-    });
+        } else if (role === Role.manager) {
+
+          this.router.navigate(['manager']);
+          this.loading = false;
+        }
+
+      }, (err: HttpErrorResponse) => {
+        // console.log('err', err);
+
+        this.errToast();
+      });
     this.loginForm.reset();
-  }
 
+  }
 
 }

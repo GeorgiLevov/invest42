@@ -16,7 +16,7 @@ import {
   name: 'users',
 })
 export class User {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   id: string;
 
   @Column()
@@ -34,16 +34,10 @@ export class User {
   @Column()
   avatar: string;
 
-  @OneToMany(type => Client, client => client.manager, { cascade: true })
+  @OneToMany(type => Client, client => client.manager, { eager: true, cascade: true })
   clients: Client[];
 
-  @Column({enum: [BasicStatus.acrhived, BasicStatus.active], type: 'enum', default: BasicStatus.active})
+  @Column({ enum: [BasicStatus.acrhived, BasicStatus.active], type: 'enum', default: BasicStatus.active })
   status: string;
 
-  // @OneToOne(type => Funds, funds => funds.client, { eager: true})
-  // @JoinColumn()
-  // funds: Funds;
-
-  // @Column()
-  // dateregistered: Date;
 }

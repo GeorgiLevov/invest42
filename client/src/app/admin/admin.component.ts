@@ -1,4 +1,7 @@
+import { AuthenticationService } from './../shared/core/authentication/authentication.service';
+import { AdminService } from './services/admin.service';
 import { Component, OnInit } from '@angular/core';
+import { UserProfile } from '../models/user-profile.model';
 
 @Component({
   selector: 'app-admin',
@@ -34,9 +37,28 @@ export class AdminComponent implements OnInit {
     }
   ];
 
-  constructor() { }
+  user: UserProfile;
+
+  constructor(
+
+    private adminService: AdminService,
+
+    private authService: AuthenticationService,
+
+  ) { }
 
   ngOnInit() {
+  }
+
+  public getUserInfo() {
+    this.adminService.getUserInfo(this.authService.getEmail()).subscribe(
+      (data) => {
+        console.log(data);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 
 }

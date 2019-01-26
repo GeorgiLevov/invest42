@@ -1,4 +1,4 @@
-import { MatFormFieldModule } from '@angular/material';
+import { MatFormFieldModule, MatInputModule, MatCardModule } from '@angular/material';
 import { MaterializeWrapModule } from './../../materialize-module/materialize.module';
 import { LoginService } from './../services/login.service';
 import { NgModule } from '@angular/core';
@@ -10,18 +10,17 @@ import { MzButtonModule, MzInputModule, MzIconModule, MzIconMdiModule, MzCardMod
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [LoginComponent],
   imports: [
     CommonModule,
-    MaterializeWrapModule,
-    MatFormFieldModule,
+    SharedModule,
     RouterModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NoopAnimationsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
   ],
   exports: [
     HttpClientModule

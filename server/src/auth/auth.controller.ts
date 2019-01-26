@@ -8,7 +8,7 @@ import { UsersService } from '../common/core/users.service';
 import { AuthService } from './auth.service';
 import {
   Get, Controller, UseGuards, Post, Body, FileInterceptor,
-  UseInterceptors, UploadedFile, BadRequestException,
+  UseInterceptors, UploadedFile, BadRequestException, HttpException, HttpStatus,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { join } from 'path';
@@ -33,7 +33,7 @@ export class AuthController {
   async sign(@Body() user: UserLoginDTO): Promise<object> {
     const generatedToken = await this.authService.signIn(user);
     if (!generatedToken) {
-      throw new BadRequestException('Wrong credentials!');
+      throw new HttpException('Wrong credentials!', HttpStatus.NOT_FOUND);
     }
 
     return { token: generatedToken };
@@ -48,12 +48,9 @@ export class AuthController {
     fileFilter: (req, file, cb) => FileService.fileFilter(req, file, cb, '.png', '.jpg'),
   }))
   async registerUser(
-    @Body()
-    user: UserRegisterDTO,
-    @UploadedFile()
-    file,
-  ): Promise<string> {
-    const folder = join('.', 'uploads');
+    @Body() user: UserRegisterDTO,
+    @UploadedFile() file): Promise<UserRegisterDTO[]> {
+    const folder = join('.', 'images');
     if (!file) {
       user.avatar = join(folder, 'default.png');
     } else {
@@ -61,8 +58,7 @@ export class AuthController {
     }
 
     try {
-      await this.usersService.registerUser(user);
-      return `${user.role}: ${user.fullname} is now registered.`;
+      return await this.usersService.registerUser(user);
     } catch (error) {
       await new Promise((resolve, reject) => {
 
@@ -81,6 +77,7 @@ export class AuthController {
 
       return (error.message);
     }
+
   }
 
   @Post('register/client')
@@ -92,20 +89,17 @@ export class AuthController {
     fileFilter: (req, file, cb) => FileService.fileFilter(req, file, cb, '.png', '.jpg'),
   }))
   async registerClient(
-    @Body()
-    client: ClientRegisterDTO,
-    @UploadedFile()
-    file,
-  ): Promise<string> {
-    const folder = join('.', 'uploads');
+    @Body() client: ClientRegisterDTO,
+    @UploadedFile() file): Promise<ClientRegisterDTO[]> {
+    const folder = join('.', 'images');
     if (!file) {
       client.icon = join(folder, 'default.png');
     } else {
       client.icon = join(folder, file.filename);
     }
+
     try {
-      await this.usersService.registerClient(client);
-      return `Client: ${client.fullname} is now registered.`;
+      return await this.usersService.registerClient(client);
     } catch (error) {
       await new Promise((resolve, reject) => {
 

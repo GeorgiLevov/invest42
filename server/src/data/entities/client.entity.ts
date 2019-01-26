@@ -9,7 +9,7 @@ import { BasicStatus } from '../../models/enums/basicstatus.enum';
 })
 export class Client {
 
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   id: string;
 
   @Column()
@@ -17,6 +17,12 @@ export class Client {
 
   @Column()
   email: string;
+
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  dateOfCreation: Date;
+
+  @Column()
+  age: number;
 
   @Column()
   address: string;
@@ -31,13 +37,13 @@ export class Client {
   manager: User;
 
   @OneToMany(type => Order, order => order.client, { eager: true })
-  orders: Promise<Order[]>;
+  orders: Order[]; // this was changed
 
   @ManyToMany(type => Company, company => company.clients, { eager: true, cascade: true })
   @JoinTable()
   watchlist: Promise<Company[]>;
 
-    @Column({enum: [BasicStatus.active, BasicStatus.acrhived], type: 'enum', default: BasicStatus.active})
-    status: string;
+  @Column({ enum: [BasicStatus.active, BasicStatus.acrhived], type: 'enum', default: BasicStatus.active })
+  status: string;
 
 }

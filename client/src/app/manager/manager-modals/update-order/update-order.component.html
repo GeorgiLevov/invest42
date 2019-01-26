@@ -1,0 +1,25 @@
+<div class="container">
+  <h1 mat-dialog-title *ngIf="data.isSell">SELL</h1>
+  <h1 mat-dialog-title *ngIf="!data.isSell">BUY</h1>
+
+  <form class="mat-dialog-content" (ngSubmit)="submit" #formControl="ngForm">
+
+    <div *ngIf="data.isSell">
+      <p>Current Order Units:</p>
+      <p>{{data.units}}</p>
+    </div>
+
+    <div class="form">
+      <mat-form-field color="accent">
+        <input matInput #input class="form-control" placeholder="Enter quantity" [(ngModel)]="data.quantity" name="quantity"
+          required>
+        <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div mat-dialog-actions>
+      <button mat-button type="button" [disabled]="!formControl.valid" [mat-dialog-close]="1" (click)="stopEdit()">Save</button>
+      <button mat-button type="button" (click)="onNoClick()" tabindex="-1">Cancel</button>
+    </div>
+  </form>
+</div>

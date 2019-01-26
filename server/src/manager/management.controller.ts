@@ -2,7 +2,7 @@ import { ManagementService } from './../common/core/management.service';
 import { Client } from '../data/entities/client.entity';
 import { OverviewService } from '../common/core/overview.service';
 import { AuthGuard } from '@nestjs/passport';
-import { Controller, Get, UseGuards, Post, Body } from '@nestjs/common';
+import { Controller, Get, UseGuards, Post, Body, Param } from '@nestjs/common';
 import { UsersService } from '../common/core/users.service';
 import { Roles, RolesGuard } from 'src/common';
 import { Role } from '../models/enums/roles.enum';
@@ -15,18 +15,18 @@ export class ManagementController {
         private readonly managementService: ManagementService,
     ) { }
 
-    @Get('portfolio')
-    @Roles(Role.admin)
-    @UseGuards(AuthGuard(), RolesGuard)
-    getClientInfo(@Body() client): Promise<Client> {
-        return this.managementService.getClientPortfolio(client.email);
-    }
-
-    @Get('activeOrders')
+    @Get('portfolio/:id')
     @Roles(Role.manager)
     @UseGuards(AuthGuard(), RolesGuard)
-    getAllActiveClientOrders(@Body() client): Promise<Order[]> {
-        return this.managementService.getAllActiveClientOrders(client.email);
+    getClientInfo(@Param() params): Promise<Client> {
+        return this.managementService.getClientPortfolio(params.id);
+    }
+
+    @Get('activeOrders/:id')
+    @Roles(Role.manager)
+    @UseGuards(AuthGuard(), RolesGuard)
+    getAllActiveClientOrders(@Param() params): Promise<Order[]> {
+        return this.managementService.getAllActiveClientOrders(params.id);
     }
 
     @Post('watchlist/add')
@@ -39,7 +39,7 @@ export class ManagementController {
     @Get('market')
     @Roles(Role.manager)
     getClientMarket(): Promise<object> {
-        return this.managementService.getClientMarket();
+        return this.managementService.getMarketInfo();
     }
 
     @Get('watchlist')
@@ -60,7 +60,21 @@ export class ManagementController {
     @Roles(Role.manager)
     @UseGuards(AuthGuard(), RolesGuard)
     updateBalance(@Body() info): Promise<object> {
-        return this.managementService.updateBalance(info.email, info.balance);
+        return this.managementService.updateBalance(info.id, info.balance);
+    }
+
+    @Post('units/update')
+    @Roles(Role.manager)
+    @UseGuards(AuthGuard(), RolesGuard)
+    updateUnits(@Body() info): Promise<object> {
+        return this.managementService.updateOrder(info.id, info.units);
+    }
+
+    @Post('update')
+    @Roles(Role.manager)
+    @UseGuards(AuthGuard(), RolesGuard)
+    updateClient(@Body() info): Promise<object> {
+        return this.managementService.updateClient(info.id, info.email, info.address);
     }
 
     @Get('open-companies')
@@ -81,7 +95,8 @@ export class ManagementController {
     @Roles(Role.manager)
     @UseGuards(AuthGuard(), RolesGuard)
     buyStock(@Body() info): Promise<object> {
-        return this.managementService.buyStock(info.orderId);
+        // return this.managementService.buyStock(info.orderId);
+        return this.managementService.clientBuyOrder(info);
     }
 
     @Post('sell')
