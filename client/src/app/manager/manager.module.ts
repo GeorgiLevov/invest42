@@ -20,6 +20,7 @@ import { ClientPortfolioComponent } from './client-portfolio/client-portfolio.co
 import { CompanyPortfolioComponent } from './company-portfolio/company-portfolio.component';
 import { UpdateBalanceComponent } from './manager-modals/update-balance/update-balance.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { UpdateOrderComponent } from './manager-modals/update-order/update-order.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     CompanyPortfolioComponent,
     UpdateBalanceComponent,
     UpdateClientInfoComponent,
+    UpdateOrderComponent,
   ],
   imports: [
     CommonModule,
@@ -49,6 +51,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
   entryComponents: [
     UpdateBalanceComponent,
     UpdateClientInfoComponent,
+    UpdateOrderComponent,
   ],
   providers: [MarketService, CompanyPortfolioService]
 })

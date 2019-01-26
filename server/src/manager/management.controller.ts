@@ -63,6 +63,13 @@ export class ManagementController {
         return this.managementService.updateBalance(info.id, info.balance);
     }
 
+    @Post('units/update')
+    @Roles(Role.manager)
+    @UseGuards(AuthGuard(), RolesGuard)
+    updateUnits(@Body() info): Promise<object> {
+        return this.managementService.updateOrder(info.id, info.units);
+    }
+
     @Post('update')
     @Roles(Role.manager)
     @UseGuards(AuthGuard(), RolesGuard)

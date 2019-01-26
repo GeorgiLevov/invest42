@@ -2,15 +2,16 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
 import { ManagerService } from '../services/manager.service';
 import { Router } from '@angular/router';
+import { UpdateOrderComponent } from '../manager-modals/update-order/update-order.component';
 
 @Component({
   selector: 'app-client-positions',
   templateUrl: './client-positions.component.html',
-  styleUrls: ['./client-positions.component.css']
+  styleUrls: ['./client-positions.component.css'],
 })
 export class ClientPositionsComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: string[] = ['name', 'industry', 'price', 'sell'];
+  displayedColumns: string[] = ['name', 'industry', 'units', 'prices', 'sell'];
   dataSource = new MatTableDataSource<any>();
   index: number;
   id: number;
@@ -34,6 +35,7 @@ export class ClientPositionsComponent implements OnInit, AfterViewInit {
       .subscribe((res) => {
         this.dataSource.data = res;
         this.managerService.clientDataChange.next(res); // added
+        // console.log(res);
       });
   }
 
@@ -50,8 +52,16 @@ export class ClientPositionsComponent implements OnInit, AfterViewInit {
     }
   }
 
-  sell() {
-    // should be impl
+  sell(orderId, units) {
+    const dialogRef = this.dialog.open(UpdateOrderComponent, {
+      data: { id: orderId, units: units, isSell: true }
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 1) {
+        this.getClientActiveOrders();
+      }
+    });
   }
 
   private refreshTable() {

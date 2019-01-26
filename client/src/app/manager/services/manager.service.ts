@@ -80,4 +80,23 @@ export class ManagerService {
     getActiveOrdersInfo(clientId): Observable<object[]> {
         return this.http.get<object[]>(`${this.apiUrl}/client/activeOrders/${clientId}`);
     }
+
+    updateOrder(data): Observable<object> {
+
+        let info;
+        if (data.isSell) {
+            info = {
+                id: data.id,
+                units: 0 - Number(data.quantity)
+            };
+        } else {
+            info = {
+                id: data.id,
+                units: Number(data.quantity)
+            };
+        }
+        // console.log(info);
+
+        return this.http.post(`${this.apiUrl}/client/units/update`, info);
+    }
 }

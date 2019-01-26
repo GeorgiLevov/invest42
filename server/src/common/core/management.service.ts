@@ -53,7 +53,8 @@ export class ManagementService {
             o.buyprice,
             o.sellprice,
             o.units,
-            o.status
+            o.status,
+            o.id
         FROM companies as c
         JOIN orders as o ON c.id = o.companyId
         JOIN clients as cl ON ${clientId} = o.clientId;`,
@@ -153,6 +154,19 @@ export class ManagementService {
         await this.clientsRepository.update(clientFound.id, { availableBalance: clientFound.availableBalance + balance });
 
         return { result: 'Balance was updated successfully!' };
+    }
+
+    async updateOrder(orderId: string, units: number): Promise<object> {
+
+        const orderFound = await this.ordersRepository.findOne({ id: `${orderId}` });
+
+        if (!orderFound) {
+            throw new HttpException('There is no such order!', HttpStatus.NOT_FOUND);
+        }
+
+        await this.ordersRepository.update(orderFound.id, { units: orderFound.units + units });
+
+        return { result: 'Units was updated successfully!' };
     }
 
     async updateClient(clientId, newEmail, newAddress): Promise<object> {
