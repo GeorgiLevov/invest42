@@ -1,3 +1,4 @@
+import { UpdateClientInfoComponent } from './manager-modals/update-client/update-client.component';
 import { CompanyPortfolioService } from './company-portfolio/company-portfolio.service';
 import { MarketService } from './market/market.serivice';
 import { MarketComponent } from './market/market.component';
@@ -35,6 +36,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     MarketComponent,
     CompanyPortfolioComponent,
     UpdateBalanceComponent,
+    UpdateClientInfoComponent,
   ],
   imports: [
     CommonModule,
@@ -45,7 +47,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     ReactiveFormsModule,
   ],
   entryComponents: [
-    UpdateBalanceComponent
+    UpdateBalanceComponent,
+    UpdateClientInfoComponent,
   ],
   providers: [MarketService, CompanyPortfolioService]
 })

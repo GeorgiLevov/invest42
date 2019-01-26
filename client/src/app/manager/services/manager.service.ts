@@ -49,7 +49,7 @@ export class ManagerService {
     }
 
     updateBalance(data): Observable<object> {
-        // should be fixed
+
         let info;
         if (data.isDeposit) {
             info = {
@@ -62,8 +62,17 @@ export class ManagerService {
                 balance: 0 - Number(data.balance)
             };
         }
-        console.log(info);
+        // console.log(info);
 
         return this.http.post(`${this.apiUrl}/client/balance/update`, info);
+    }
+
+    updateClientInfo(data): Observable<object> {
+        const info = {
+            id: data.id,
+            email: data.newClientEmail,
+            address: data.newClientAddress,
+        };
+        return this.http.post(`${this.apiUrl}/client/update`, info);
     }
 }

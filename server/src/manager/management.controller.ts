@@ -63,6 +63,14 @@ export class ManagementController {
         return this.managementService.updateBalance(info.id, info.balance);
     }
 
+    @Post('update')
+    @Roles(Role.manager)
+    @UseGuards(AuthGuard(), RolesGuard)
+    updateClient(@Body() info): Promise<object> {
+        return this.managementService.updateClient(info.id, info.email, info.address);
+    }
+
+
     @Get('open-companies')
     @Roles(Role.manager)
     @UseGuards(AuthGuard(), RolesGuard)

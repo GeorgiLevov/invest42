@@ -135,6 +135,19 @@ export class ManagementService {
         return { result: 'Balance was updated successfully!' };
     }
 
+    async updateClient(clientId, newEmail, newAddress): Promise<object> {
+
+        const clientFound = await this.clientsRepository.findOne({ id: `${clientId}` });
+
+        if (!clientFound) {
+            throw new HttpException('There is no such client!', HttpStatus.NOT_FOUND);
+        }
+
+        await this.clientsRepository.update(clientFound.id, { email: newEmail, address: newAddress });
+
+        return { result: 'Successfully updated client information!' };
+    }
+
     async getOpenCompanies(): Promise<Company[]> {
 
         const foundCompanies = await this.companyRepository.find({ status: BasicStatus.active });

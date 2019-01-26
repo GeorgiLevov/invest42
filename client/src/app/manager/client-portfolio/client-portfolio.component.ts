@@ -1,3 +1,4 @@
+import { UpdateClientInfoComponent } from './../manager-modals/update-client/update-client.component';
 import { Component, OnInit } from '@angular/core';
 import { ClientModel } from '../../models/interfaces/client.model';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -40,7 +41,6 @@ export class ClientPortfolioComponent implements OnInit {
   }
 
   deposit() {
-    // should be impl
     const dialogRef = this.dialog.open(UpdateBalanceComponent, {
       data: { id: this.client.id, availableBalance: this.client.availableBalance, isDeposit: true }
     });
@@ -53,11 +53,32 @@ export class ClientPortfolioComponent implements OnInit {
   }
 
   withdraw() {
-    // should be impl
+    const dialogRef = this.dialog.open(UpdateBalanceComponent, {
+      data: { id: this.client.id, availableBalance: this.client.availableBalance, isDeposit: false }
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 1) {
+        this.showClientPortfolio(this.client.id);
+      }
+    });
   }
 
   editAccount() {
     // should be impl
+    const dialogRef = this.dialog.open(UpdateClientInfoComponent, {
+      data: {
+        id: this.client.id,
+        email: this.client.email,
+        address: this.client.address
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 1) {
+        this.showClientPortfolio(this.client.id);
+      }
+    });
   }
 
 }
