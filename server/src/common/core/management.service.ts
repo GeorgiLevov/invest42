@@ -26,8 +26,8 @@ export class ManagementService {
 
     ) { }
 
-    async getClientPortfolio(email: string): Promise<Client> {
-        const clientPortfolio = await this.clientsRepository.findOne({ email: `${email}` });
+    async getClientPortfolio(clientId: string): Promise<Client> {
+        const clientPortfolio = await this.clientsRepository.findOne({ id: `${clientId}` });
 
         if (!clientPortfolio) {
             throw new HttpException('There is no such client!', HttpStatus.NOT_FOUND);
@@ -122,9 +122,9 @@ export class ManagementService {
         return { result: 'Company was successfully removed from client watchlist!' };
     }
 
-    async updateBalance(clientEmail: string, balance: number): Promise<object> {
+    async updateBalance(clientId: string, balance: number): Promise<object> {
 
-        const clientFound = await this.clientsRepository.findOne({ email: `${clientEmail}` });
+        const clientFound = await this.clientsRepository.findOne({ id: `${clientId}` });
 
         if (!clientFound) {
             throw new HttpException('There is no such client!', HttpStatus.NOT_FOUND);
@@ -169,7 +169,7 @@ export class ManagementService {
 
     async getClientMarket(): Promise<object> {
         const foundCompanies = await this.companyRepository.find({ select: ['name', 'abbr', 'industry'] });
-        if (! foundCompanies){
+        if (!foundCompanies) {
             throw new HttpException('No companies found', HttpStatus.BAD_REQUEST);
         }
 
@@ -184,7 +184,7 @@ export class ManagementService {
         WHERE prices.opendate
         BETWEEN NOW() - interval 60 minute AND NOW()
         LIMIT 10;`);
-        return {result: orders};
+        return { result: orders };
     }
 
 }

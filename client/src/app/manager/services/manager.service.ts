@@ -1,4 +1,4 @@
-import { ClientOrders } from './../../models/interfaces/client.model';
+import { ClientModel } from './../../models/interfaces/client.model';
 import { UserRegisterData } from './../../models/user-register.model';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -33,8 +33,8 @@ export class ManagerService {
         return this.http.get<ClientData[]>(`${this.apiUrl}/view/clients`);
     }
 
-    getClientOrders(): Observable<ClientOrders[]> {
-        return this.http.get<ClientOrders[]>(`${this.apiUrl}/view/clients/orders`);
+    getClientOrders(): Observable<ClientModel[]> {
+        return this.http.get<ClientModel[]>(`${this.apiUrl}/view/clients/orders`);
     }
 
     getDialogData() {
@@ -44,4 +44,26 @@ export class ManagerService {
         return this.dataChange.value;
     }
 
+    getClientPortfolio(clientId: string): Observable<ClientModel> {
+        return this.http.get<ClientModel>(`${this.apiUrl}/client/portfolio/${clientId}`);
+    }
+
+    updateBalance(data): Observable<object> {
+        // should be fixed
+        let info;
+        if (data.isDeposit) {
+            info = {
+                id: data.id,
+                balance: Number(data.balance)
+            };
+        } else {
+            info = {
+                id: data.id,
+                balance: 0 - Number(data.balance)
+            };
+        }
+        console.log(info);
+
+        return this.http.post(`${this.apiUrl}/client/balance/update`, info);
+    }
 }

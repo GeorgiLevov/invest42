@@ -17,6 +17,8 @@ import { ClientWatchlistComponent } from './client-watchlist/client-watchlist.co
 import { ClientHistoryComponent } from './client-history/client-history.component';
 import { ClientPortfolioComponent } from './client-portfolio/client-portfolio.component';
 import { CompanyPortfolioComponent } from './company-portfolio/company-portfolio.component';
+import { UpdateBalanceComponent } from './manager-modals/update-balance/update-balance.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -32,14 +34,19 @@ import { CompanyPortfolioComponent } from './company-portfolio/company-portfolio
     ClientPortfolioComponent,
     MarketComponent,
     CompanyPortfolioComponent,
+    UpdateBalanceComponent,
   ],
   imports: [
     CommonModule,
     SharedModule,
     ManagerRoutingModule,
     MaterializeWrapModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
-
+  entryComponents: [
+    UpdateBalanceComponent
+  ],
   providers: [MarketService, CompanyPortfolioService]
 })
 export class ManagerModule { }

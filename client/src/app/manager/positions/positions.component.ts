@@ -1,7 +1,7 @@
 import { ManagerService } from './../services/manager.service';
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Sort, MatSort, MatTableDataSource } from '@angular/material';
-import { ClientOrders } from '../../models/interfaces/client.model';
+import { ClientModel } from '../../models/interfaces/client.model';
 import { Orders } from '../../models/interfaces/orders.model';
 
 @Component({
@@ -11,7 +11,7 @@ import { Orders } from '../../models/interfaces/orders.model';
 })
 export class PositionsComponent implements OnInit {
 
-  clients: ClientOrders[];
+  clients: ClientModel[];
 
   sortedData: Orders[];
 
@@ -29,7 +29,7 @@ export class PositionsComponent implements OnInit {
 
   initializeClients() {
     this.managerService.getClientOrders().subscribe((data) => {
-      this.clients = data as ClientOrders[];
+      this.clients = data as ClientModel[];
       this.sortedData = this.clients[0].orders;
 
       this.clients.map((client: any) => {

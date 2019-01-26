@@ -2,7 +2,7 @@ import { Orders } from './orders.model';
 import { Watchlist } from './watchlist.model';
 import { MatTableDataSource } from '@angular/material';
 
-export interface ClientOrders {
+export interface ClientModel {
 
     id: number;
     fullname: string;
