@@ -1,0 +1,28 @@
+<div class="container">
+  <h1 *ngIf="data.isDeposit">DEPOSIT</h1>
+  <h1 *ngIf="!data.isDeposit">WITHDRAW</h1>
+
+  <h3 mat-dialog-title>Client id: {{data.id}}</h3>
+
+
+  <form class="mat-dialog-content" (ngSubmit)="submit" #formControl="ngForm">
+
+    <div>
+      <p>Current Client Balance:</p>
+      <p>{{data.availableBalance}}</p>
+    </div>
+
+    <div class="form">
+      <mat-form-field color="accent">
+        <input matInput #input class="form-control" placeholder="Update Balance" [(ngModel)]="data.balance" name="balance"
+          required>
+        <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div mat-dialog-actions>
+      <button mat-button type="button" [disabled]="!formControl.valid" [mat-dialog-close]="1" (click)="stopEdit()">Save</button>
+      <button mat-button type="button" (click)="onNoClick()" tabindex="-1">Cancel</button>
+    </div>
+  </form>
+</div>

@@ -1,14 +1,15 @@
 h3 {
-    color: white;
+  color: white;
 }
 
 .full-width-table {
-    width: 100%;
-  }
+  width: 100%;
+}
+
 .company-details {
-    max-width: 100px !important;
-    box-shadow: none;
-  }
+  max-width: 100px !important;
+  box-shadow: none;
+}
 
 .mat-table {
   width: 95%;
@@ -19,29 +20,47 @@ h3 {
   max-width: 120px;
   box-shadow: none;
   margin: none;
-  padding-left:0px;
+  padding-left: 0px;
 }
 
 .mat-header-cell {
-    font-size: 1rem;
+  font-size: 1rem;
 }
 
 .td.mat-cell {
-    min-width: 200px;;
-    width: 250px;
+  min-width: 200px;
+  ;
+  width: 250px;
 }
 
 .company-content {
-    display: inline-block;
+  display: inline-block;
 }
 
 .company-avatar {
-    width: 64px;
-    height: 64px;
-    margin: 0;
+  width: 64px;
+  height: 64px;
+  margin: 0;
 }
+
 .company-image {
-    width: inherit;
-    height: inherit;
-    margin: inherit;
+  width: inherit;
+  height: inherit;
+  margin: inherit;
+}
+
+
+th {
+  width: 25%;
+}
+
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+.mat-paginator {
+  width: 94.95%;
+  float: right;
 }

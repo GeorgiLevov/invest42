@@ -23,6 +23,12 @@ export class LoginComponent implements OnInit {
   options: FormGroup;
   public loginForm: FormGroup;
 
+
+  public genericErrorMsg = 'The field is required!';
+  public genMinLengthMsg = 'Min length should be more than 8 chars!';
+  public emailErrMsg = 'Invalid email! Eg. john.doe@gmail.com!';
+  public genMaxLengthMsg = 'Max length should be less than 50 chars!';
+
   // tslint:disable-next-line:max-line-length
   public emailPattern = ('/^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$/');
 
@@ -53,15 +59,15 @@ export class LoginComponent implements OnInit {
           Validators.email,
           Validators.minLength(10),
           Validators.maxLength(50),
-          // Validators.pattern(this.loginChekEmail),
-        ]
-        )],
+          Validators.pattern(this.loginChekEmail),
+        ])],
       'password': [null,
         Validators.compose([
           Validators.required,
           Validators.minLength(8),
-          Validators.maxLength(50)]
-        )],
+          Validators.maxLength(50),
+          Validators.pattern(this.passwordPattern)
+        ])],
     });
   }
 
@@ -82,17 +88,15 @@ export class LoginComponent implements OnInit {
       password: this.loginForm.value.password,
     };
 
-    // const emailRegex = new RegExp(this.loginChekEmail);
-    // const passRegex = new RegExp(this.passwordPattern);
-
-    // console.log(passRegex);
-    // console.log(emailRegex.test(user.email));
-    // console.log(passRegex.test(user.password));
+    if (!user.email || !user.password) {
+      this.errToast();
+      this.loginForm.reset();
+      return;
+    }
 
     if (!(user.email.match(this.loginChekEmail)) || !(user.password.match(this.passwordPattern))) {
       this.errToast();
       this.loginForm.reset();
-      console.log('vua');
       return;
     }
 
@@ -112,12 +116,13 @@ export class LoginComponent implements OnInit {
           this.loading = false;
         }
 
-      }, (err) => {
+      }, (err: HttpErrorResponse) => {
         // console.log('err', err);
+
         this.errToast();
       });
     this.loginForm.reset();
-  }
 
+  }
 
 }

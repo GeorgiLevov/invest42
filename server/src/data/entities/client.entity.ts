@@ -37,7 +37,7 @@ export class Client {
   manager: User;
 
   @OneToMany(type => Order, order => order.client, { eager: true })
-  orders: Promise<Order[]>;
+  orders: Order[]; // this was changed
 
   @ManyToMany(type => Company, company => company.clients, { eager: true, cascade: true })
   @JoinTable()

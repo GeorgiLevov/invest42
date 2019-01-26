@@ -97,6 +97,7 @@ export class AuthController {
     } else {
       client.icon = join(folder, file.filename);
     }
+
     try {
       return await this.usersService.registerClient(client);
     } catch (error) {

@@ -12,17 +12,17 @@ import { Router } from '@angular/router';
 export class MarketService {
 
 
-    constructor(private http: HttpClient, private appConfig: AppConfig, private router: Router) {}
+  constructor(private http: HttpClient, private appConfig: AppConfig, private router: Router) { }
 
-    public getCompanies (): Observable<object> {
-        const url = `${this.appConfig.apiUrl}/view/market`;
-        return this.http.get(url);
+  public getCompanies(): Observable<object> {
+    const url = `${this.appConfig.apiUrl}/view/market`;
+    return this.http.get(url);
   }
 
-  public getCompaniesAndPrices (): Observable<object> {
+  public getCompaniesAndPrices(): Observable<object> {
     const url = `${this.appConfig.apiUrl}/view/market/prices`;
     return this.http.get(url);
-}
+  }
 
   public goToCompanyProfilePage(companyId): any {
     this.router.navigate([`manager/market/company/${companyId}`]);

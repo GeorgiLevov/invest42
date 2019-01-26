@@ -14,13 +14,13 @@ const routes: Routes = [
     },
     {
         path: 'admin', loadChildren: './admin/admin.module#AdminModule',
-         canActivate: [AdminGuard],
-          data: { animation: { value: 'admin' } },
+        canActivate: [AdminGuard],
+        data: { animation: { value: 'admin' } },
     },
     {
         path: 'manager', loadChildren: './manager/manager.module#ManagerModule',
-         canActivate: [ManagerGuard],
-          data: { animation: { value: 'manager' } },
+        canActivate: [ManagerGuard],
+        data: { animation: { value: 'manager' } },
     },
     {
         path: 'unauthorised', component: UnauthorisedComponent,
