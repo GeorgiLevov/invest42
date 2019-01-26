@@ -18,6 +18,7 @@ export class ManagerService {
 
     dataChange: BehaviorSubject<UserData[]> = new BehaviorSubject<UserData[]>([]);
 
+    clientDataChange: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
     dialogData: any;
 
     constructor(
@@ -74,5 +75,9 @@ export class ManagerService {
             address: data.newClientAddress,
         };
         return this.http.post(`${this.apiUrl}/client/update`, info);
+    }
+
+    getActiveOrdersInfo(clientId): Observable<object[]> {
+        return this.http.get<object[]>(`${this.apiUrl}/client/activeOrders/${clientId}`);
     }
 }

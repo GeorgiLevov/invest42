@@ -36,18 +36,38 @@ export class ManagementService {
         return clientPortfolio;
     }
 
-    async getAllActiveClientOrders(email: string): Promise<Order[]> {
-        const clientActiveOrders = await this.clientsRepository.findOne({ email: `${email}` });
+    async getAllActiveClientOrders(clientId: string): Promise<Order[]> {
+        // const clientActiveOrders = await this.clientsRepository.findOne({ id: `${clientId}` });
+        const orders = await this.clientsRepository.query(
+            `SELECT
+            DISTINCT
+            c.id,
+            c.name,
+            c.abbr,
+            c.icon,
+            c.ceo,
+            c.address,
+            c.industry,
+            o.opendate,
+            o.closedate,
+            o.buyprice,
+            o.sellprice,
+            o.units,
+            o.status
+        FROM companies as c
+        JOIN orders as o ON c.id = o.companyId
+        JOIN clients as cl ON ${clientId} = o.clientId;`,
+        );
 
-        if (!clientActiveOrders) {
-            throw new HttpException('There is no such client!', HttpStatus.NOT_FOUND);
-        }
+        // if (!clientActiveOrders) {
+        //     throw new HttpException('There is no such client!', HttpStatus.NOT_FOUND);
+        // }
 
-        const activeOrders = await clientActiveOrders.orders;
+        // const activeOrders = await clientActiveOrders.orders;
 
-        const orders = activeOrders.filter((order) => {
-            return order.status === OrderStatus.open;
-        });
+        // const orders = activeOrders.filter((order) => {
+        //     return order.status === OrderStatus.open;
+        // });
 
         return orders;
     }
@@ -166,7 +186,7 @@ export class ManagementService {
 
         const foundCompany = await this.ordersRepository.findOne({ id: `${orderId}` });
 
-        await this.ordersRepository.update(foundCompany.id, { status: OrderStatus.closed });
+        await this.ordersRepository.update(foundCompany.id, { status: OrderStatus.open });
 
         return { result: 'Successfully bought stock!' };
     }
@@ -175,7 +195,7 @@ export class ManagementService {
 
         const foundCompany = await this.ordersRepository.findOne({ id: `${orderId}` });
 
-        await this.ordersRepository.update(foundCompany.id, { status: OrderStatus.sold });
+        await this.ordersRepository.update(foundCompany.id, { status: OrderStatus.closed });
 
         return { result: 'Successfully sold stock!' };
     }

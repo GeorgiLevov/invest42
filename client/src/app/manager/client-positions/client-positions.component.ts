@@ -1,17 +1,61 @@
-import { Component, OnInit } from '@angular/core';
-import { Sort } from '@angular/material';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
+import { ManagerService } from '../services/manager.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-client-positions',
   templateUrl: './client-positions.component.html',
   styleUrls: ['./client-positions.component.css']
 })
-export class ClientPositionsComponent implements OnInit {
+export class ClientPositionsComponent implements OnInit, AfterViewInit {
 
-  constructor() { }
+  displayedColumns: string[] = ['name', 'industry', 'price', 'sell'];
+  dataSource = new MatTableDataSource<any>();
+  index: number;
+  id: number;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
+  constructor(
+    private managerService: ManagerService,
+    private dialog: MatDialog,
+    private router: Router,
+  ) { }
+
 
   ngOnInit() {
+    this.getClientActiveOrders();
   }
 
+  public getClientActiveOrders = () => {
+    this.managerService.getActiveOrdersInfo(this.router.url.split('/')[3])
+      .subscribe((res) => {
+        this.dataSource.data = res;
+        this.managerService.clientDataChange.next(res); // added
+      });
+  }
+
+  ngAfterViewInit(): void {
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  sell() {
+    // should be impl
+  }
+
+  private refreshTable() {
+    this.getClientActiveOrders();
+  }
 
 }

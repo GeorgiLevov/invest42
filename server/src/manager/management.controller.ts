@@ -22,11 +22,11 @@ export class ManagementController {
         return this.managementService.getClientPortfolio(params.id);
     }
 
-    @Get('activeOrders')
+    @Get('activeOrders/:id')
     @Roles(Role.manager)
     @UseGuards(AuthGuard(), RolesGuard)
-    getAllActiveClientOrders(@Body() client): Promise<Order[]> {
-        return this.managementService.getAllActiveClientOrders(client.email);
+    getAllActiveClientOrders(@Param() params): Promise<Order[]> {
+        return this.managementService.getAllActiveClientOrders(params.id);
     }
 
     @Post('watchlist/add')
@@ -69,7 +69,6 @@ export class ManagementController {
     updateClient(@Body() info): Promise<object> {
         return this.managementService.updateClient(info.id, info.email, info.address);
     }
-
 
     @Get('open-companies')
     @Roles(Role.manager)
