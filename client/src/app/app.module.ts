@@ -1,3 +1,4 @@
+import { SpinnerInterceptor } from './shared/core/interceptors/spinner.interceptor.service';
 import '../polyfills';
 import { ManagerGuard } from './shared/core/authentication/manager-guard.service';
 import { AdminGuard } from './shared/core/authentication/admin-guard.service';
@@ -12,7 +13,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { TokenInterceptor } from './shared/core/authentication/token.interceptor';
 import { RoleGuard } from './shared/core/authentication/role-guard.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { NgxSpinnerModule } from 'ngx-spinner';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/material';
 import { ParallaxDirective } from './parallax.directive';
@@ -24,6 +25,7 @@ import { ParallaxDirective } from './parallax.directive';
     ParallaxDirective,
   ],
   imports: [
+    NgxSpinnerModule,
     HttpClientModule,
     BrowserModule,
     SharedModule,
@@ -39,6 +41,11 @@ import { ParallaxDirective } from './parallax.directive';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: SpinnerInterceptor,
       multi: true
     },
     AdminGuard,

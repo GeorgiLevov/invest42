@@ -19,7 +19,9 @@
           <mat-nav-list>
               <ul>
                   <li *ngFor="let item of navMenu">
-                    <a [ngClass]="{'active': item.isActive }" (click)="sidenav.close()" mat-list-item routerLink="{{item.route}}">{{item.text}}</a>
+                    <a [ngClass]="{'active': item.isActive }" (click)="sidenav.close()" mat-list-item routerLink="{{item.route}}">
+                        {{item.text}}
+                    </a>
                   </li>
                 </ul>
           </mat-nav-list>

@@ -11,18 +11,21 @@ export class ManagerComponent implements OnInit {
   public navMenu = [
     {
       text: 'Market',
+      icon: 'swap_vertical_circle',
       route: '/manager',
       path: 'market',
       isActive: false,
     },
     {
       text: 'Positions',
+      icon: 'swap_vertical_circle',
       route: '/positions',
       path: 'positions',
       isActive: false,
     },
     {
       text: 'Clients',
+      icon: 'swap_vertical_circle',
       route: '/clients',
       path: 'clients',
       isActive: false,

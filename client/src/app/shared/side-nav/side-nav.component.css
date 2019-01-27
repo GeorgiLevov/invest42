@@ -8,15 +8,29 @@
 
 .mat-sidenav {
   z-index: 99;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  /* background-image: url("../../../assets/diagmonds.png"); */
 }
-  
+
 #sidenav-button {
     z-index: 98;
     top: 1%;
+    left: 0.5%;
     position: fixed;
 }
 
    .mat-drawer-container {
     position: static;
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .sidenav-icon {
+    padding: 0 14px;
   }
   

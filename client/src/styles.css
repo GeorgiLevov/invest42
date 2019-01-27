@@ -1,16 +1,17 @@
-/* @import "~font-awesome/css/font-awesome.min.css"; */
-
 /* You can add global styles to this file, and also import other style files */
 
 html,
 body {
-  height: 100%;
+  /* height: 100%; */
 }
 
 body {
-  margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
-  background-image: url("./assets/background.jpg");
-  background-color: rgb(2, 3, 5);
-  background-repeat: no-repeat;
+/* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
+  background-color: #504aa7; /* fallback for old browsers */
+  background-image: url("./assets/background-blur.jpg");
+  background-attachment: fixed;
+  background-repeat: repeat; 
+  background-size: cover;
+
 }

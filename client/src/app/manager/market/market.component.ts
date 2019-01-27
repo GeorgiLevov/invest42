@@ -16,7 +16,7 @@ export class MarketComponent implements AfterViewInit, OnInit {
   companies: CompanyModel[];
   prices: PricesModel[];
   displayedColumns = ['name', 'industry', 'price', 'more'];
-  dataSource: MatTableDataSource<any>;
+  dataSource = new MatTableDataSource<PricesModel>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -30,66 +30,22 @@ export class MarketComponent implements AfterViewInit, OnInit {
     this.returnWithPrices();
   }
 
-  // public returnCompanies() {
-  //   this.marketService.getCompanies()
-  //   .subscribe(
-  //   (companies: CompanyModel[]) => {
-  //     if (companies === undefined || companies === null) { return; }
-  //     this.companies = companies;
-  //     console.log(this.companies);
-  //     this.dataSource = new MatTableDataSource(companies);
-  //     this.dataSource.paginator = this.paginator;
-  //     this.dataSource.sort = this.sort;
-  //     console.log(this.dataSource);
-  //     },
-  //   error => console.log(error),
-  //   () => {
-  //     console.log('companies finished loading');
-  //   });
-  // }
-
-  // public uprateCompanyObjects(companies, prices) {
-  //   const findId = (id) => prices.find( price => price.__company__.id === id);
-  //   companies.forEach(company => Object.assign(company, findId(company.id)));
-  //   return companies;
-  //   }
-
   public returnWithPrices() {
     this.marketService.getCompaniesAndPrices()
-      .subscribe(
-        (PricesWithCompanies: any) => {
-          // this.companies = PricesWithCompanies.__company__ as CompanyModel[];
-          // console.log(this.companies);
-          this.companies = PricesWithCompanies.map((price) => {
-            return price.__company__;
+      .subscribe((PricesWithCompanies: PricesModel[]) => {
+          this.dataSource.data = PricesWithCompanies as PricesModel[];
+          console.log(this.dataSource);
           });
-          // console.log(this.companies);
-          // THIS SHOULD BE FIXED !!!!!
-
-          this.prices = PricesWithCompanies as PricesModel[];
-          // console.log(PricesWithCompanies);
-          this.dataSource = new MatTableDataSource(this.prices);
-          // this.dataSource.data = this.companies;
-          // console.log(PricesWithCompanies.__company__);
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
-        },
-        error => console.log(error),
-        // () => console.log('ReturnWithPricesIsReady')
-      );
   }
 
   companyProfile(id) {
     this.marketService.goToCompanyProfilePage(id);
-    // console.log('component');
   }
 
-  ngAfterViewInit() {
-
-    // this.dataSource.paginator = this.paginator;
-    // this.dataSource.sort = this.sort;
+  ngAfterViewInit(): void {
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
-
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();

@@ -11,10 +11,10 @@ h3 {
   box-shadow: none;
 }
 
-.mat-table {
-  width: 95%;
+.mat-paginator {
+  width: 100%;
   float: right;
-}
+} 
 
 .mat-card {
   max-width: 120px;
@@ -49,18 +49,21 @@ h3 {
   margin: inherit;
 }
 
-
 th {
   width: 25%;
 }
 
-
 .mat-form-field {
-  font-size: 14px;
-  width: 100%;
+  font-size: 20px;
+  width: 30%;
+}
+  
+.toolbar-icon {
+  padding: 0 14px;
 }
 
-.mat-paginator {
-  width: 94.95%;
-  float: right;
+.toolbar-spacer {
+  flex: 1 1 auto;
 }
+
+

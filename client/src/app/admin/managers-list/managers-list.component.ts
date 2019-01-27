@@ -13,7 +13,7 @@ import { EditManagerComponent } from '../admin-modals/edit-manager/edit-manager.
 })
 export class ManagersListComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: string[] = ['avatar', 'id', 'fullname', 'email', 'role', 'status', 'clients', 'actions'];
+  displayedColumns: string[] = [ 'id', 'avatar', 'fullname', 'email', 'status', 'clients', 'actions'];
   dataSource = new MatTableDataSource<ManagerData>();
 
   index: number;
