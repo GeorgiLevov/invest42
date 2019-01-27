@@ -12,6 +12,7 @@ export class SideNavComponent implements OnInit, OnChanges {
   constructor() { }
   @ViewChildren('sidenav') sidenav: MatSidenav;
 
+  @Input() navMode;
   @Input() navMenu;
 
 

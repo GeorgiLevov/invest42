@@ -7,7 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./manager.component.css']
 })
 export class ManagerComponent implements OnInit {
-
+  
+  public navMode = 'Overview Mode';
   public navMenu = [
     {
       text: 'Market',

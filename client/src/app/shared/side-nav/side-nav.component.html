@@ -9,9 +9,9 @@
           
     
           <mat-divider></mat-divider>
-    
-          <mat-toolbar>
-            <span>General Overview</span>
+
+          <mat-toolbar *ngIf="navMode">
+            <span>{{navMode}}</span>
           </mat-toolbar>
     
           <mat-divider></mat-divider>

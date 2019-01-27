@@ -47,16 +47,14 @@ const TREE_DATA = JSON.stringify({
         company: 'company_details',
         price: 'last_stock_price',
         more_information: {
-          company_details: 'card',
+          company_profile: 'card',
           company_news: 'dropdown',
           stock_price_chart: 'chart',
         },
       },
       Clients: {
-        src: {
-          button: 'ts',
-          checkbox: 'ts',
-          input: 'ts',
+        ToDo: {
+          add_client_sections: 'todo',
         },
       }
     },

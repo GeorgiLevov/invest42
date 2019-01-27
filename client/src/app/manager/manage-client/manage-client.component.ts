@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ManageClientComponent implements OnInit {
 
+  public navMode = 'Management Mode';
   public navMenu = [
     {
       text: 'Portfolio',
