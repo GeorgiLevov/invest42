@@ -13,9 +13,9 @@ import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 export class MarketComponent implements AfterViewInit, OnInit {
 
 
-  companies: CompanyModel[];
+  // companies: CompanyModel[];
   prices: PricesModel[];
-  displayedColumns = ['name', 'industry', 'price', 'more'];
+  displayedColumns = ['name', 'industry', 'endprice', 'more'];
   dataSource = new MatTableDataSource<PricesModel>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -34,8 +34,7 @@ export class MarketComponent implements AfterViewInit, OnInit {
     this.marketService.getCompaniesAndPrices()
       .subscribe((PricesWithCompanies: PricesModel[]) => {
           this.dataSource.data = PricesWithCompanies as PricesModel[];
-          console.log(this.dataSource);
-          });
+      });
   }
 
   companyProfile(id) {
