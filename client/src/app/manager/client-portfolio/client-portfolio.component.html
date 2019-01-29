@@ -1,18 +1,31 @@
-<div *ngIf="client">
+<div *ngIf="client" class="client-details-container">
+    <mat-card class="example-card">
+        <mat-card-header>
+            <div mat-card-avatar>
+                <img class="client-image" [src]="'http://localhost:5500//'+client.icon" alt="Client Icon">
+            </div>
+          <mat-card-title>{{client.fullname}}</mat-card-title>
+          <mat-card-subtitle>Age: {{client.age}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p class="mat-h3">
+            Email: {{client.email}}<br/>
+            Address: {{client.address}}<br/>
+            Date Added: {{client.dateOfCreation.slice(0, 10)}}<br/>
+          </p>
+          <p class="mat-display-1">
+            Balance: {{client.availableBalance}}<br/>
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button color="primary" (click)="deposit()">Deposit</button>
+            <button mat-raised-button color="primary" (click)="withdraw()">Withdraw</button>
+            <button mat-raised-button color="primary" (click)="editAccount()">Edit Account</button>
+        </mat-card-actions>
+      </mat-card>
 
-  <h1>id: {{client.id}}</h1>
-  <h1>fullname: {{client.fullname}}</h1>
-  <h1>email: {{client.email}}</h1>
-  <h1>dateOfCreation: {{client.dateOfCreation}}</h1>
-  <h1>address: {{client.address}}</h1>
-  <h1>age: {{client.age}}</h1>
-  <h1>availableBalance: {{client.availableBalance}}</h1>
-  <h1>status: {{client.status}}</h1>
-  <h1>icon: {{client.icon}}</h1>
 
-  <button mat-raised-button color="primary" (click)="deposit()">Deposit</button>
-  <button mat-raised-button color="primary" (click)="withdraw()">Withdraw</button>
-  <button mat-raised-button color="primary" (click)="editAccount()">Edit Account</button>
+
 
   <h1>CURRENT PROFIT OR LOSS: not impl for now!</h1>
 

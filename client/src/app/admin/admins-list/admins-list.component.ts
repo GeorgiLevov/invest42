@@ -12,7 +12,7 @@ import { AddAdminComponent } from '../admin-modals/add-admin/add-admin.component
 })
 export class AdminsListComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: string[] = ['avatar', 'id', 'fullname', 'email', 'role', 'status', 'actions'];
+  displayedColumns: string[] = ['id', 'avatar',  'fullname', 'email', 'status', 'actions'];
   dataSource = new MatTableDataSource<UserData>();
 
   // dataChange: BehaviorSubject<UserData[]> = new BehaviorSubject<UserData[]>([]);
@@ -59,14 +59,13 @@ export class AdminsListComponent implements OnInit, AfterViewInit {
   }
 
   addNewUser() {
-
     const dialogRef = this.dialog.open(AddAdminComponent, {
       data: {}
     });
-
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
         this.adminService.dataChange.value.push(this.adminService.getDialogData());
+        console.log(this.adminService.dataChange.value);
       }
     });
   }

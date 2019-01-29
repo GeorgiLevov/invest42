@@ -33,6 +33,7 @@ export class AddClientComponent {
     }
 
     public confirmAdd(): void {
+        console.log(this.data);
         this.adminService.addClient(this.data);
     }
 }

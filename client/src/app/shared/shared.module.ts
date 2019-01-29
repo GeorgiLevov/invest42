@@ -8,6 +8,7 @@ import { UnauthorisedComponent } from './core/errors/unauthorised/unauthorised.c
 import { SideNavComponent } from './side-nav/side-nav.component';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import {MatTreeModule} from '@angular/material/tree';
 import {
     MatGridListModule,
     MatFormFieldModule,
@@ -26,8 +27,10 @@ import {
 import { MaterialModule } from '../angular-material/angular-material.module';
 import { LayoutModule } from '@angular/cdk/layout';
 import { ProfileComponent } from './profile/profile.component';
+import { ProjectTreeComponent } from './project-tree/project-tree.component';
 
 const sharedModules = [
+    MatTreeModule,
     MatToolbarModule,
     MatButtonModule,
     MatSidenavModule,
@@ -54,6 +57,7 @@ const sharedModules = [
         UnauthorisedComponent,
         SideNavComponent,
         ProfileComponent,
+        ProjectTreeComponent,
     ],
     imports: [
         ...sharedModules,
@@ -66,6 +70,7 @@ const sharedModules = [
         ...sharedModules,
         SideNavComponent,
         ProfileComponent,
+        ProjectTreeComponent,
     ],
     providers: [ProfileService, AppConfig],
 })

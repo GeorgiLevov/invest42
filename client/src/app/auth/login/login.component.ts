@@ -26,15 +26,14 @@ export class LoginComponent implements OnInit {
 
   public genericErrorMsg = 'The field is required!';
   public genMinLengthMsg = 'Min length should be more than 8 chars!';
-  public emailErrMsg = 'Invalid email! Eg. john.doe@gmail.com!';
+  public emailErrMsg = 'Not a valid email';
+  public passErrMsg = 'Password must have one \'capital\' and one small letter.';
   public genMaxLengthMsg = 'Max length should be less than 50 chars!';
 
   // tslint:disable-next-line:max-line-length
-  public emailPattern = ('/^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$/');
 
   public passwordPattern = ('([A-Za-z0-9@#$%&*]+)$');
 
-  public loginChekEmail = ('([a-z_.0-9]+@(?:[a-z])+\.[a-z]{2,})$');
   loading = false;
 
   constructor(
@@ -59,7 +58,6 @@ export class LoginComponent implements OnInit {
           Validators.email,
           Validators.minLength(10),
           Validators.maxLength(50),
-          Validators.pattern(this.loginChekEmail),
         ])],
       'password': [null,
         Validators.compose([
@@ -76,13 +74,30 @@ export class LoginComponent implements OnInit {
   }
 
   errToast() {
-    this.toastService.error('', 'Wrong credentials!', { timeOut: 1000 });
+    this.toastService.error('Please try again', 'Wrong credentials!', { timeOut: 1500 });
+    this.loginForm.controls['password'].setErrors(null);
   }
 
+  getEmailErrorMessage() {
+    return this.loginForm.controls['email'].hasError('required') ? this.genericErrorMsg :
+        this.loginForm.controls['email'].hasError('minlength') ? this.genMinLengthMsg :
+        this.loginForm.controls['email'].hasError('maxlength') ? this.genMaxLengthMsg :
+        this.loginForm.controls['email'].hasError('pattern') ? this.emailErrMsg :
+        '';
+  }
+
+  getPassErrorMessage() {
+    return this.loginForm.controls['password'].hasError('required') ? this.genericErrorMsg :
+        this.loginForm.controls['password'].hasError('minlength') ? this.genMinLengthMsg :
+        this.loginForm.controls['password'].hasError('maxlength') ? this.genMaxLengthMsg :
+        this.loginForm.controls['password'].hasError('pattern') ? this.passErrMsg :
+        '';
+  }
 
   public login(): void {
 
     this.loading = true;
+
     const user: UserLogin = {
       email: this.loginForm.value.email,
       password: this.loginForm.value.password,
@@ -94,15 +109,10 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    if (!(user.email.match(this.loginChekEmail)) || !(user.password.match(this.passwordPattern))) {
-      this.errToast();
-      this.loginForm.reset();
-      return;
-    }
-
     this.loginService.login(user, { observe: 'response', responseType: 'json' })
       .subscribe((data: { message: string, token: string }) => {
         localStorage.setItem('token', data.token);
+
         this.successToast();
         const role = this.authService.getRole();
 
@@ -120,9 +130,8 @@ export class LoginComponent implements OnInit {
         // console.log('err', err);
 
         this.errToast();
+        this.loginForm.reset();
       });
-    this.loginForm.reset();
 
   }
-
 }

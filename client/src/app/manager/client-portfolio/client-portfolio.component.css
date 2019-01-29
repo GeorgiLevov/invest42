@@ -1,0 +1,16 @@
+
+
+.client-details-container {
+    max-width: 400px;
+    display: inline-block;
+}
+
+.mat-card {
+    margin: 15px;
+}
+
+.client-image {
+    width: 40px;
+    height: 45px; 
+    margin: 0;
+  }

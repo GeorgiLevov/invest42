@@ -12,8 +12,8 @@ export class SideNavComponent implements OnInit, OnChanges {
   constructor() { }
   @ViewChildren('sidenav') sidenav: MatSidenav;
 
+  @Input() navMode;
   @Input() navMenu;
-
 
   open() {
     this.sidenav.open();
@@ -21,6 +21,10 @@ export class SideNavComponent implements OnInit, OnChanges {
 
   close() {
     this.sidenav.close();
+  }
+
+  onEdit(){
+    window.scrollTo(0, 0);
   }
 
   ngOnInit() {

@@ -12,8 +12,16 @@ import { EditClientComponent } from '../admin-modals/edit-client/edit-client.com
 })
 export class ClientsListComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: string[] = ['id',
-    'fullname', 'email', 'address', 'availableBalance', 'icon', 'status', 'managerName', 'managerEmail', 'actions'];
+  displayedColumns: string[] = [
+    'id',
+    'icon',
+    'fullname',
+    'email',
+    'address',
+    'availableBalance',
+    'status',
+    'managerName',
+    'actions'];
   dataSource = new MatTableDataSource<ClientData>();
 
   index: number;

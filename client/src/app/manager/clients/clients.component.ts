@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./clients.component.css']
 })
 export class ClientsComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['id', 'fullname', 'email', 'icon', 'actions'];
+  displayedColumns: string[] = ['id', 'icon', 'fullname', 'email', 'actions'];
   dataSource = new MatTableDataSource<ClientData>();
 
   index: number;
