@@ -15,13 +15,16 @@ export class SideNavComponent implements OnInit, OnChanges {
   @Input() navMode;
   @Input() navMenu;
 
-
   open() {
     this.sidenav.open();
   }
 
   close() {
     this.sidenav.close();
+  }
+
+  onEdit(){
+    window.scrollTo(0, 0);
   }
 
   ngOnInit() {

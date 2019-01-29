@@ -11,14 +11,22 @@
   position: absolute;
   top: 0px;
   left: 0px;
-  /* background-image: url("../../../assets/diagmonds.png"); */
+  background-image: url("../../../assets/myimage.jpg");
+  background-color: powderblue;
 }
 
 #sidenav-button {
     z-index: 98;
-    top: 1%;
+    top: 0.5%;
     left: 0.5%;
-    position: fixed;
+    position: absolute;
+}
+
+#to-top-button {
+  z-index: 97;
+  top: 0.5%;
+  left: 0.5%;
+  position: fixed;
 }
 
    .mat-drawer-container {

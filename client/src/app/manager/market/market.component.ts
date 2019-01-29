@@ -1,3 +1,4 @@
+import { ManagerService } from './../services/manager.service';
 import { Router } from '@angular/router';
 import { PricesModel } from './../../models/prices/prices.model';
 import { MarketService } from './market.serivice';
@@ -15,14 +16,15 @@ export class MarketComponent implements AfterViewInit, OnInit {
 
   // companies: CompanyModel[];
   prices: PricesModel[];
-  displayedColumns = ['name', 'industry', 'endprice', 'more'];
-  dataSource = new MatTableDataSource<PricesModel>();
+  displayedColumns = ['name', 'industry', 'endprice', 'opendate', 'more'];
+  dataSource = new MatTableDataSource<any>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(
     private marketService: MarketService,
+    private managerService: ManagerService,
     private router: Router,
   ) { }
 
@@ -30,10 +32,12 @@ export class MarketComponent implements AfterViewInit, OnInit {
     this.returnWithPrices();
   }
 
-  public returnWithPrices() {
-    this.marketService.getCompaniesAndPrices()
-      .subscribe((PricesWithCompanies: PricesModel[]) => {
-          this.dataSource.data = PricesWithCompanies as PricesModel[];
+  public returnWithPrices = () => {
+    this.managerService.getMarketInfo()
+      .subscribe((res: any) => {
+        this.dataSource.data = res;
+        console.log(res);
+        // this.managerService.clientDataChange.next(res); // added
       });
   }
 

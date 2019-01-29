@@ -64,20 +64,20 @@ export class ManagementService {
 
     async getMarketInfo(): Promise<object[]> {
         const market = await this.companyRepository.query(
-            `SELECT
-            c.id,
-            c.name,
-            c.abbr,
-            c.icon,
-            c.ceo,
-            c.address,
-            c.industry,
-            Max(p.opendate),
-            p.startprice,
-            p.endprice,
-            p.highprice,
-            p.lowprice,
-            p.endprice as currentprice
+        `SELECT
+        c.id,
+        c.name,
+        c.abbr,
+        c.icon,
+        c.ceo,
+        c.address,
+        c.industry,
+        Max(p.opendate),
+        p.startprice,
+        p.endprice,
+        p.highprice,
+        p.lowprice,
+        p.endprice as currentprice
         FROM companies as c
         JOIN prices as p ON c.id = p.companyId
         GROUP BY(c.id);`,
