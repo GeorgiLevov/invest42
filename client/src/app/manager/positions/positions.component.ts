@@ -28,13 +28,15 @@ export class PositionsComponent implements OnInit {
   }
 
   initializeClients() {
-    this.managerService.getClientOrders().subscribe((data) => {
+    this.managerService.getClientOrders().subscribe((data: any) => {
       this.clients = data as ClientModel[];
-      this.sortedData = this.clients[0].orders;
+      // console.log(this.clients);
 
-      this.clients.map((client: any) => {
-        client.orders = client.__orders__;
-      });
+      // this.sortedData = this.clients[0].orders;
+
+      // this.clients.map((client: any) => {
+      //   client.orders = client.__orders__;
+      // });
     },
       (err) => { console.log('Error from client orders: ', err); });
   }
@@ -59,7 +61,6 @@ export class PositionsComponent implements OnInit {
 
     this.clients[index].orders = this.sortedData;
   }
-
 
   generateTable(orders): string {
 

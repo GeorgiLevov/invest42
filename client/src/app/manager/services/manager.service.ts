@@ -34,8 +34,8 @@ export class ManagerService {
         return this.http.get<ClientData[]>(`${this.apiUrl}/view/clients`);
     }
 
-    getClientOrders(): Observable<ClientModel[]> {
-        return this.http.get<ClientModel[]>(`${this.apiUrl}/view/clients/orders`);
+    getClientOrders(): Observable<ClientData[]> { // here working
+        return this.http.get<ClientData[]>(`${this.apiUrl}/view/clients/orders`);
     }
 
     getDialogData() {

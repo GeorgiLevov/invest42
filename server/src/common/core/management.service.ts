@@ -64,7 +64,7 @@ export class ManagementService {
 
     async getMarketInfo(): Promise<object[]> {
         const market = await this.companyRepository.query(
-        `SELECT
+            `SELECT
         c.id,
         c.name,
         c.abbr,
@@ -72,7 +72,7 @@ export class ManagementService {
         c.ceo,
         c.address,
         c.industry,
-        Max(p.opendate),
+        Max(p.opendate) as opendate,
         p.startprice,
         p.endprice,
         p.highprice,

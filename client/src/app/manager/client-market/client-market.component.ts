@@ -37,7 +37,7 @@ export class ClientMarketComponent implements OnInit, AfterViewInit {
       .subscribe((res) => {
         this.dataSource.data = res;
         this.managerService.clientDataChange.next(res); // added
-        console.log(res);
+        // console.log(res);
       });
   }
 

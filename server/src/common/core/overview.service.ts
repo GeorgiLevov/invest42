@@ -105,13 +105,13 @@ export class OverviewService {
     }
 
     const assignedClients = await this.clientsRepository.find({ where: { manager: managerFound.id, status: BasicStatus.active } });
-    // console.log(assignedClients);
     if (!assignedClients) {
       throw new HttpException('No clients found', HttpStatus.BAD_REQUEST);
     }
     if (assignedClients.length < 1) {
       throw new HttpException('You have no assigned clients.', HttpStatus.BAD_REQUEST);
     }
+    // console.log(assignedClients);
     return assignedClients;
   }
 
