@@ -64,23 +64,40 @@ export class ManagementService {
 
     async getMarketInfo(): Promise<object[]> {
         const market = await this.companyRepository.query(
-            `SELECT
-        c.id,
-        c.name,
-        c.abbr,
-        c.icon,
-        c.ceo,
-        c.address,
-        c.industry,
-        Max(p.opendate) as opendate,
-        p.startprice,
-        p.endprice,
-        p.highprice,
-        p.lowprice,
-        p.endprice as currentprice
-        FROM companies as c
-        JOIN prices as p ON c.id = p.companyId
-        GROUP BY(c.id);`,
+            `SELECT DISTINCT
+            c.id,
+            c.name,
+            c.abbr,
+            c.icon,
+            c.ceo,
+            c.address,
+            c.industry,
+            pricesTable.companyId,
+            pricesTable.opendate,
+            pricesTable.startprice,
+            pricesTable.endprice,
+            pricesTable.highprice,
+            pricesTable.lowprice,
+            pricesTable.currentprice
+        FROM
+            (SELECT DISTINCT
+                prices.companyId AS companyId,
+                    prices.opendate AS opendate,
+                    prices.startprice AS startprice,
+                    prices.endprice AS endprice,
+                    prices.highprice AS highprice,
+                    prices.lowprice AS lowprice,
+                    prices.endprice AS currentprice
+            FROM
+                prices
+            JOIN (SELECT
+                MAX(prices.opendate) AS opendate
+            FROM
+                prices
+            GROUP BY prices.companyId) maxOpenDates ON prices.opendate = maxOpenDates.opendate
+            GROUP BY prices.companyId) pricesTable
+                JOIN
+            companies AS c ON c.id = pricesTable.companyId;`,
         );
 
         return market;
