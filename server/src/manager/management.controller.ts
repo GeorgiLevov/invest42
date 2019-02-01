@@ -29,6 +29,13 @@ export class ManagementController {
         return this.managementService.getAllActiveClientOrders(params.id);
     }
 
+    @Get('closedOrders/:id')
+    @Roles(Role.manager)
+    @UseGuards(AuthGuard(), RolesGuard)
+    getAllClosedClientOrders(@Param() params): Promise<Order[]> {
+        return this.managementService.getAllClosedClientOrders(params.id);
+    }
+
     @Post('watchlist/add')
     @Roles(Role.manager)
     @UseGuards(AuthGuard(), RolesGuard)
@@ -67,7 +74,7 @@ export class ManagementController {
     @Roles(Role.manager)
     @UseGuards(AuthGuard(), RolesGuard)
     updateUnits(@Body() info): Promise<object> {
-        return this.managementService.updateOrder(info.id, info.units);
+        return this.managementService.updateOrder(info.id, info.units, info.clientId);
     }
 
     @Post('update')

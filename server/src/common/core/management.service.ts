@@ -56,7 +56,35 @@ export class ManagementService {
             o.id
         FROM companies as c
         JOIN orders as o ON c.id = o.companyId
-        JOIN clients as cl ON ${clientId} = o.clientId;`,
+        JOIN clients as cl ON ${clientId} = o.clientId
+        WHERE o.status = 'OPEN';`,
+        );
+
+        return orders;
+    }
+
+    async getAllClosedClientOrders(clientId: string): Promise<Order[]> {
+        const orders = await this.clientsRepository.query(
+            `SELECT
+            DISTINCT
+            c.id,
+            c.name,
+            c.abbr,
+            c.icon,
+            c.ceo,
+            c.address,
+            c.industry,
+            o.opendate,
+            o.closedate,
+            o.buyprice,
+            o.sellprice,
+            o.units,
+            o.status,
+            o.id
+        FROM companies as c
+        JOIN orders as o ON c.id = o.companyId
+        JOIN clients as cl ON ${clientId} = o.clientId
+        WHERE o.status = 'CLOSED';`,
         );
 
         return orders;
@@ -147,7 +175,7 @@ export class ManagementService {
                 JOIN
             companies AS c ON c.id = pricesTable.companyId
                 JOIN clients_watchlist_companies ON clients_watchlist_companies.companiesId = c.id
-                JOIN clients ON clients.id = clients_watchlist_companies.clientsId 
+                JOIN clients ON clients.id = clients_watchlist_companies.clientsId
                 WHERE clients.id = ${foundClient.id};`,
         );
 
@@ -225,15 +253,37 @@ export class ManagementService {
         return { result: 'Balance was updated successfully!' };
     }
 
-    async updateOrder(orderId: string, units: number): Promise<object> {
+    async updateOrder(orderId: string, units: number, clientId): Promise<object> {
 
-        const orderFound = await this.ordersRepository.findOne({ id: `${orderId}` });
-
+        const orderFound = await this.ordersRepository.findOne({ id: `${orderId}` }, { relations: ['company', 'client'] });
         if (!orderFound) {
             throw new HttpException('There is no such order!', HttpStatus.NOT_FOUND);
         }
 
         await this.ordersRepository.update(orderFound.id, { units: orderFound.units + units });
+
+        const clientFound = await this.clientsRepository.findOne({ id: clientId });
+
+        const order = {
+            opendate: new Date(),
+            closedate: new Date(),
+            buyprice: orderFound.buyprice - 1,
+            sellprice: orderFound.sellprice + 2,
+            units: `${units * -1}`,
+            status: OrderStatus.closed,
+            companyId: orderFound.company.id,
+        };
+        const createOrder = this.ordersRepository.create(order);
+        const newOrder = await this.ordersRepository.save(createOrder);
+
+        const companyFound = await this.companyRepository.findOne({ id: orderFound.company.id });
+
+        const com = await companyFound.orders;
+        com.push(newOrder);
+        await this.companyRepository.save(companyFound);
+        // console.log(newOrder);
+        clientFound.orders.push(newOrder);
+        await this.clientsRepository.save(clientFound);
 
         return { result: 'Units was updated successfully!' };
     }
