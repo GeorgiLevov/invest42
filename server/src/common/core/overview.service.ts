@@ -68,7 +68,19 @@ export class OverviewService {
   async getCompanyPrices(companyId): Promise<object[]> {
 
     const prices = [];
-    const companyPrices = await this.pricesRepository.query(`
+    const companyPrices = await this.pricesRepository.query(
+      // SELECT
+      //     p.id,
+      //     p.opendate,
+      //     p.startprice,
+      //     p.endprice,
+      //     p.highprice,
+      //     p.lowprice
+      // FROM
+      //     prices AS p
+      // WHERE
+      //     p.companyId = ${companyId} AND (p.id % 1440) = 0;
+      `
         SELECT
             p.id,
             p.opendate,
@@ -79,13 +91,18 @@ export class OverviewService {
         FROM
             prices AS p
         WHERE
-            p.companyId = ${companyId} AND (p.id % 1440) = 0;`);
+            p.companyId = 1
+            ORDER BY opendate DESC
+            LIMIT 60;`,
+    );
 
     companyPrices.forEach((price) => {
-      const newDate = price.opendate.toISOString().slice(0, 10);
+      // const newDate = price.opendate.toISOString().slice(0, 10);
+      const newDate1 = price.opendate.toISOString().slice(0, 10) + ' '
+        + price.opendate.toISOString().slice(11, 19);
 
       const obj = {
-        date: newDate,
+        date: newDate1,
         open: `${price.startprice}`,
         high: `${price.endprice}`,
         low: `${price.lowprice}`,

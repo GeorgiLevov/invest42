@@ -14,7 +14,7 @@ import { UpdateOrderComponent } from '../manager-modals/update-order/update-orde
 })
 export class ClientMarketComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: string[] = ['name', 'industry', 'startprice', 'currentprice', 'addToWatchlsit', 'buy'];
+  displayedColumns: string[] = ['name', 'industry', 'startprice', 'currentprice', 'addToWatchlsit', 'buy', 'sell'];
   dataSource = new MatTableDataSource<any>();
   index: number;
   id: number;
