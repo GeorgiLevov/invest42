@@ -154,7 +154,7 @@ export class ManagementService {
         return watchlist;
     }
 
-    async addCompanyToWatchlist(clientId: string, companyName: string): Promise<object> {
+    async addCompanyToWatchlist(clientId: string, companyId: string): Promise<object> {
 
         const clientFound = await this.clientsRepository.findOne({ id: `${clientId}` });
 
@@ -162,7 +162,7 @@ export class ManagementService {
             throw new HttpException('There is no such client!', HttpStatus.NOT_FOUND);
         }
 
-        const foundCompany = await this.companyRepository.findOne({ name: `${companyName}` });
+        const foundCompany = await this.companyRepository.findOne({ id: `${companyId}` });
 
         if (!foundCompany) {
             throw new HttpException('There is no such company!', HttpStatus.NOT_FOUND);
@@ -180,15 +180,15 @@ export class ManagementService {
         return { result: 'Company was successfully added to watchlist!' };
     }
 
-    async removeCompanyFromWatchlist(clientEmail: string, companyName: string): Promise<object> {
+    async removeCompanyFromWatchlist(clientId: string, companyId: string): Promise<object> {
 
-        const clientFound = await this.clientsRepository.findOne({ email: `${clientEmail}` });
+        const clientFound = await this.clientsRepository.findOne({ id: `${clientId}` });
 
         if (!clientFound) {
             throw new HttpException('There is no such client!', HttpStatus.NOT_FOUND);
         }
 
-        const foundCompany = await this.companyRepository.findOne({ name: `${companyName}` });
+        const foundCompany = await this.companyRepository.findOne({ id: `${companyId}` });
 
         if (!foundCompany) {
             throw new HttpException('There is no such company!', HttpStatus.NOT_FOUND);
@@ -205,9 +205,8 @@ export class ManagementService {
         if (index === -1) {
             throw new HttpException('There is no such company in client list!', HttpStatus.NOT_FOUND);
         }
-        clientFound.watchlist = Promise.all(watchlist.splice(index, 1));
-        // tslint:disable-next-line:no-console
-        console.log(clientFound);
+
+        watchlist.splice(index, 1);
         await this.clientsRepository.save(clientFound);
 
         return { result: 'Company was successfully removed from client watchlist!' };

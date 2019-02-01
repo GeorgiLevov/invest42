@@ -50,7 +50,7 @@ export class CompanyPortfolioComponent implements OnInit, AfterViewInit, OnDestr
       const chart = am4core.create('chartdiv', am4charts.XYChart);
       chart.paddingRight = 20;
 
-      chart.dateFormatter.inputDateFormat = 'YYYY-MM-dd HH:mm:ss';
+      chart.dateFormatter.inputDateFormat = 'YYYY-MM-dd HH:mm:ss'; // should be fixed
 
       const dateAxis = chart.xAxes.push(new am4charts.DateAxis());
       dateAxis.renderer.grid.template.location = 0;

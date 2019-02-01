@@ -70,9 +70,9 @@ export class ClientMarketComponent implements OnInit, AfterViewInit {
     });
   }
 
-  addToWatchlsit(companyName) {
+  addToWatchlsit(companyId) {
     // console.log(this.clientId, companyName);
-    this.managerService.addToWatchlist(this.clientId, companyName)
+    this.managerService.addToWatchlist(this.clientId, companyId)
       .subscribe((data) => {
         this.toastr.success('', 'Successfully added to watchlist', { timeOut: 1000 });
         // console.log(data);

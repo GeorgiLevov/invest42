@@ -69,13 +69,13 @@ export class ClientWatchlistComponent implements OnInit, AfterViewInit {
     });
   }
 
-  removeFromWatchlsit(companyName) {
+  removeFromWatchlsit(companyId) {
     // console.log(this.clientId, companyName);
-    // this.managerService.removeFromWatchlist(this.clientId, companyName)
-    //   .subscribe((data) => {
-    //     this.toastr.success('', 'Successfully added to watchlist', { timeOut: 1000 });
-    //     // console.log(data);
-    //   });
+    this.managerService.removeFromWatchlist(this.clientId, companyId)
+      .subscribe((data) => {
+        this.toastr.success('', 'Successfully removed from watchlist', { timeOut: 1000 });
+        // console.log(data);
+      });
   }
 
   private refreshTable() {
