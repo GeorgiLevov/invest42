@@ -33,7 +33,7 @@ export class ManagementController {
     @Roles(Role.manager)
     @UseGuards(AuthGuard(), RolesGuard)
     addToClientWatchlist(@Body() info): Promise<object> {
-        return this.managementService.addCompanyToWatchlist(info.email, info.companyname);
+        return this.managementService.addCompanyToWatchlist(info.clientId, info.companyName);
     }
 
     @Get('market')
@@ -42,18 +42,18 @@ export class ManagementController {
         return this.managementService.getMarketInfo();
     }
 
-    @Get('watchlist')
+    @Get('watchlist/:clientId')
     @Roles(Role.manager)
     @UseGuards(AuthGuard(), RolesGuard)
-    getClientWatchlist(@Body() info): Promise<object> {
-        return this.managementService.getClientWatchlist(info.email);
+    getClientWatchlist(@Param() info): Promise<object> {
+        return this.managementService.getClientWatchlist(info.clientId);
     }
 
     @Post('watchlist/remove')
     @Roles(Role.manager)
     @UseGuards(AuthGuard(), RolesGuard)
     removeFromClientWatchlist(@Body() info): Promise<object> {
-        return this.managementService.removeCompanyFromWatchlist(info.email, info.companyname);
+        return this.managementService.removeCompanyFromWatchlist(info.clientId, info.companyName);
     }
 
     @Post('balance/update')

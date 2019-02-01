@@ -103,20 +103,60 @@ export class ManagementService {
         return market;
     }
 
-    async getClientWatchlist(clientEmail: string): Promise<Company[]> {
+    async getClientWatchlist(clientId: string): Promise<Company[]> {
 
-        const foundClient = await this.clientsRepository.findOne({ email: `${clientEmail}` });
+        const foundClient = await this.clientsRepository.findOne({ id: `${clientId}` });
 
         if (!foundClient) {
             throw new HttpException('There is no such client!', HttpStatus.NOT_FOUND);
         }
 
-        return await foundClient.watchlist;
+        const watchlist = await this.companyRepository.query(
+            ` SELECT DISTINCT
+            c.id,
+            c.name,
+            c.abbr,
+            c.icon,
+            c.ceo,
+            c.address,
+            c.industry,
+            pricesTable.companyId,
+            pricesTable.opendate,
+            pricesTable.startprice,
+            pricesTable.endprice,
+            pricesTable.highprice,
+            pricesTable.lowprice,
+            pricesTable.currentprice
+        FROM
+            (SELECT DISTINCT
+                prices.companyId AS companyId,
+                    prices.opendate AS opendate,
+                    prices.startprice AS startprice,
+                    prices.endprice AS endprice,
+                    prices.highprice AS highprice,
+                    prices.lowprice AS lowprice,
+                    prices.endprice AS currentprice
+            FROM
+                prices
+            JOIN (SELECT
+                MAX(prices.opendate) AS opendate
+            FROM
+                prices
+            GROUP BY prices.companyId) maxOpenDates ON prices.opendate = maxOpenDates.opendate
+            GROUP BY prices.companyId) pricesTable
+                JOIN
+            companies AS c ON c.id = pricesTable.companyId
+                JOIN clients_watchlist_companies ON clients_watchlist_companies.companiesId = c.id
+                JOIN clients ON clients.id = clients_watchlist_companies.clientsId 
+                WHERE clients.id = ${foundClient.id};`,
+        );
+
+        return watchlist;
     }
 
-    async addCompanyToWatchlist(clientEmail: string, companyName: string): Promise<object> {
+    async addCompanyToWatchlist(clientId: string, companyName: string): Promise<object> {
 
-        const clientFound = await this.clientsRepository.findOne({ email: `${clientEmail}` });
+        const clientFound = await this.clientsRepository.findOne({ id: `${clientId}` });
 
         if (!clientFound) {
             throw new HttpException('There is no such client!', HttpStatus.NOT_FOUND);

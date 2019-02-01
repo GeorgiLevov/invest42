@@ -119,4 +119,19 @@ export class ManagerService {
         return this.http.post(`${this.apiUrl}/client/buy`, info);
     }
 
+    addToWatchlist(clientId, companyName): Observable<object> {
+        // console.log({ clientId, companyName });
+        return this.http.post(`${this.apiUrl}/client/watchlist/add`, { clientId, companyName });
+    }
+
+    removeFromWatchlist(clientId, companyName): Observable<object> {
+        // console.log({ clientId, companyName });
+        return this.http.post(`${this.apiUrl}/client/watchlist/remove`, { clientId, companyName });
+    }
+
+    getWatchlist(clientId): Observable<object[]> {
+        // console.log({ clientId, companyName });
+        return this.http.get<object[]>(`${this.apiUrl}/client/watchlist/${clientId}`);
+    }
+
 }

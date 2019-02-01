@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { BuyOrderComponent } from './../manager-modals/buy-modal/buy-order.component';
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
@@ -13,10 +14,12 @@ import { UpdateOrderComponent } from '../manager-modals/update-order/update-orde
 })
 export class ClientMarketComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: string[] = ['name', 'industry', 'startprice', 'currentprice', 'buy'];
+  displayedColumns: string[] = ['name', 'industry', 'startprice', 'currentprice', 'addToWatchlsit', 'buy'];
   dataSource = new MatTableDataSource<any>();
   index: number;
   id: number;
+
+  clientId = this.router.url.split('/')[3];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -25,6 +28,7 @@ export class ClientMarketComponent implements OnInit, AfterViewInit {
     private managerService: ManagerService,
     private dialog: MatDialog,
     private router: Router,
+    private toastr: ToastrService,
   ) { }
 
   ngOnInit() {
@@ -64,6 +68,15 @@ export class ClientMarketComponent implements OnInit, AfterViewInit {
         this.getMarketInfo();
       }
     });
+  }
+
+  addToWatchlsit(companyName) {
+    // console.log(this.clientId, companyName);
+    this.managerService.addToWatchlist(this.clientId, companyName)
+      .subscribe((data) => {
+        this.toastr.success('', 'Successfully added to watchlist', { timeOut: 1000 });
+        // console.log(data);
+      });
   }
 
   private refreshTable() {
