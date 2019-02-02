@@ -46,7 +46,7 @@ export class ManagerService {
     }
 
     updateBalance(data): Observable<object> {
-
+        // console.log('data', data);
         let info;
         if (data.isDeposit) {
             info = {
@@ -59,7 +59,7 @@ export class ManagerService {
                 balance: 0 - Number(data.balance)
             };
         }
-        // console.log(info);
+        console.log('info: ', info);
 
         return this.http.post(`${this.apiUrl}/client/balance/update`, info);
     }
@@ -82,19 +82,21 @@ export class ManagerService {
     }
 
     updateOrder(data): Observable<object> {
-
+        console.log(data);
         let info;
-        if (data.isSell) {
+        if (!data.isSell) {
             info = {
                 id: data.id,
                 units: 0 - Number(data.quantity),
-                clientId: data.clientId
+                clientId: data.clientId,
+                buyprice: data.buyprice,
             };
         } else {
             info = {
                 id: data.id,
                 units: Number(data.quantity),
-                clientId: data.clientId
+                clientId: data.clientId,
+                buyprice: data.buyprice,
             };
         }
         // console.log(info);

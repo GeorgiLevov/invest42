@@ -20,7 +20,7 @@
   } 
 
   mat-card-title {
-    max-width: 120px;
+    max-width: 100px;
   }
   mat-card-subtitle {
     user-select: none;

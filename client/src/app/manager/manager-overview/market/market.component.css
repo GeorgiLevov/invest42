@@ -70,11 +70,29 @@ td.mat-cell:nth-of-type(2), td.mat-footer-cell:nth-of-type(2), th.mat-header-cel
 }
 td.mat-cell:nth-of-type(3), td.mat-footer-cell:nth-of-type(3), th.mat-header-cell:nth-of-type(3) {
   justify-content: center;
-  width: 20%;
-  padding-left: 50px;
+  width: 15%;
+  /* padding-left: 50px;   */
+  /* padding-right: 100px; */
+  text-align: center;
 }
 
-td.mat-cell:nth-of-type(4), td.mat-footer-cell:nth-of-type(4), th.mat-header-cell:nth-of-type(4) {
+th.mat-header-cell:nth-of-type(4) {
+  justify-content: center;
+  padding-left: 4%;
+  padding-right: 4%;
+  text-align: center;
+}
+
+
+td.mat-cell:nth-of-type(4), td.mat-footer-cell:nth-of-type(4) {
+  justify-content: center;
+  width: 15%;
+  /* padding-left: 50px;   */
+  padding-right: 100px;
+  text-align: right;
+}
+
+td.mat-cell:nth-of-type(5), td.mat-footer-cell:nth-of-type(5), th.mat-header-cell:nth-of-type(5) {
   /* padding-left: 75px; */
   width: 15%;
   justify-content: center;
@@ -82,7 +100,7 @@ td.mat-cell:nth-of-type(4), td.mat-footer-cell:nth-of-type(4), th.mat-header-cel
   padding-right: 50px;
 }
 
-td.mat-cell:nth-of-type(5), td.mat-footer-cell:nth-of-type(5), th.mat-header-cell:nth-of-type(5) {
+td.mat-cell:nth-of-type(6), td.mat-footer-cell:nth-of-type(6), th.mat-header-cell:nth-of-type(6) {
   padding-right: 75px;
   width: 5%;
   justify-content: center;

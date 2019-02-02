@@ -253,11 +253,17 @@ export class ManagementService {
         return { result: 'Balance was updated successfully!' };
     }
 
-    async updateOrder(orderId: string, units: number, clientId): Promise<object> {
+    async updateOrder(orderId: string, units: number, clientId, buyprice): Promise<object> {
 
         const orderFound = await this.ordersRepository.findOne({ id: `${orderId}` }, { relations: ['company', 'client'] });
         if (!orderFound) {
             throw new HttpException('There is no such order!', HttpStatus.NOT_FOUND);
+        }
+
+        this.updateBalance(clientId, (+units) * (+buyprice));
+        
+        if (orderFound.units - units <= 0) {
+           return await this.ordersRepository.remove(orderFound);
         }
 
         await this.ordersRepository.update(orderFound.id, { units: orderFound.units + units });
@@ -398,6 +404,8 @@ export class ManagementService {
             await this.clientsRepository.save(clientFound);
 
         }
+
+        this.updateBalance(orderInfo.clientId, (0 - +orderInfo.quantity * orderInfo.currentprice));
 
         return { result: 'Successfully buy stocks!' };
     }

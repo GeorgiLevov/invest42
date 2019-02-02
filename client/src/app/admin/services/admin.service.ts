@@ -53,7 +53,7 @@ export class AdminService {
             this.toastService.success('', 'Successfully edited!', { timeOut: 2000 });
         },
             (err: HttpErrorResponse) => {
-                this.toastService.error('', 'Error occurred!', { timeOut: 5000 });
+                this.toastService.error('', 'Error occurred!', { timeOut: 2000 });
             });
     }
 
