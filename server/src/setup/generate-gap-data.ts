@@ -72,12 +72,7 @@ createConnection().then(async (conn) => {
           const highlow = [min + Math.random() * delta, min + Math.random() * delta];
           newPrice.lowprice = +Math.min(...highlow).toFixed(2);
           newPrice.highprice = +Math.max(...highlow).toFixed(2);
-<<<<<<< HEAD
-          newPrice.endprice = Math.round(newPrice.lowprice + (Math.random() * (newPrice.highprice - newPrice.lowprice)));
-=======
           newPrice.endprice = +Math.round(newPrice.lowprice + Math.random() * (newPrice.highprice - newPrice.lowprice)).toFixed(2);
-
->>>>>>> c50d0901faea9d227652fb411543631b3beaa81b
           newPrice.company = Promise.resolve(company);
           prices.push(newPrice);
         }

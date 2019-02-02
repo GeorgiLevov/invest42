@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
 import { AdminService } from '../services/admin.service';
-import { ClientData } from '../../models/interfaces/client-data.model';
 import { AddClientComponent } from '../admin-modals/add-client/add-client.component';
 import { EditClientComponent } from '../admin-modals/edit-client/edit-client.component';
 

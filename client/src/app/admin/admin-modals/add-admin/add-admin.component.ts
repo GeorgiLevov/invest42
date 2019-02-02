@@ -1,9 +1,12 @@
-import { UserRegisterData } from './../../../models/user-register.model';
+
 import { AdminService } from './../../services/admin.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { Component, Inject, OnInit } from '@angular/core';
-import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
+import {  OnInit } from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { Component, Inject } from '@angular/core';
+import { Validators } from '@angular/forms';
+import { UserRegisterData } from '../../../shared/models/user-register.model';
 
 @Component({
     selector: 'app-add-admin',

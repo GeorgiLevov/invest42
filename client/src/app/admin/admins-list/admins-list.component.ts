@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
 import { AdminService } from '../services/admin.service';
-import { UserData } from '../../models/interfaces/user-data.model';
 import { EditAdminComponent } from '../admin-modals/edit-admin/edit-admin.component';
 import { AddAdminComponent } from '../admin-modals/add-admin/add-admin.component';
+import { UserData } from '../../shared/models/interfaces/user-data.model';
 
 @Component({
   selector: 'app-admins-list',
@@ -20,7 +20,7 @@ export class AdminsListComponent implements OnInit, AfterViewInit {
    'status',
    'actions'];
   dataSource = new MatTableDataSource<UserData>();
- 
+
   index: number;
 
   id: number;
@@ -83,7 +83,7 @@ export class AdminsListComponent implements OnInit, AfterViewInit {
       data: { id: id, email: email, password: password }
     });
 
-    dialogRef.afterClosed().subscribe((result) => { 
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         console.log('dialogRefAfterClose:' , result);
         this.dataSource.data.push(result);

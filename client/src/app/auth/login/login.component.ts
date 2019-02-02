@@ -1,4 +1,4 @@
-import { UserLogin } from '../../models/user-login.model';
+
 import { LoginService } from './../services/login.service';
 import { AuthService } from './../../../../../server/src/auth/auth.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
@@ -13,6 +13,7 @@ import { AuthenticationService } from '../../shared/core/authentication/authenti
 import { Role } from '../../../../../server/src/models/enums/roles.enum';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { IImage } from 'ng-simple-slideshow';
+import { UserLogin } from '../../shared/models/user-login.model';
 // import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -120,18 +121,18 @@ export class LoginComponent implements OnInit {
 
   getEmailErrorMessage() {
     return this.loginForm.controls['email'].hasError('required') ? this.genericErrorMsg :
-        this.loginForm.controls['email'].hasError('minlength') ? this.genMinLengthMsg :
+      this.loginForm.controls['email'].hasError('minlength') ? this.genMinLengthMsg :
         this.loginForm.controls['email'].hasError('maxlength') ? this.genMaxLengthMsg :
-        this.loginForm.controls['email'].hasError('pattern') ? this.emailErrMsg :
-        '';
+          this.loginForm.controls['email'].hasError('pattern') ? this.emailErrMsg :
+            '';
   }
 
   getPassErrorMessage() {
     return this.loginForm.controls['password'].hasError('required') ? this.genericErrorMsg :
-        this.loginForm.controls['password'].hasError('minlength') ? this.genMinLengthMsg :
+      this.loginForm.controls['password'].hasError('minlength') ? this.genMinLengthMsg :
         this.loginForm.controls['password'].hasError('maxlength') ? this.genMaxLengthMsg :
-        this.loginForm.controls['password'].hasError('pattern') ? this.passErrMsg :
-        '';
+          this.loginForm.controls['password'].hasError('pattern') ? this.passErrMsg :
+            '';
   }
 
   public login(): void {

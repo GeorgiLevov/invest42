@@ -1,7 +1,7 @@
 import { AuthenticationService } from './../shared/core/authentication/authentication.service';
 import { AdminService } from './services/admin.service';
 import { Component, OnInit } from '@angular/core';
-import { UserProfile } from '../models/user-profile.model';
+import { UserProfile } from '../shared/models/user-profile.model';
 
 @Component({
   selector: 'app-admin',
