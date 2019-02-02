@@ -2,7 +2,7 @@ import { AdminService } from './../../services/admin.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Component, Inject } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { ClientRegisterData } from '../../../models/client-register.model';
+import { ClientRegisterData } from '../../../shared/models/client-register.model';
 
 @Component({
     selector: 'app-add-client',

@@ -1,5 +1,5 @@
-import { SpinnerInterceptor } from './shared/core/interceptors/spinner.interceptor.service';
 import '../polyfills';
+import { SpinnerInterceptor } from './shared/core/interceptors/spinner.interceptor.service';
 import { ManagerGuard } from './shared/core/authentication/manager-guard.service';
 import { AdminGuard } from './shared/core/authentication/admin-guard.service';
 import { LoginModule } from './auth/login/login.module';
@@ -8,7 +8,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
-
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { TokenInterceptor } from './shared/core/authentication/token.interceptor';
 import { RoleGuard } from './shared/core/authentication/role-guard.service';
@@ -17,6 +16,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/material';
 import { ParallaxDirective } from './parallax.directive';
+import { MaterialWrapModule } from './material-module/material.module';
 
 
 @NgModule({
@@ -36,6 +36,7 @@ import { ParallaxDirective } from './parallax.directive';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    MaterialWrapModule,
   ],
   providers: [
     {

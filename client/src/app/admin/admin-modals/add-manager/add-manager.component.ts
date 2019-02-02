@@ -1,8 +1,9 @@
-import { UserRegisterData } from './../../../models/user-register.model';
+
 import { AdminService } from './../../services/admin.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Component, Inject } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { UserRegisterData } from '../../../shared/models/user-register.model';
 
 @Component({
     selector: 'app-add-manager',

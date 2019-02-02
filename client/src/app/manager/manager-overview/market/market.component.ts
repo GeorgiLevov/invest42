@@ -1,10 +1,9 @@
-import { ManagerService } from './../services/manager.service';
 import { Router } from '@angular/router';
-import { PricesModel } from './../../models/prices/prices.model';
 import { MarketService } from './market.serivice';
-import { CompanyModel } from './../../models/companies/company.model';
 import { Component, OnInit, AfterViewInit, ViewChild, Input } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { ManagerService } from '../../services/manager.service';
+import { PricesModel } from '../../../shared/models/prices/prices.model';
 
 @Component({
   selector: 'app-market',
@@ -13,8 +12,6 @@ import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 })
 export class MarketComponent implements AfterViewInit, OnInit {
 
-
-  // companies: CompanyModel[];
   prices: PricesModel[];
   displayedColumns = ['name', 'industry', 'endprice', 'opendate', 'more'];
   dataSource = new MatTableDataSource<any>();

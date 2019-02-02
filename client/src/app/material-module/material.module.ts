@@ -11,7 +11,7 @@ import {
     MatChipsModule, MatIconModule, MatProgressSpinnerModule,
     MatProgressBarModule,
     MatTooltipModule,
-    MatSnackBarModule, MatSortModule, MatNativeDateModule, MatExpansionModule, MatDialogModule
+    MatSnackBarModule, MatSortModule, MatNativeDateModule, MatExpansionModule, MatDialogModule, MatTreeModule
 } from '@angular/material';
 
 const M_MODULES = [
@@ -47,6 +47,23 @@ const M_MODULES = [
     MatSortModule,
     MatButtonModule,
     MatNativeDateModule,
+    MatTreeModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatProgressSpinnerModule,
+    MatGridListModule,
+    MatFormFieldModule,
+    MatCardModule,
+    MatInputModule,
+    MatMenuModule,
+    MatIconModule,
+    MatButtonModule
 ];
 
 
@@ -54,10 +71,10 @@ const M_MODULES = [
     imports: M_MODULES,
     exports: M_MODULES,
 })
-export class MaterializeWrapModule {
+export class MaterialWrapModule {
     static forRoot(): ModuleWithProviders {
         return {
-            ngModule: MaterializeWrapModule,
+            ngModule: MaterialWrapModule,
         };
     }
 }

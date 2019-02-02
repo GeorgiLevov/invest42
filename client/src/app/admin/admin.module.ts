@@ -10,11 +10,11 @@ import { AdminRoutingModule } from './admin-route.module';
 import { AdminsListComponent } from './admins-list/admins-list.component';
 import { ManagersListComponent } from './managers-list/managers-list.component';
 import { ClientsListComponent } from './clients-list/clients-list.component';
-import { MaterializeWrapModule } from '../materialize-module/materialize.module';
 import { AdminComponent } from './admin.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditAdminComponent } from './admin-modals/edit-admin/edit-admin.component';
 import { AddAdminComponent } from './admin-modals/add-admin/add-admin.component';
+import { MaterialWrapModule } from '../material-module/material.module';
 
 @NgModule({
   declarations: [
@@ -34,7 +34,7 @@ import { AddAdminComponent } from './admin-modals/add-admin/add-admin.component'
     CommonModule,
     SharedModule,
     AdminRoutingModule,
-    MaterializeWrapModule,
+    MaterialWrapModule,
     FormsModule,
     ReactiveFormsModule,
   ],

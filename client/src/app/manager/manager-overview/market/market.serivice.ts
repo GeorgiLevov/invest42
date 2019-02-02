@@ -1,16 +1,13 @@
-import { CompanyModel } from './../../models/companies/company.model';
+
 import { Injectable } from '@angular/core';
 import { AppConfig } from 'src/app/config/app.config';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs/internal/Observable';
-import { PricesModel } from 'src/app/models/prices/prices.model';
 import { Router } from '@angular/router';
-
 
 @Injectable()
 export class MarketService {
-
 
   constructor(private http: HttpClient, private appConfig: AppConfig, private router: Router) { }
 

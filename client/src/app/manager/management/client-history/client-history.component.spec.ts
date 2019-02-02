@@ -1,20 +1,20 @@
 // import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-// import { NotFoundComponent } from './not-found.component';
+// import { ClientHistoryComponent } from './client-history.component';
 
-// describe('NotFoundComponent', () => {
-//   let component: NotFoundComponent;
-//   let fixture: ComponentFixture<NotFoundComponent>;
+// describe('ClientHistoryComponent', () => {
+//   let component: ClientHistoryComponent;
+//   let fixture: ComponentFixture<ClientHistoryComponent>;
 
 //   beforeEach(async(() => {
 //     TestBed.configureTestingModule({
-//       declarations: [ NotFoundComponent ]
+//       declarations: [ ClientHistoryComponent ]
 //     })
 //     .compileComponents();
 //   }));
 
 //   beforeEach(() => {
-//     fixture = TestBed.createComponent(NotFoundComponent);
+//     fixture = TestBed.createComponent(ClientHistoryComponent);
 //     component = fixture.componentInstance;
 //     fixture.detectChanges();
 //   });

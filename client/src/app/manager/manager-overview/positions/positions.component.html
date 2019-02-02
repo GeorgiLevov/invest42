@@ -95,15 +95,12 @@
           <th mat-sort-header="buyprice">Buy Price</th>
         </tr>
 
-        <!-- to be fixed !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-        <!-- {{generateTable(clients.orders)}} -->
         <tr *ngFor="let order of client.orders">
           <td>{{order.id}}</td>
           <td>{{order.units}}</td>
           <td>{{order.closedate}}</td>
           <td>{{order.buyprice}}</td>
         </tr>
-        <!-- to be fixed !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
       </table>
 
     </mat-expansion-panel>

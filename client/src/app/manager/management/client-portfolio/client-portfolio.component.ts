@@ -1,10 +1,10 @@
-import { UpdateClientInfoComponent } from './../manager-modals/update-client/update-client.component';
 import { Component, OnInit } from '@angular/core';
-import { ClientModel } from '../../models/interfaces/client.model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ManagerService } from '../services/manager.service';
 import { MatDialog } from '@angular/material';
-import { UpdateBalanceComponent } from '../manager-modals/update-balance/update-balance.component';
+import { ManagerService } from '../../services/manager.service';
+import { ClientModel } from '../../../shared/models/interfaces/client.model';
+import { UpdateBalanceComponent } from '../../manager-modals/update-balance/update-balance.component';
+import { UpdateClientInfoComponent } from '../../manager-modals/update-client/update-client.component';
 
 @Component({
   selector: 'app-client-portfolio',

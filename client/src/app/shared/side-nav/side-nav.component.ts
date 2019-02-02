@@ -23,7 +23,7 @@ export class SideNavComponent implements OnInit, OnChanges {
     this.sidenav.close();
   }
 
-  onEdit(){
+  onEdit() {
     window.scrollTo(0, 0);
   }
 

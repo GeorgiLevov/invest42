@@ -7,7 +7,7 @@ import {
 import { debug } from 'util';
 import * as jwt_decode from 'jwt-decode';
 import { AuthenticationService } from './authentication.service';
-import { Role } from '../../../models/enums/role.enum';
+import { Role } from '../../../../../../server/src/models/enums/roles.enum';
 
 @Injectable()
 export class ManagerGuard implements CanActivate {

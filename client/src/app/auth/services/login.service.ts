@@ -1,9 +1,9 @@
 import { AppConfig } from './../../config/app.config';
-import { UserLogin } from '../../models/users/user.model';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { HttpOptions } from '../../models/core/http-options.model';
+import { HttpOptions } from '../../shared/models/core/http-options.model';
+import { UserLogin } from '../../shared/models/user-login.model';
 
 
 

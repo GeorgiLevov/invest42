@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
-import { ManagerService } from '../services/manager.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { BuyOrderComponent } from '../manager-modals/buy-modal/buy-order.component';
+import { ManagerService } from '../../services/manager.service';
+import { BuyOrderComponent } from '../../manager-modals/buy-modal/buy-order.component';
 
 @Component({
   selector: 'app-client-watchlist',

@@ -1,12 +1,12 @@
-import { UserRegisterData } from './../../models/user-register.model';
+
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { UserData } from '../../models/interfaces/user-data.model';
-import { ManagerData } from '../../models/interfaces/manager-data.model';
-import { ClientData } from '../../models/interfaces/client-data.model';
-import { ClientRegisterData } from '../../models/client-register.model';
+import { UserData } from '../../shared/models/interfaces/user-data.model';
+import { ManagerData } from '../../shared/models/interfaces/manager-data.model';
+import { UserRegisterData } from '../../shared/models/user-register.model';
+import { ClientRegisterData } from '../../shared/models/client-register.model';
 
 @Injectable({
     providedIn: 'root'

@@ -1,9 +1,10 @@
 import { AddManagerComponent } from './../admin-modals/add-manager/add-manager.component';
-import { ManagerData } from './../../models/interfaces/manager-data.model';
+
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
 import { AdminService } from '../services/admin.service';
 import { EditManagerComponent } from '../admin-modals/edit-manager/edit-manager.component';
+import { ManagerData } from '../../shared/models/interfaces/manager-data.model';
 
 
 @Component({
@@ -13,7 +14,7 @@ import { EditManagerComponent } from '../admin-modals/edit-manager/edit-manager.
 })
 export class ManagersListComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: string[] = [ 'id', 'avatar', 'fullname', 'email', 'status', 'clients', 'actions'];
+  displayedColumns: string[] = ['id', 'avatar', 'fullname', 'email', 'status', 'clients', 'actions'];
   dataSource = new MatTableDataSource<ManagerData>();
 
   index: number;
