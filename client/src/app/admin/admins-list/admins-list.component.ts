@@ -21,13 +21,6 @@ export class AdminsListComponent implements OnInit, AfterViewInit {
     'actions'];
   dataSource = new MatTableDataSource<UserData>();
 
-  index: number;
-
-  id: number;
-
-  role: string;
-
-  @ViewChild('dynamicTable') myTable: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -44,7 +37,6 @@ export class AdminsListComponent implements OnInit, AfterViewInit {
     this.adminService.getAdmins()
       .subscribe((res) => {
         this.dataSource.data = res as UserData[];
-        // this.adminService.dataChange.next(res); // added
       });
   }
 
@@ -74,20 +66,16 @@ export class AdminsListComponent implements OnInit, AfterViewInit {
     });
   }
 
-  startEdit(i, id, email, password) {
-    this.id = id;
-    this.index = i;
-    // console.log(this.index); // for debugging / can be removed
-
+  startEdit(id, email, password) {
     const dialogRef = this.dialog.open(EditAdminComponent, {
       data: { id: id, email: email, password: password }
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        // console.log('dialogRefAfterClose:', result);
-        this.dataSource.data.push(result);
-        this.applyFilter('');
+        setTimeout(() => {
+          this.refreshTable();
+        }, 1000);
       }
     });
   }

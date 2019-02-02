@@ -22,12 +22,6 @@ export class ClientsListComponent implements OnInit, AfterViewInit {
     'managerName',
     'actions'];
   dataSource = new MatTableDataSource<ClientData>();
-
-  index: number;
-
-  id: number;
-
-  @ViewChild('dynamicTable') myTable: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -44,7 +38,6 @@ export class ClientsListComponent implements OnInit, AfterViewInit {
     this.adminService.getClientsInfo()
       .subscribe((res) => {
         this.dataSource.data = res as ClientData[];
-        // this.adminService.dataChange.next(res); // added
       });
   }
 
@@ -74,20 +67,17 @@ export class ClientsListComponent implements OnInit, AfterViewInit {
     });
   }
 
-  startEdit(i, id, email, managerEmail) {
-    this.id = id;
-    this.index = i;
-
+  startEdit(id, email, managerEmail) {
     const dialogRef = this.dialog.open(EditClientComponent, {
       data: { id: id, email: email, managerEmail: managerEmail }
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-        if (result) {
-          console.log('dialogRefAfterClose:' , result);
-          this.dataSource.data.push(result);
-          this.applyFilter('');
-        }
+      if (result) {
+        setTimeout(() => {
+          this.refreshTable();
+        }, 1000);
+      }
     });
   }
 

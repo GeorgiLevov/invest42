@@ -30,7 +30,6 @@ export class AddClientComponent implements OnInit {
         private fb: FormBuilder,
     ) { }
 
-
     ngOnInit() {
         this.buildTheForm();
     }
@@ -51,14 +50,14 @@ export class AddClientComponent implements OnInit {
                         this.clientForm.controls['address'].hasError('required') ? this.genericErrorMsg :
                             this.clientForm.controls['fullname'].hasError('required') ? this.genericErrorMsg :
                                 this.clientForm.controls['age'].hasError('required') ? this.genericErrorMsg :
-                                    this.clientForm.controls['balane'].hasError('required') ? this.genericErrorMsg : '';
+                                    this.clientForm.controls['availableBalance'].hasError('required') ? this.genericErrorMsg : '';
     }
 
     get formData() {
         return this.clientForm.value;
     }
 
-    onNoClick(): void {
+    cancel(): void {
         this.dialogRef.close();
     }
 

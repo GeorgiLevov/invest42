@@ -21,7 +21,6 @@ export class AddManagerComponent implements OnInit {
     public genMinLengthMsg = 'Min length should be more than 8 chars!';
     public emailErrMsg = 'Not a valid email';
     public passErrMsg = 'Password must have Capitol, lowercase, number and special characters';
-    public passwordPattern = ('([A-Za-z0-9@#$%&*]+)$');
     public genMaxLengthMsg = 'Max length should be less than 50 chars!';
 
     constructor(
@@ -52,11 +51,10 @@ export class AddManagerComponent implements OnInit {
                     this.managerForm.controls['email'].hasError('pattern') ? this.emailErrMsg :
                         this.managerForm.controls['password'].hasError('minlength') ? this.genMinLengthMsg :
                             this.managerForm.controls['password'].hasError('maxlength') ? this.genMaxLengthMsg :
-                                this.managerForm.controls['password'].hasError('pattern') ? this.passErrMsg :
-                                    this.managerForm.controls['password'].hasError('required') ? this.genericErrorMsg :
-                                        this.managerForm.controls['fullname'].hasError('required') ? this.genericErrorMsg :
-                                            this.managerForm.controls['role'].hasError('required') ? this.genericErrorMsg :
-                                                '';
+                                this.managerForm.controls['password'].hasError('required') ? this.genericErrorMsg :
+                                    this.managerForm.controls['fullname'].hasError('required') ? this.genericErrorMsg :
+                                        this.managerForm.controls['role'].hasError('required') ? this.genericErrorMsg :
+                                            '';
     }
 
     get formData() {
@@ -75,16 +73,17 @@ export class AddManagerComponent implements OnInit {
             password: this.fb.control('', [Validators.required,
             Validators.minLength(8),
             Validators.maxLength(50),
-            Validators.pattern(this.passwordPattern)]),
+            ]),
             role: this.fb.control('MANAGER', Validators.required),
         });
     }
 
-    onNoClick(): void {
+    cancel(): void {
         this.dialogRef.close();
     }
 
     public confirmAdd(addManagerData): void {
+        console.log(addManagerData);
         this.adminService.addUser(addManagerData).subscribe((result) => {
             this.successToast(),
                 this.dialogRef.close(result);

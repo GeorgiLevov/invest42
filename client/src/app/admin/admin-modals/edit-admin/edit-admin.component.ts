@@ -1,6 +1,6 @@
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
+import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { AdminService } from '../../services/admin.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
@@ -34,7 +34,7 @@ export class EditAdminComponent implements OnInit {
     }
 
     successToast() {
-        this.toastService.success('', 'Admin added!', { timeOut: 1000 });
+        this.toastService.success('', 'Admin edited!', { timeOut: 1000 });
     }
 
     errToast() {
@@ -71,11 +71,12 @@ export class EditAdminComponent implements OnInit {
         return this.editAdminForm.value;
     }
 
-    onNoClick(): void {
+    cancel(): void {
         this.dialogRef.close();
     }
 
     stopEdit(): void {
+        this.data.manager = this.formData;
         this.adminService.updateUser(this.data).subscribe((data) => {
             this.successToast();
         },

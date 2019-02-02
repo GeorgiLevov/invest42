@@ -204,8 +204,8 @@ export class UsersService {
             availableBalance: client.availableBalance,
             icon: client.icon,
             status: client.status,
-            managerName: 'No manager',
-            managerEmail: 'No manager',
+            managerName: '-',
+            managerEmail: '-',
           };
 
           return clientInfo;

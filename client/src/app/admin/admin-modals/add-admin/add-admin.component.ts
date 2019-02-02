@@ -1,4 +1,3 @@
-
 import { AdminService } from './../../services/admin.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { OnInit } from '@angular/core';
@@ -62,7 +61,7 @@ export class AddAdminComponent implements OnInit {
         return this.adminForm.value;
     }
 
-    onNoClick(): void {
+    cancel(): void {
         this.dialogRef.close();
     }
 

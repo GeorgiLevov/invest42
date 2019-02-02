@@ -269,7 +269,7 @@ export class ManagementService {
             closedate: new Date(),
             buyprice: orderFound.buyprice - 1,
             sellprice: orderFound.sellprice + 2,
-            units: `${units * -1}`,
+            units: +`${units * -1}`,
             status: OrderStatus.closed,
             companyId: orderFound.company.id,
         };

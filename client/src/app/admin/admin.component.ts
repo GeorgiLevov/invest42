@@ -12,7 +12,6 @@ export class AdminComponent implements OnInit {
 
 
   public managing = false;
-
   public navMode = 'Admin Menu';
   public navMenu = [
 
@@ -45,11 +44,8 @@ export class AdminComponent implements OnInit {
   user: UserProfile;
 
   constructor(
-
     private adminService: AdminService,
-
     private authService: AuthenticationService,
-
   ) { }
 
   ngOnInit() {
