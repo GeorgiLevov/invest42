@@ -1,37 +1,38 @@
-<button mat-fab color="primary" (click)="sidenav.open()" id="sidenav-button"><mat-icon>menu</mat-icon></button>
-<button mat-fab color="primary" id="to-top-button" (click)="onEdit()"><mat-icon>keyboard_arrow_up</mat-icon></button>
+<button mat-fab color="primary" (click)="sidenav.open()" id="sidenav-button">
+  <mat-icon>menu</mat-icon>
+</button>
+<button mat-fab color="primary" id="to-top-button" (click)="onEdit()">
+  <mat-icon>keyboard_arrow_up</mat-icon>
+</button>
 <mat-sidenav-container class="sidenav-container" (backdropClick)="sidenav.close()">
 
-    <mat-sidenav #sidenav (keydown.escape)="sidenav.close()" disableClose>
+  <mat-sidenav #sidenav (keydown.escape)="sidenav.close()" disableClose>
 
-      
-          <app-manager-profile></app-manager-profile>
-          
-    
-          <mat-divider></mat-divider>
+    <app-manager-profile></app-manager-profile>
 
-          <mat-toolbar *ngIf="navMode">
-            <span>{{navMode}}</span>
-          </mat-toolbar>
-    
-          <mat-divider></mat-divider>
-    
-          <mat-nav-list>
-              <ul>
-                  <li *ngFor="let item of navMenu">
-                    <a [ngClass]="{'active': item.isActive }" (click)="sidenav.close()" mat-list-item routerLink="{{item.route}}">
-                        {{item.text}}
-                    </a>
-                  </li>
-                </ul>
-          </mat-nav-list>
-      </mat-sidenav>
 
-      <mat-sidenav-content>
+    <mat-divider></mat-divider>
+
+    <mat-toolbar *ngIf="navMode">
+      <span>{{navMode}}</span>
+    </mat-toolbar>
+
+    <mat-divider></mat-divider>
+
+    <mat-nav-list>
+      <ul>
+        <li *ngFor="let item of navMenu">
+          <a [ngClass]="{'active': item.isActive }" (click)="sidenav.close()" mat-list-item routerLink="{{item.route}}">
+            {{item.text}}
+          </a>
+        </li>
+      </ul>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
 
 
   </mat-sidenav-content>
-    
-  </mat-sidenav-container>
 
-
+</mat-sidenav-container>
