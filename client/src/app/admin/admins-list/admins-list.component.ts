@@ -12,19 +12,22 @@ import { AddAdminComponent } from '../admin-modals/add-admin/add-admin.component
 })
 export class AdminsListComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: string[] = ['id', 'avatar',  'fullname', 'email', 'status', 'actions'];
+  displayedColumns: string[] = [
+   'id',
+   'avatar',
+   'fullname',
+   'email',
+   'status',
+   'actions'];
   dataSource = new MatTableDataSource<UserData>();
-
-  // dataChange: BehaviorSubject<UserData[]> = new BehaviorSubject<UserData[]>([]);
-
-  // dialogData: any;
-
+ 
   index: number;
 
   id: number;
 
   role: string;
 
+  @ViewChild('dynamicTable') myTable: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -41,7 +44,7 @@ export class AdminsListComponent implements OnInit, AfterViewInit {
     this.adminService.getAdmins()
       .subscribe((res) => {
         this.dataSource.data = res as UserData[];
-        this.adminService.dataChange.next(res); // added
+        // this.adminService.dataChange.next(res); // added
       });
   }
 
@@ -62,10 +65,11 @@ export class AdminsListComponent implements OnInit, AfterViewInit {
     const dialogRef = this.dialog.open(AddAdminComponent, {
       data: {}
     });
+
     dialogRef.afterClosed().subscribe(result => {
-      if (result === 1) {
-        this.adminService.dataChange.value.push(this.adminService.getDialogData());
-        console.log(this.adminService.dataChange.value);
+      if (result) {
+        this.dataSource.data.push(result);
+        this.applyFilter('');
       }
     });
   }
@@ -79,10 +83,11 @@ export class AdminsListComponent implements OnInit, AfterViewInit {
       data: { id: id, email: email, password: password }
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result === 1) {
-        const foundIndex = this.adminService.dataChange.value.findIndex((x: any) => x.id === this.id);
-        this.adminService.dataChange.value[foundIndex] = this.adminService.getDialogData();
+    dialogRef.afterClosed().subscribe((result) => { 
+      if (result) {
+        console.log('dialogRefAfterClose:' , result);
+        this.dataSource.data.push(result);
+        this.applyFilter('');
       }
     });
   }

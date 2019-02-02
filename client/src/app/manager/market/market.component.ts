@@ -36,8 +36,14 @@ export class MarketComponent implements AfterViewInit, OnInit {
     this.managerService.getMarketInfo()
       .subscribe((res: any) => {
         this.dataSource.data = res;
-        console.log(res);
+        // console.log(res);
         // this.managerService.clientDataChange.next(res); // added
+
+      //   setInterval(() => {
+      //     this.dataSource.data.forEach((data) => {
+      //       data.endprice += 1;
+      //     });
+      //   }, 1000);
       });
   }
 

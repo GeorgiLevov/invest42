@@ -72,7 +72,7 @@ export class ManagementService {
         c.ceo,
         c.address,
         c.industry,
-        Max(p.opendate),
+        Max(p.opendate) as opendate,
         p.startprice,
         p.endprice,
         p.highprice,

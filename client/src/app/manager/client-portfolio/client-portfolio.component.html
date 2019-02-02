@@ -4,18 +4,20 @@
             <div mat-card-avatar>
                 <img class="client-image" [src]="'http://localhost:5500//'+client.icon" alt="Client Icon">
             </div>
-          <mat-card-title>{{client.fullname}}</mat-card-title>
-          <mat-card-subtitle>Age: {{client.age}}</mat-card-subtitle>
+          <mat-card-title>Client Profile</mat-card-title>
+          <!-- <mat-card-subtitle></mat-card-subtitle> -->
         </mat-card-header>
         <mat-card-content>
-          <p class="mat-h3">
-            Email: {{client.email}}<br/>
+          <div class="mat-h3 client-details">
+              Full naame:{{client.fullname}}<br/>
+              Email: {{client.email}}<br/>
+            <!-- Age: {{client.age}}<br/> -->
             Address: {{client.address}}<br/>
-            Date Added: {{client.dateOfCreation.slice(0, 10)}}<br/>
-          </p>
-          <p class="mat-display-1">
+            Date Registered: {{client.dateOfCreation.slice(0, 10)}}<br/>
+        </div>
+          <div class="mat-display-1 client-balance">
             Balance: {{client.availableBalance}}<br/>
-          </p>
+          </div>
         </mat-card-content>
         <mat-card-actions>
             <button mat-raised-button color="primary" (click)="deposit()">Deposit</button>
@@ -23,8 +25,6 @@
             <button mat-raised-button color="primary" (click)="editAccount()">Edit Account</button>
         </mat-card-actions>
       </mat-card>
-
-
 
 
   <h1>CURRENT PROFIT OR LOSS: not impl for now!</h1>

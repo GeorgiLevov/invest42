@@ -2,6 +2,7 @@ import { IsString, Length, Matches, IsOptional, IsEmail, IsNumber } from 'class-
 import { Optional } from '@nestjs/common';
 import { Column } from 'typeorm';
 import { agent } from 'supertest';
+import { Transform } from 'class-transformer';
 
 export class ClientRegisterDTO {
 
@@ -15,9 +16,11 @@ export class ClientRegisterDTO {
   address: string;
 
   @IsNumber()
+  @Transform((value) => +value)
   availableBalance: number;
 
   @IsNumber()
+  @Transform((value) => +value)
   age: number;
 
   @Optional()

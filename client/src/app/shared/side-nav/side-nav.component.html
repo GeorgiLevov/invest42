@@ -3,32 +3,28 @@
 <mat-sidenav-container class="sidenav-container" (backdropClick)="sidenav.close()">
 
     <mat-sidenav #sidenav (keydown.escape)="sidenav.close()" disableClose>
-
-      
-          <app-manager-profile></app-manager-profile>
+        
+        <h3 class="sidenav-title">Invest42</h3>
+        <div style="color:white; display: block; font-size: 16px; font-weight:normal; text-align: center;">
+            Current time: {{ now | date:'HH:mm:ss'}}
+        </div>
+          <app-manager-profile [managing]="managing"></app-manager-profile>
           
-    
-          <mat-divider></mat-divider>
-
-          <mat-toolbar *ngIf="navMode">
+          <mat-toolbar *ngIf="navMode" class="navmode-container">
             <span>{{navMode}}</span>
           </mat-toolbar>
-    
-          <mat-divider></mat-divider>
-    
-          <mat-nav-list>
-              <ul>
-                  <li *ngFor="let item of navMenu">
-                    <a [ngClass]="{'active': item.isActive }" (click)="sidenav.close()" mat-list-item routerLink="{{item.route}}">
+
+          <mat-nav-list class="nav-list-container">
+                <mat-list-item *ngFor="let item of navMenu" class="nav-row" [ngClass]="{'active': item.isActive }"
+                (click)="sidenav.close()"
+                mat-list-item routerLink="{{item.route}}">
                         {{item.text}}
-                    </a>
-                  </li>
-                </ul>
+                </mat-list-item>
           </mat-nav-list>
+
       </mat-sidenav>
 
       <mat-sidenav-content>
-
 
   </mat-sidenav-content>
     

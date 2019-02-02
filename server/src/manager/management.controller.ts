@@ -106,4 +106,9 @@ export class ManagementController {
         return this.managementService.sellStock(info.orderId);
     }
 
-}
+    // @Get('investments')
+    // @Roles(Role.manager)
+    // @UseGuards(AuthGuard(), RolesGuard)
+    // ivestments(@Body() info: Array<any>): Promise<object> {
+    //     return this.managementService.sellStock(info.orderId);
+    // }

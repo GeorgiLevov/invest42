@@ -9,6 +9,8 @@ import { SideNavComponent } from './side-nav/side-nav.component';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import {MatTreeModule} from '@angular/material/tree';
+import {SlideshowModule} from 'ng-simple-slideshow';
+
 import {
     MatGridListModule,
     MatFormFieldModule,
@@ -60,6 +62,7 @@ const sharedModules = [
         ProjectTreeComponent,
     ],
     imports: [
+        SlideshowModule,
         ...sharedModules,
         CommonModule,
         RouterModule,
@@ -67,6 +70,7 @@ const sharedModules = [
     ],
     exports: [
         //  CommonModule,
+        SlideshowModule,
         ...sharedModules,
         SideNavComponent,
         ProfileComponent,

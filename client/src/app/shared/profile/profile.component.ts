@@ -3,9 +3,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ProfileService } from './getmanagerprofile.service';
 import { ManagerProfile } from './../../models/users/manager.model';
 import { AuthenticationService } from './../core/authentication/authentication.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { importExpr } from '@angular/compiler/src/output/output_ast';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-manager-profile',
@@ -14,12 +15,15 @@ import { importExpr } from '@angular/compiler/src/output/output_ast';
 })
 export class ProfileComponent implements OnInit {
 
-
   constructor(
     private authService: AuthenticationService,
     private profileService: ProfileService,
     private appConfig: AppConfig,
+    private router: Router
     ) { }
+
+    @Input() managing;
+
     public src = this.appConfig.apiUrl;
     public managerProfile: ManagerProfile;
     managerEmail = this.authService.tokenEmail();
@@ -41,6 +45,10 @@ export class ProfileComponent implements OnInit {
 
     logout() {
       this.authService.logout();
+    }
+
+    backToClients() {
+      this.router.navigate([`manager/clients/`]);
     }
 
   }

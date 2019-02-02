@@ -10,6 +10,9 @@ import { UserProfile } from '../models/user-profile.model';
 })
 export class AdminComponent implements OnInit {
 
+
+  public managing = false;
+
   public navMode = 'Admin Menu';
   public navMenu = [
 

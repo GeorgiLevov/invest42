@@ -7,7 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./manager.component.css']
 })
 export class ManagerComponent implements OnInit {
-  
+
+  public managing = false;
+
   public navMode = 'Overview Mode';
   public navMenu = [
     {
@@ -15,21 +17,21 @@ export class ManagerComponent implements OnInit {
       icon: 'swap_vertical_circle',
       route: '/manager',
       path: 'market',
-      isActive: false,
+      isActive: true,
     },
     {
       text: 'Positions',
       icon: 'swap_vertical_circle',
       route: '/positions',
       path: 'positions',
-      isActive: false,
+      isActive: true,
     },
     {
       text: 'Clients',
       icon: 'swap_vertical_circle',
       route: '/clients',
       path: 'clients',
-      isActive: false,
+      isActive: true,
     }
   ];
 

@@ -66,12 +66,13 @@ createConnection().then(async (conn) => {
           const newPrice = new Price();
           newPrice.opendate = new Date(startdate.valueOf() + (i + 1) * SETUP.tick * 1000);
           newPrice.startprice = stockMockData[i];
-          newPrice.endprice = stockMockData[i + 1];
+          // newPrice.endprice = stockMockData[i + 1];
           const delta = Math.abs(stockMockData[i + 1] - stockMockData[i]);
           const min = Math.min(stockMockData[i], stockMockData[i + 1]);
           const highlow = [min + Math.random() * delta, min + Math.random() * delta];
           newPrice.lowprice = +Math.min(...highlow).toFixed(2);
           newPrice.highprice = +Math.max(...highlow).toFixed(2);
+          newPrice.endprice = Math.round(newPrice.lowprice + (Math.random() * (newPrice.highprice - newPrice.lowprice)));
           newPrice.company = Promise.resolve(company);
           prices.push(newPrice);
         }

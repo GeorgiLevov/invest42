@@ -9,11 +9,22 @@ import {MatSidenav} from '@angular/material/sidenav';
 })
 export class SideNavComponent implements OnInit, OnChanges {
 
-  constructor() { }
+  clickedItem: 'dashboard';
+  public now: Date = new Date();
+
+  constructor() {
+    setInterval(() => {
+      this.now = new Date();
+    }, 1);
+   }
   @ViewChildren('sidenav') sidenav: MatSidenav;
 
+  @Input() managing;
   @Input() navMode;
   @Input() navMenu;
+
+
+
 
   open() {
     this.sidenav.open();
@@ -23,7 +34,7 @@ export class SideNavComponent implements OnInit, OnChanges {
     this.sidenav.close();
   }
 
-  onEdit(){
+  onEdit() {
     window.scrollTo(0, 0);
   }
 
@@ -32,6 +43,10 @@ export class SideNavComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
 
+  }
+
+  onClick(item: 'dashboard') {
+    this.clickedItem = item;
   }
 
 
