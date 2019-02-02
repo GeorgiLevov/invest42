@@ -37,8 +37,8 @@ export class ClientPortfolioComponent implements OnInit {
         (clientData: any) => {
           this.client = clientData as ClientModel;
           const orders = clientData.orders as Orders[];
-          this.clientOrders = orders.filter( order => order.status === 'OPEN');
-          console.log(this.clientOrders);
+          this.clientOrders = orders.filter((clientOrder) => clientOrder.status === 'OPEN');
+          // console.log(this.clientOrders);
           this.profitLoss = this.clientProfitLoss(this.clientOrders);
         },
         error => console.log(error)
@@ -50,10 +50,10 @@ export class ClientPortfolioComponent implements OnInit {
   // )
 
   clientProfitLoss(clientOrders) {
-    return clientOrders.reduce((reducer, order: Orders) => {
-      return reducer + ((order.sellprice - order.buyprice) * order.units);
-     }, 0);
-    }
+    return clientOrders.reduce((reducer, clientOrder: Orders) => {
+      return reducer + ((clientOrder.sellprice - clientOrder.buyprice) * clientOrder.units);
+    }, 0);
+  }
 
   deposit() {
     const dialogRef = this.dialog.open(UpdateBalanceComponent, {

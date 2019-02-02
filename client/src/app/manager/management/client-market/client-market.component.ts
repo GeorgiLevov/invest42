@@ -40,13 +40,13 @@ export class ClientMarketComponent implements OnInit, AfterViewInit {
       .subscribe((res) => {
         this.dataSource.data = res;
 
-          setInterval((): any => {
-            (this.dataSource.data).forEach((company) => {
-              const direction = (Math.random() >= 0.5) ? 1 : -1;
-              const priceToUpdate = Math.round((direction * Math.random()) + company.currentprice );
-              company.currentprice = priceToUpdate;
-            });
-           }, 500);
+        setInterval((): any => {
+          (this.dataSource.data).forEach((company) => {
+            const direction = (Math.random() >= 0.5) ? 1 : -1;
+            const priceToUpdate = Math.round((direction * Math.random()) + company.currentprice);
+            company.currentprice = priceToUpdate;
+          });
+        }, 500);
       });
   }
 

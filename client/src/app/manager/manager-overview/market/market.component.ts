@@ -33,13 +33,13 @@ export class MarketComponent implements AfterViewInit, OnInit {
     this.managerService.getMarketInfo()
       .subscribe((res: any) => {
         this.dataSource.data = res;
-        console.log(this.dataSource.data);
+        // console.log(this.dataSource.data);
         setInterval((): any => {
           (this.dataSource.data).forEach((company) => {
             const direction = (Math.random() >= 0.5) ? 1 : -1;
             let priceToUpdate = ((direction * Math.random()) + company.endprice);
             priceToUpdate = Number(priceToUpdate).toFixed(2);
-            if (priceToUpdate >= company.lowprice && priceToUpdate <= company.highprice ) {
+            if (priceToUpdate >= company.lowprice && priceToUpdate <= company.highprice) {
               company.endprice = Number(priceToUpdate);
             }
           });

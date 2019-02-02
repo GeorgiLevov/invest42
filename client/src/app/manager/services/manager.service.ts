@@ -59,7 +59,7 @@ export class ManagerService {
                 balance: 0 - Number(data.balance)
             };
         }
-        console.log('info: ', info);
+        // console.log('info: ', info);
 
         return this.http.post(`${this.apiUrl}/client/balance/update`, info);
     }
