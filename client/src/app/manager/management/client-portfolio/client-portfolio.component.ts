@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { PriceData } from './../../../shared/models/interfaces/prices.model';
+import { Orders } from './../../../shared/models/interfaces/orders.model';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { ManagerService } from '../../services/manager.service';
 import { ClientModel } from '../../../shared/models/interfaces/client.model';
 import { UpdateBalanceComponent } from '../../manager-modals/update-balance/update-balance.component';
 import { UpdateClientInfoComponent } from '../../manager-modals/update-client/update-client.component';
+import { order } from '@amcharts/amcharts4/.internal/core/utils/Number';
 
 @Component({
   selector: 'app-client-portfolio',
@@ -13,9 +16,10 @@ import { UpdateClientInfoComponent } from '../../manager-modals/update-client/up
 })
 export class ClientPortfolioComponent implements OnInit {
 
-  client: ClientModel;
   private params = this.route.snapshot.params;
-
+  public client: ClientModel;
+  public clientOrders: Orders[];
+  public profitLoss;
   constructor(
     private route: ActivatedRoute,
     private managerService: ManagerService,
@@ -24,7 +28,6 @@ export class ClientPortfolioComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // console.log(this.router.url.split('/')[3]);
     this.showClientPortfolio(this.router.url.split('/')[3]);
   }
 
@@ -33,12 +36,24 @@ export class ClientPortfolioComponent implements OnInit {
       .subscribe(
         (clientData: any) => {
           this.client = clientData as ClientModel;
-          // console.log(this.client);
+          const orders = clientData.orders as Orders[];
+          this.clientOrders = orders.filter( order => order.status === 'OPEN');
+          console.log(this.clientOrders);
+          this.profitLoss = this.clientProfitLoss(this.clientOrders);
         },
         error => console.log(error)
       );
-
   }
+  // this.managerService.updateBalance({ id : this.data.clientId, isDeposit: false, balance: this.data.currentPrice })
+  // .subscribe(
+  //     data => console.log(data)
+  // )
+
+  clientProfitLoss(clientOrders) {
+    return clientOrders.reduce((reducer, order: Orders) => {
+      return reducer + ((order.sellprice - order.buyprice) * order.units);
+     }, 0);
+    }
 
   deposit() {
     const dialogRef = this.dialog.open(UpdateBalanceComponent, {

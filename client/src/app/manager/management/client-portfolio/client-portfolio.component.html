@@ -1,32 +1,61 @@
-<div *ngIf="client" class="client-details-container">
-    <mat-card class="example-card">
-        <mat-card-header>
-            <div mat-card-avatar>
+<div *ngIf="client" class="client-profile-container">
+    <mat-card>
+        <mat-card-content>
+            <div mat-card-avatar class="client-head">
+                <mat-card-title>Client Profile</mat-card-title>
                 <img class="client-image" [src]="'http://localhost:5500//'+client.icon" alt="Client Icon">
             </div>
-          <mat-card-title>{{client.fullname}}</mat-card-title>
-          <mat-card-subtitle>Age: {{client.age}}</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-          <p class="mat-h3">
-            Email: {{client.email}}<br/>
-            Address: {{client.address}}<br/>
-            Date Added: {{client.dateOfCreation.slice(0, 10)}}<br/>
-          </p>
-          <p class="mat-display-1">
-            Balance: {{client.availableBalance}}<br/>
-          </p>
-        </mat-card-content>
-        <mat-card-actions>
-            <button mat-raised-button color="primary" (click)="deposit()">Deposit</button>
-            <button mat-raised-button color="primary" (click)="withdraw()">Withdraw</button>
-            <button mat-raised-button color="primary" (click)="editAccount()">Edit Account</button>
-        </mat-card-actions>
+            <div class="client-details">
+              <mat-list>
+                  <mat-list-item > <b>Fullname:</b>&nbsp;  {{client.fullname}} </mat-list-item>
+                  <mat-list-item > <b>Email:</b>&nbsp; {{client.email}} </mat-list-item>
+                  <mat-list-item > <b>Address:</b>&nbsp; {{client.address}} </mat-list-item>
+                  <mat-list-item > <b>Date Registered:</b>&nbsp; {{client.dateOfCreation.slice(0, 10)}} </mat-list-item>
+                  <mat-list-item > <b>Address:</b>&nbsp; {{client.address}} </mat-list-item>
+              </mat-list>
+            </div>
+          </mat-card-content>
+
       </mat-card>
+    </div>
+      <div *ngIf="client" class="client-investments-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Investments Overview</mat-card-title>
+      <!-- <mat-card-subtitle>Age: {{client.age}}</mat-card-subtitle> -->
+    </mat-card-header>
+    <mat-card-content>
+       <!-- <p class="mat-body-1">
+        Available Balance:<br/>
+      </p>
+      <p class="mat-body-1">
+          Available Balance:<br/> 
+        </p> -->
+        <div class="important-info-header">
+          <p class="number-info">{{client.availableBalance}}</p>
+          Available Balance
+        </div>
+        <mat-divider></mat-divider>
+        <div class="important-info-header">
+          <p class="number-info">{{clientOrders.length}}</p>
+          Active Investments
+        </div>
+        <mat-divider></mat-divider>
+        <div class="important-info-header" *ngIf="client.orders">
+            <p class="number-info">{{profitLoss}}</p>
+            Profit/Loss
+          </div>
+          <mat-divider></mat-divider>
+            <!-- <mat-list-item > <b>Address:</b>&nbsp; {{client.address}} </mat-list-item>
+            <mat-list-item > <b>Date Registered:</b>&nbsp; {{client.dateOfCreation.slice(0, 10)}} </mat-list-item>
+            <mat-list-item > <b>Address:</b>&nbsp; {{client.address}} </mat-list-item> -->
 
 
-
-
-  <h1>CURRENT PROFIT OR LOSS: not impl for now!</h1>
-
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="deposit()">Deposit</button>
+        <button mat-raised-button color="primary" (click)="withdraw()">Withdraw</button>
+        <button mat-raised-button color="primary" (click)="editAccount()">Edit Account</button>
+    </mat-card-actions>
+  </mat-card>
 </div>

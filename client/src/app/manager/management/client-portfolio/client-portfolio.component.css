@@ -1,16 +1,53 @@
 
 
-.client-details-container {
-    max-width: 400px;
+.client-profile-container {
+    margin-left: 75px;
     display: inline-block;
+    width: 40%;
+    vertical-align: top;
 }
 
 .mat-card {
-    margin: 15px;
+    margin: 16px;
+}
+
+
+.client-head {
+    margin: 1%;
+    display: inline-block;
+    vertical-align: top;
+    width: 35%;
+    text-align: center;
 }
 
 .client-image {
-    width: 40px;
-    height: 45px; 
-    margin: 0;
+    width: 80px;
+    height: 90px;
+    /* margin: 1%; */
+    display: inline-block;
+    vertical-align: top;
+}
+
+.client-details {
+    display: inline-block;
+    margin: 1%;
+}
+
+  .client-investments-container {
+    width: 50%;
+    display: inline-block;
+  }
+
+  .important-info-header {
+    margin: auto;
+    font-weight: bold;
+    text-align: center;
+    /* margin-top: 5%; */
+    margin-bottom: 1%;
+  }
+
+  .number-info {
+      font-size: 72px;
+      margin-bottom: 0;
+      margin-top: 5%;
   }
