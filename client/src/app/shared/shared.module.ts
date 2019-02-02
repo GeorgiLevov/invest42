@@ -13,7 +13,6 @@ import { ProjectTreeComponent } from './project-tree/project-tree.component';
 import { MaterialWrapModule } from '../material-module/material.module';
 import { SlideshowModule } from 'ng-simple-slideshow';
 
-
 @NgModule({
     declarations: [
         NotFoundComponent,
@@ -30,7 +29,6 @@ import { SlideshowModule } from 'ng-simple-slideshow';
         LayoutModule,
     ],
     exports: [
-        //  CommonModule,
         SlideshowModule,
         MaterialWrapModule,
         SideNavComponent,

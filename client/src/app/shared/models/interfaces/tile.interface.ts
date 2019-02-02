@@ -1,6 +1,8 @@
 export interface Tile {
-    color: string;
-    cols: number;
-    rows: number;
-    text: object;
-  }
+
+  color: string;
+  cols: number;
+  rows: number;
+  text: object;
+
+}

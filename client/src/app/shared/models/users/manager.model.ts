@@ -4,4 +4,5 @@ export class ManagerProfile {
     avatar: string;
     fullname: string;
     role: string;
+
 }

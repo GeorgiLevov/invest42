@@ -16,15 +16,12 @@ export class SideNavComponent implements OnInit, OnChanges {
     setInterval(() => {
       this.now = new Date();
     }, 1);
-   }
+  }
   @ViewChildren('sidenav') sidenav: MatSidenav;
 
   @Input() managing;
   @Input() navMode;
   @Input() navMenu;
-
-
-
 
   open() {
     this.sidenav.open();
@@ -44,10 +41,8 @@ export class SideNavComponent implements OnInit, OnChanges {
   ngOnChanges() {
 
   }
-
   onClick(item: 'dashboard') {
     this.clickedItem = item;
   }
-
 
 }

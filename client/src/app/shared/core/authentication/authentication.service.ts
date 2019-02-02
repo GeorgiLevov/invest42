@@ -1,6 +1,5 @@
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
-// import { JwtHelperService } from '@auth0/angular-jwt';
 import * as jwt_decode from 'jwt-decode';
 import { ToastrService } from 'ngx-toastr';
 import * as decode from 'jwt-decode';
@@ -9,17 +8,11 @@ import * as decode from 'jwt-decode';
     providedIn: 'root'
 })
 export class AuthenticationService {
+
     constructor(
-        // private jwtService: JwtHelperService,
         private toastr: ToastrService,
         private router: Router,
     ) { }
-
-    // public isAuthenticated(): boolean {
-    //     const token = localStorage.getItem('token');
-
-    //     return !this.jwtService.isTokenExpired(token);
-    // }
 
     public getRole(): string {
         const token = localStorage.getItem('token');
@@ -37,7 +30,6 @@ export class AuthenticationService {
 
     tokenData(): { id: number, role: string } {
         const token = localStorage.getItem('token');
-
         const tokenPayload = jwt_decode(token);
 
         return tokenPayload;
@@ -45,7 +37,6 @@ export class AuthenticationService {
 
     tokenEmail(): string {
         const token = localStorage.getItem('token');
-
         const tokenPayload = jwt_decode(token);
 
         return tokenPayload.email;

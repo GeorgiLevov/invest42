@@ -14,7 +14,6 @@ import { RoleGuard } from './shared/core/authentication/role-guard.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { LayoutModule } from '@angular/cdk/layout';
-import { MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/material';
 import { ParallaxDirective } from './parallax.directive';
 import { MaterialWrapModule } from './material-module/material.module';
 
@@ -33,9 +32,6 @@ import { MaterialWrapModule } from './material-module/material.module';
     LoginModule,
     LayoutModule,
     BrowserAnimationsModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
     MaterialWrapModule,
   ],
   providers: [

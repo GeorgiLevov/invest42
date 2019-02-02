@@ -33,9 +33,7 @@ export class ProfileComponent implements OnInit {
     this.profileService.getManagerProfile(this.managerEmail)
       .subscribe((data: ManagerProfile) => {
         this.managerProfile = data;
-      }, (error: HttpErrorResponse) => {
-        // console.log(error);
-      });
+      }, (error: HttpErrorResponse) => { });
   }
 
   public ngOnInit() {

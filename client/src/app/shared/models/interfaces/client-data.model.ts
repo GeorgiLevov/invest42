@@ -1,4 +1,5 @@
 export class ClientData {
+
     id: string;
     fullname: string;
     email: string;
@@ -8,4 +9,5 @@ export class ClientData {
     status: string;
     managerName: string;
     managerEmail: string;
+
 }
