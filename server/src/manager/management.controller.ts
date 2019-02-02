@@ -119,3 +119,4 @@ export class ManagementController {
     // ivestments(@Body() info: Array<any>): Promise<object> {
     //     return this.managementService.sellStock(info.orderId);
     // }
+}
