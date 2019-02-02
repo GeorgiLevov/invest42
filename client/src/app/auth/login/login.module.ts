@@ -1,5 +1,5 @@
 import { MatFormFieldModule, MatInputModule, MatCardModule } from '@angular/material';
-import { MaterializeWrapModule } from './../../materialize-module/materialize.module';
+// import { MaterializeWrapModule } from './../../materialize-module/materialize.module';
 import { LoginService } from './../services/login.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';

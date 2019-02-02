@@ -1,19 +1,16 @@
-import { BuyOrderComponent } from './../manager-modals/buy-modal/buy-order.component';
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
-import { ManagerService } from '../services/manager.service';
 import { Router } from '@angular/router';
-import { UpdateOrderComponent } from '../manager-modals/update-order/update-order.component';
-
+import { ManagerService } from '../../services/manager.service';
 
 @Component({
-  selector: 'app-client-market',
-  templateUrl: './client-market.component.html',
-  styleUrls: ['./client-market.component.css']
+  selector: 'app-client-history',
+  templateUrl: './client-history.component.html',
+  styleUrls: ['./client-history.component.css']
 })
-export class ClientMarketComponent implements OnInit, AfterViewInit {
+export class ClientHistoryComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: string[] = ['name', 'industry', 'startprice', 'currentprice', 'buy'];
+  displayedColumns: string[] = ['name', 'industry', 'units', 'prices', 'sellprice', 'profit'];
   dataSource = new MatTableDataSource<any>();
   index: number;
   id: number;
@@ -27,13 +24,13 @@ export class ClientMarketComponent implements OnInit, AfterViewInit {
     private router: Router,
   ) { }
 
+
   ngOnInit() {
-    // (this.router.url.split('/')[3]
-    this.getMarketInfo();
+    this.getClientClosedOrders();
   }
 
-  public getMarketInfo = () => {
-    this.managerService.getMarketInfo()
+  public getClientClosedOrders = () => {
+    this.managerService.getClosedOrdersInfo(this.router.url.split('/')[3])
       .subscribe((res) => {
         this.dataSource.data = res;
         this.managerService.clientDataChange.next(res); // added
@@ -54,20 +51,9 @@ export class ClientMarketComponent implements OnInit, AfterViewInit {
     }
   }
 
-  buy(companyId, currentprice) {
-    const dialogRef = this.dialog.open(BuyOrderComponent, {
-      data: { clientId: this.router.url.split('/')[3], companyId: companyId, currentprice: currentprice }
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result === 1) {
-        this.getMarketInfo();
-      }
-    });
-  }
-
   private refreshTable() {
-    this.getMarketInfo();
+    this.getClientClosedOrders();
   }
+
 
 }

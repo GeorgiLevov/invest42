@@ -10,7 +10,7 @@ export class ParallaxDirective {
   initialTop = 0;
 
   constructor(private eleRef: ElementRef) {
-    this.initialTop = this.eleRef.nativeElement.getBoundingClientRect().top
+    this.initialTop = this.eleRef.nativeElement.getBoundingClientRect().top;
   }
 
   @HostListener('window:scroll', ['$event'])

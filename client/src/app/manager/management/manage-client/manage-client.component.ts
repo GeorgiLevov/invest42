@@ -7,39 +7,37 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ManageClientComponent implements OnInit {
 
-  public managing = true;
-
   public navMode = 'Management Mode';
   public navMenu = [
     {
       text: 'Portfolio',
       route: './portfolio',
       path: 'portfolio',
-      isActive: true,
+      isActive: false,
     },
     {
       text: 'Active Positions',
       route: './positions',
       path: 'positions',
-      isActive: true,
+      isActive: false,
     },
     {
       text: 'Market',
       route: './market',
       path: 'market',
-      isActive: true,
+      isActive: false,
     },
     {
       text: 'Watchlist',
       route: './watchlist',
       path: 'watchlist',
-      isActive: true,
+      isActive: false,
     },
     {
       text: 'History',
       route: './history',
       path: 'history',
-      isActive: true,
+      isActive: false,
     }
   ];
 

@@ -1,20 +1,20 @@
 // import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-// import { NotFoundComponent } from './not-found.component';
+// import { ClientWatchlistComponent } from './client-watchlist.component';
 
-// describe('NotFoundComponent', () => {
-//   let component: NotFoundComponent;
-//   let fixture: ComponentFixture<NotFoundComponent>;
+// describe('ClientWatchlistComponent', () => {
+//   let component: ClientWatchlistComponent;
+//   let fixture: ComponentFixture<ClientWatchlistComponent>;
 
 //   beforeEach(async(() => {
 //     TestBed.configureTestingModule({
-//       declarations: [ NotFoundComponent ]
+//       declarations: [ ClientWatchlistComponent ]
 //     })
 //     .compileComponents();
 //   }));
 
 //   beforeEach(() => {
-//     fixture = TestBed.createComponent(NotFoundComponent);
+//     fixture = TestBed.createComponent(ClientWatchlistComponent);
 //     component = fixture.componentInstance;
 //     fixture.detectChanges();
 //   });

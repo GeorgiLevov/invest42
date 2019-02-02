@@ -1,9 +1,9 @@
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { AppConfig } from '../../config/app.config';
 import { Router } from '@angular/router';
-import { PriceData } from '../../models/interfaces/prices.model';
+import { PriceData } from '../../../shared/models/interfaces/prices.model';
+import { AppConfig } from '../../../config/app.config';
 
 @Injectable()
 export class CompanyPortfolioService {

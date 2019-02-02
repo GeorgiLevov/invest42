@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
-import { ManagerService } from '../services/manager.service';
 import { Router } from '@angular/router';
-import { UpdateOrderComponent } from '../manager-modals/update-order/update-order.component';
+import { ManagerService } from '../../services/manager.service';
+import { UpdateOrderComponent } from '../../manager-modals/update-order/update-order.component';
 
 @Component({
   selector: 'app-client-positions',
@@ -54,7 +54,7 @@ export class ClientPositionsComponent implements OnInit, AfterViewInit {
 
   sell(orderId, units) {
     const dialogRef = this.dialog.open(UpdateOrderComponent, {
-      data: { id: orderId, units: units, isSell: true }
+      data: { id: orderId, units: units, isSell: true, clientId: this.router.url.split('/')[3] }
     });
 
     dialogRef.afterClosed().subscribe((result) => {

@@ -1,8 +1,8 @@
-import { ManagerService } from './../services/manager.service';
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { Sort, MatSort, MatTableDataSource } from '@angular/material';
-import { ClientModel } from '../../models/interfaces/client.model';
-import { Orders } from '../../models/interfaces/orders.model';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Sort, MatSort } from '@angular/material';
+import { ClientModel } from '../../../shared/models/interfaces/client.model';
+import { Orders } from '../../../shared/models/interfaces/orders.model';
+import { ManagerService } from '../../services/manager.service';
 
 @Component({
   selector: 'app-positions',
@@ -28,13 +28,8 @@ export class PositionsComponent implements OnInit {
   }
 
   initializeClients() {
-    this.managerService.getClientOrders().subscribe((data) => {
+    this.managerService.getClientOrders().subscribe((data: any) => {
       this.clients = data as ClientModel[];
-      this.sortedData = this.clients[0].orders;
-
-      this.clients.map((client: any) => {
-        client.orders = client.__orders__;
-      });
     },
       (err) => { console.log('Error from client orders: ', err); });
   }
@@ -58,13 +53,6 @@ export class PositionsComponent implements OnInit {
     });
 
     this.clients[index].orders = this.sortedData;
-  }
-
-
-  generateTable(orders): string {
-
-    // return `<h1>TEST</h1>`;
-    return orders;
   }
 
 }

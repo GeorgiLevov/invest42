@@ -1,8 +1,7 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
-import { ClientData } from '../../models/interfaces/client-data.model';
-import { ManagerService } from '../services/manager.service';
 import { Router } from '@angular/router';
+import { ManagerService } from '../../services/manager.service';
 
 @Component({
   selector: 'app-clients',
