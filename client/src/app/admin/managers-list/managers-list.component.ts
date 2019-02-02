@@ -14,13 +14,20 @@ import { ManagerData } from '../../shared/models/interfaces/manager-data.model';
 })
 export class ManagersListComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: string[] = ['id', 'avatar', 'fullname', 'email', 'status', 'clients', 'actions'];
+  displayedColumns: string[] = [
+    'id',
+    'avatar',
+    'fullname',
+    'email',
+    'status',
+    'clients',
+    'actions'];
   dataSource = new MatTableDataSource<ManagerData>();
 
   index: number;
 
   id: number;
-
+  @ViewChild('dynamicTable') myTable: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -37,7 +44,7 @@ export class ManagersListComponent implements OnInit, AfterViewInit {
     this.adminService.getManagers()
       .subscribe((res) => {
         this.dataSource.data = res as ManagerData[];
-        this.adminService.dataChange.next(res); // added
+        // this.adminService.dataChange.next(res); // added
       });
   }
 
@@ -60,8 +67,9 @@ export class ManagersListComponent implements OnInit, AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result === 1) {
-        this.adminService.dataChange.value.push(this.adminService.getDialogData());
+      if (result) {
+        this.dataSource.data.push(result);
+        this.applyFilter('');
       }
     });
   }
@@ -69,16 +77,16 @@ export class ManagersListComponent implements OnInit, AfterViewInit {
   startEdit(i, id, email, password) {
     this.id = id;
     this.index = i;
-    // console.log(this.index); // for debugging / can be removed
 
     const dialogRef = this.dialog.open(EditManagerComponent, {
       data: { id: id, email: email, password: password }
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result === 1) {
-        const foundIndex = this.adminService.dataChange.value.findIndex((x: any) => x.id === this.id);
-        this.adminService.dataChange.value[foundIndex] = this.adminService.getDialogData();
+      if (result) {
+        console.log('dialogRefAfterClose:' , result);
+        this.dataSource.data.push(result);
+        this.applyFilter('');
       }
     });
   }

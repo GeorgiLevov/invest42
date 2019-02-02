@@ -8,6 +8,7 @@ import { AuthenticationService } from 'src/app/shared/core/authentication/authen
 })
 export class OverviewComponent implements OnInit {
 
+  public managing = false;
   public navMode = 'Overview Mode';
   public navMenu = [
     {

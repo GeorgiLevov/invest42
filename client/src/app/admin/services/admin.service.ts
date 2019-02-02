@@ -57,30 +57,12 @@ export class AdminService {
             });
     }
 
-    addUser(user: UserRegisterData): void { // added
-        // this.dialogData = user;
-        // console.log(user);
-        this.http.post(`${this.apiUrl}/register/user`, user).subscribe((data) => {
-            this.toastService.success('', 'Successfully added', { timeOut: 3000 });
-        },
-            (err: HttpErrorResponse) => {
-                this.toastService.error('', 'Error occurred!', { timeOut: 8000 });
-            });
+    addUser(user: UserRegisterData):  Observable<UserData> {
+        return this.http.post<UserData>(`${this.apiUrl}/register/user`, user);
     }
 
-    addClient(client: ClientRegisterData): void {
-
-        const balance = +client.availableBalance;
-        client.availableBalance = balance;
-        const age = +client.age;
-        client.age = +age;
-
-        this.http.post(`${this.apiUrl}/register/client`, client).subscribe((data) => {
-            this.toastService.success('', 'Successfully added', { timeOut: 3000 });
-        },
-            (err: HttpErrorResponse) => {
-                this.toastService.error('', 'Error occurred!', { timeOut: 8000 });
-            });
+    addClient(client: ClientRegisterData): Observable<ClientData> {
+        return this.http.post<ClientData>(`${this.apiUrl}/register/client`, client);
     }
 
     updateClient(client): void {

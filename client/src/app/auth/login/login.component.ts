@@ -1,7 +1,7 @@
 
 import { LoginService } from './../services/login.service';
 import { AuthService } from './../../../../../server/src/auth/auth.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, AbstractControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 // import { AuthHomeService } from '../services/auth.service';
@@ -12,6 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthenticationService } from '../../shared/core/authentication/authentication.service';
 import { Role } from '../../../../../server/src/models/enums/roles.enum';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { IImage } from 'ng-simple-slideshow';
 import { UserLogin } from '../../shared/models/user-login.model';
 // import { ToastrService } from 'ngx-toastr';
 
@@ -24,6 +25,44 @@ export class LoginComponent implements OnInit {
   options: FormGroup;
   public loginForm: FormGroup;
 
+  public imageUrls: (string | IImage)[] = [
+    {  url: 'assets/login/login-1-min.jpg',
+     backgroundSize: 'cover', backgroundPosition: 'center center' },
+
+    { url: 'assets/login/login-2-min.jpg',
+    backgroundSize: 'cover', backgroundPosition: 'center center' },
+
+     { url: 'assets/login/login-3-min.jpg',
+     backgroundSize: 'cover', backgroundPosition: 'center center' },
+
+    // { url: 'https://cdn.vox-cdn.com/uploads/chorus_image/image/56674755/mr_pb_is_the_best.0.jpg',
+    //  backgroundSize: 'contain', backgroundPosition: 'center' }
+
+  ];
+
+  height = '500px';
+  minHeight = '500px';
+  arrowSize = '30px';
+  showArrows = false;
+  disableSwiping = false;
+  autoPlay = true;
+  autoPlayInterval = 3333;
+  stopAutoPlayOnSlide = true;
+  autoPlayWaitForLazyLoad = true;
+  debug = false;
+  backgroundSize = 'cover';
+  // backgroundPosition = 'center center';
+  backgroundRepeat = 'no-repeat';
+  showDots = false;
+  dotColor = '#FFF';
+  showCaptions  = false;
+  captionColor = '#FFF';
+  captionBackground = 'rgba(0, 0, 0, .35)';
+  lazyLoad = true;
+  hideOnNoSlides = false;
+  width = '50%';
+
+  @ViewChild('slideshow') slideshow: any;
 
   public genericErrorMsg = 'The field is required!';
   public genMinLengthMsg = 'Min length should be more than 8 chars!';
@@ -49,6 +88,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.buildLoginForm();
+    console.log(this.loginForm);
   }
 
   public buildLoginForm(): void {

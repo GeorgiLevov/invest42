@@ -27,6 +27,7 @@ export class ClientsListComponent implements OnInit, AfterViewInit {
 
   id: number;
 
+  @ViewChild('dynamicTable') myTable: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -66,8 +67,9 @@ export class ClientsListComponent implements OnInit, AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result === 1) {
-        this.adminService.dataChange.value.push(this.adminService.getDialogData());
+      if (result) {
+        this.dataSource.data.push(result);
+        this.applyFilter('');
       }
     });
   }
@@ -75,17 +77,17 @@ export class ClientsListComponent implements OnInit, AfterViewInit {
   startEdit(i, id, email, managerEmail) {
     this.id = id;
     this.index = i;
-    // console.log(this.index); // for debugging / can be removed
 
     const dialogRef = this.dialog.open(EditClientComponent, {
       data: { id: id, email: email, managerEmail: managerEmail }
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result === 1) {
-        const foundIndex = this.adminService.dataChange.value.findIndex((x: any) => x.id === this.id);
-        this.adminService.dataChange.value[foundIndex] = this.adminService.getDialogData();
-      }
+        if (result) {
+          console.log('dialogRefAfterClose:' , result);
+          this.dataSource.data.push(result);
+          this.applyFilter('');
+        }
     });
   }
 

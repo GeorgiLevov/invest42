@@ -11,6 +11,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { ProfileComponent } from './profile/profile.component';
 import { ProjectTreeComponent } from './project-tree/project-tree.component';
 import { MaterialWrapModule } from '../material-module/material.module';
+import { SlideshowModule } from 'ng-simple-slideshow';
 
 
 @NgModule({
@@ -29,6 +30,8 @@ import { MaterialWrapModule } from '../material-module/material.module';
         LayoutModule,
     ],
     exports: [
+        //  CommonModule,
+        SlideshowModule,
         MaterialWrapModule,
         SideNavComponent,
         ProfileComponent,

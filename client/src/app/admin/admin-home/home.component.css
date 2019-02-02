@@ -1,4 +1,8 @@
 
+.admin-home-container {
+    margin: 5%;
+    margin-top: 1%;
+}
 
 .first-div {
     max-width: 400px;
@@ -15,6 +19,10 @@
     vertical-align: top;
 }
 
+.add {
+    color:white;
+    display: inline-block;
+}
 
       /* display: inline-block; */
 
