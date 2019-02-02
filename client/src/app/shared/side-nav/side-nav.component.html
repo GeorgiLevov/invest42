@@ -27,34 +27,5 @@
 
   </mat-sidenav>
 
-  <mat-sidenav-content>
-
-  </mat-sidenav-content>
-
-</mat-sidenav-container>
-
-<mat-divider></mat-divider>
-
-<mat-toolbar *ngIf="navMode">
-  <span>{{navMode}}</span>
-</mat-toolbar>
-
-<mat-divider></mat-divider>
-
-<mat-nav-list>
-  <ul>
-    <li *ngFor="let item of navMenu">
-      <a [ngClass]="{'active': item.isActive }" (click)="sidenav.close()" mat-list-item routerLink="{{item.route}}">
-        {{item.text}}
-      </a>
-    </li>
-  </ul>
-</mat-nav-list>
-</mat-sidenav>
-
-<mat-sidenav-content>
-
-
-</mat-sidenav-content>
 
 </mat-sidenav-container>

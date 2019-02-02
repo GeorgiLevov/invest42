@@ -13,12 +13,12 @@ import { UserData } from '../../shared/models/interfaces/user-data.model';
 export class AdminsListComponent implements OnInit, AfterViewInit {
 
   displayedColumns: string[] = [
-   'id',
-   'avatar',
-   'fullname',
-   'email',
-   'status',
-   'actions'];
+    'id',
+    'avatar',
+    'fullname',
+    'email',
+    'status',
+    'actions'];
   dataSource = new MatTableDataSource<UserData>();
 
   index: number;
@@ -85,7 +85,7 @@ export class AdminsListComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        console.log('dialogRefAfterClose:' , result);
+        // console.log('dialogRefAfterClose:', result);
         this.dataSource.data.push(result);
         this.applyFilter('');
       }

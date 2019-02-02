@@ -43,21 +43,15 @@ export class AdminService {
         return this.http.get<ClientData[]>(`${this.apiUrl}/user/get-client-info`);
     }
 
-    updateUser(user): void {  // added
+    updateUser(user): Observable<object> {
         this.dialogData = user;
         const id = user.id;
         const manager = { email: user.email, password: user.password };
 
-        this.http.post(`${this.apiUrl}/user/update`, { id, manager }).subscribe((data) => {
-            this.dialogData = data;
-            this.toastService.success('', 'Successfully edited!', { timeOut: 2000 });
-        },
-            (err: HttpErrorResponse) => {
-                this.toastService.error('', 'Error occurred!', { timeOut: 5000 });
-            });
+        return this.http.post(`${this.apiUrl}/user/update`, { id, manager });
     }
 
-    addUser(user: UserRegisterData):  Observable<UserData> {
+    addUser(user: UserRegisterData): Observable<UserData> {
         return this.http.post<UserData>(`${this.apiUrl}/register/user`, user);
     }
 
@@ -65,17 +59,11 @@ export class AdminService {
         return this.http.post<ClientData>(`${this.apiUrl}/register/client`, client);
     }
 
-    updateClient(client): void {
+    updateClient(client): Observable<object> {
         const managerEmail = client.newManagerEmail;
         const clientEmail = client.email;
 
-        this.http.post(`${this.apiUrl}/user/assign-to-manager`, { managerEmail, clientEmail }).subscribe((data) => {
-            this.dialogData = data;
-            this.toastService.success('', 'Successfully edited!', { timeOut: 2000 });
-        },
-            (err: HttpErrorResponse) => {
-                this.toastService.error('', 'Error occurred!', { timeOut: 5000 });
-            });
+        return this.http.post(`${this.apiUrl}/user/assign-to-manager`, { managerEmail, clientEmail });
     }
 
     getDialogData() {

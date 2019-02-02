@@ -37,23 +37,21 @@ export class AddClientComponent implements OnInit {
 
     successToast() {
         this.toastService.success('', 'Client added!', { timeOut: 1500 });
-      }
+    }
 
-      errToast() {
+    errToast() {
         this.toastService.error('Please try again', 'Wrong input!', { timeOut: 1500 });
-      }
+    }
 
     getErrorMessage() {
         return this.clientForm.controls['email'].hasError('required') ? this.genericErrorMsg :
-        this.clientForm.controls['email'].hasError('minlength') ? this.genMinLengthMsg :
-        this.clientForm.controls['email'].hasError('maxlength') ? this.genMaxLengthMsg :
-        this.clientForm.controls['email'].hasError('pattern') ? this.emailErrMsg :
-        this.clientForm.controls['address'].hasError('required') ? this.genericErrorMsg :
-        this.clientForm.controls['fullname'].hasError('required') ? this.genericErrorMsg :
-        this.clientForm.controls['age'].hasError('required') ? this.genericErrorMsg :
-        this.clientForm.controls['balane'].hasError('required') ? this.genericErrorMsg :
-
-            '';
+            this.clientForm.controls['email'].hasError('minlength') ? this.genMinLengthMsg :
+                this.clientForm.controls['email'].hasError('maxlength') ? this.genMaxLengthMsg :
+                    this.clientForm.controls['email'].hasError('pattern') ? this.emailErrMsg :
+                        this.clientForm.controls['address'].hasError('required') ? this.genericErrorMsg :
+                            this.clientForm.controls['fullname'].hasError('required') ? this.genericErrorMsg :
+                                this.clientForm.controls['age'].hasError('required') ? this.genericErrorMsg :
+                                    this.clientForm.controls['balane'].hasError('required') ? this.genericErrorMsg : '';
     }
 
     get formData() {
@@ -73,7 +71,7 @@ export class AddClientComponent implements OnInit {
                 Validators.email,
                 Validators.minLength(10),
                 Validators.maxLength(50),
-              ]),
+            ]),
             age: this.fb.control('', Validators.required),
             availableBalance: this.fb.control('', Validators.required),
         });
@@ -82,9 +80,9 @@ export class AddClientComponent implements OnInit {
     public confirmAdd(addClientFormData): void {
         this.adminService.addClient(addClientFormData).subscribe((result) => {
             this.successToast(),
-            this.dialogRef.close(result);
+                this.dialogRef.close(result);
         },
-        () =>  this.errToast(),
+            () => this.errToast(),
         );
     }
 }

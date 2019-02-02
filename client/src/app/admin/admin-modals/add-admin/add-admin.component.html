@@ -5,23 +5,23 @@
 
     <div class="form">
       <mat-form-field color="accent">
-        <input matInput class="form-control"  placeholder="Full Name" formControlName="fullname">
+        <input matInput class="form-control" placeholder="Full Name" formControlName="fullname">
         <mat-error *ngIf="!adminForm.controls['fullname'].valid">{{getErrorMessage()}}</mat-error>
       </mat-form-field>
     </div>
 
     <div class="form">
-        <mat-form-field color="accent">
-          <input matInput class="form-control" placeholder="Email" formControlName="email" type="email" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
-          <mat-error *ngIf="!adminForm.controls['email'].valid">{{getErrorMessage()}}</mat-error>
-        </mat-form-field>
-      </div>
+      <mat-form-field color="accent">
+        <input matInput class="form-control" placeholder="Email" formControlName="email" type="email" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+        <mat-error *ngIf="!adminForm.controls['email'].valid">{{getErrorMessage()}}</mat-error>
+      </mat-form-field>
+    </div>
 
     <div class="form">
       <mat-form-field color="accent">
         <input matInput class="form-control" placeholder="Password" formControlName="password">
         <mat-error *ngIf="!adminForm.controls['password'].valid">{{getErrorMessage()}}</mat-error>
-           
+
       </mat-form-field>
     </div>
 
@@ -34,9 +34,9 @@
     </div>
 
     <div mat-dialog-actions>
-        <button mat-button type="button" [disabled]="!formControl.valid" (click)="confirmAdd(this.formData)">Save</button>
-        <button mat-button type="button" (click)="onNoClick()" tabindex="-1">Cancel</button>
-      </div>
+      <button mat-button type="button" [disabled]="!formControl.valid" (click)="confirmAdd(this.formData)">Save</button>
+      <button mat-button type="button" (click)="onNoClick()" tabindex="-1">Cancel</button>
+    </div>
 
   </form>
 </div>

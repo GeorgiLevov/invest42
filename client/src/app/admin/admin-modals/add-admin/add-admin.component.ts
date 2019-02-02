@@ -1,7 +1,7 @@
 
 import { AdminService } from './../../services/admin.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import {  OnInit } from '@angular/core';
+import { OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Component, Inject } from '@angular/core';
@@ -37,31 +37,30 @@ export class AddAdminComponent implements OnInit {
         this.buildTheForm();
     }
 
- successToast() {
-    this.toastService.success('', 'Admin added!', { timeOut: 1000 });
-  }
-
-  errToast() {
-    this.toastService.error('Please try again', 'Wrong input!', { timeOut: 1500 });
-  }
-
-getErrorMessage() {
-    return this.adminForm.controls['email'].hasError('required') ? this.genericErrorMsg :
-    this.adminForm.controls['email'].hasError('minlength') ? this.genMinLengthMsg :
-    this.adminForm.controls['email'].hasError('maxlength') ? this.genMaxLengthMsg :
-    this.adminForm.controls['email'].hasError('pattern') ? this.emailErrMsg :
-    this.adminForm.controls['password'].hasError('minlength') ? this.genMinLengthMsg :
-    this.adminForm.controls['password'].hasError('maxlength') ? this.genMaxLengthMsg :
-    this.adminForm.controls['password'].hasError('pattern') ? this.passErrMsg :
-    this.adminForm.controls['password'].hasError('required') ? this.genericErrorMsg :
-    this.adminForm.controls['fullname'].hasError('required') ? this.genericErrorMsg :
-    this.adminForm.controls['role'].hasError('required') ? this.genericErrorMsg :
-    '';
+    successToast() {
+        this.toastService.success('', 'Admin added!', { timeOut: 1000 });
     }
 
-get formData() {
-    return this.adminForm.value;
-}
+    errToast() {
+        this.toastService.error('Please try again', 'Wrong input!', { timeOut: 1500 });
+    }
+
+    getErrorMessage() {
+        return this.adminForm.controls['email'].hasError('required') ? this.genericErrorMsg :
+            this.adminForm.controls['email'].hasError('minlength') ? this.genMinLengthMsg :
+                this.adminForm.controls['email'].hasError('maxlength') ? this.genMaxLengthMsg :
+                    this.adminForm.controls['email'].hasError('pattern') ? this.emailErrMsg :
+                        this.adminForm.controls['password'].hasError('minlength') ? this.genMinLengthMsg :
+                            this.adminForm.controls['password'].hasError('maxlength') ? this.genMaxLengthMsg :
+                                this.adminForm.controls['password'].hasError('pattern') ? this.passErrMsg :
+                                    this.adminForm.controls['password'].hasError('required') ? this.genericErrorMsg :
+                                        this.adminForm.controls['fullname'].hasError('required') ? this.genericErrorMsg :
+                                            this.adminForm.controls['role'].hasError('required') ? this.genericErrorMsg : '';
+    }
+
+    get formData() {
+        return this.adminForm.value;
+    }
 
     onNoClick(): void {
         this.dialogRef.close();
@@ -75,8 +74,8 @@ get formData() {
                 Validators.email,
                 Validators.minLength(10),
                 Validators.maxLength(50),
-              ]),
-            password: this.fb.control('', [ Validators.required,
+            ]),
+            password: this.fb.control('', [Validators.required,
             Validators.minLength(8),
             Validators.maxLength(50),
             Validators.pattern(this.passwordPattern)]),
@@ -86,12 +85,12 @@ get formData() {
 
     public confirmAdd(addAdminData): void {
         this.adminService.addUser(addAdminData).subscribe((result) => {
-        this.successToast(),
-        this.dialogRef.close(result);
-    },
-       () =>  this.errToast(),
-       );
-}
+            this.successToast(),
+                this.dialogRef.close(result);
+        },
+            () => this.errToast(),
+        );
+    }
 
 
 }
