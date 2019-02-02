@@ -1,19 +1,21 @@
-/* .login-input {
-  color: white;
-} */
-html, body {margin: 0; height: 100%; overflow: hidden}
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden
+}
 
 .login-title {
   user-select: none;
   display: block;
   margin: auto;
-  margin-top:1%;
+  margin-top: 1%;
   margin-left: 1%;
   text-align: left;
   font-size: 2.5em;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  font-style:normal;
+  font-style: normal;
   padding-top: 0.1em;
   text-shadow: 0.07em 0.07em 0 rgba(255, 255, 255, 0.1);
   color: rgba(123, 158, 206, 0.7);
@@ -22,23 +24,26 @@ html, body {margin: 0; height: 100%; overflow: hidden}
 }
 
 .login-body {
-height: 500px;
-margin-top: 2%;
-background:white;
--webkit-box-shadow: 0px 0px 25px 10px rgba(0,0,0,0.61);
--moz-box-shadow: 0px 0px 25px 10px rgba(0,0,0,0.61);
-box-shadow: 0px 0px 25px 10px rgba(0,0,0,0.61);
+  height: 500px;
+  margin-top: 2%;
+  background: white;
+  -webkit-box-shadow: 0px 0px 25px 10px rgba(0, 0, 0, 0.61);
+  -moz-box-shadow: 0px 0px 25px 10px rgba(0, 0, 0, 0.61);
+  box-shadow: 0px 0px 25px 10px rgba(0, 0, 0, 0.61);
 }
 
-.slideshow{
+.slideshow {
   width: 60%;
   display: inline-block;
-  clip-path: polygon(
-    0 0, /* left top */
-    90% 0, /* right top */ 
-    100% 100%, /* right bottom */
-    0 100% /* left bottom */
-  );
+  clip-path: polygon(0 0,
+    /* left top */
+    90% 0,
+    /* right top */
+    100% 100%,
+    /* right bottom */
+    0 100%
+    /* left bottom */
+    );
 }
 
 
@@ -61,7 +66,7 @@ form {
   margin-top: 15%;
 }
 
-.login-form-title{
+.login-form-title {
   text-align: left;
 }
 

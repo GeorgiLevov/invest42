@@ -5,8 +5,6 @@ import { Observable } from 'rxjs';
 import { HttpOptions } from '../../shared/models/core/http-options.model';
 import { UserLogin } from '../../shared/models/user-login.model';
 
-
-
 @Injectable()
 export class LoginService {
 

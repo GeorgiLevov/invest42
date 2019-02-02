@@ -20,13 +20,13 @@ export class ProfileComponent implements OnInit {
     private profileService: ProfileService,
     private appConfig: AppConfig,
     private router: Router
-    ) { }
+  ) { }
 
-    @Input() managing;
+  @Input() managing;
 
-    public src = this.appConfig.apiUrl;
-    public managerProfile: ManagerProfile;
-    managerEmail = this.authService.tokenEmail();
+  public src = this.appConfig.apiUrl;
+  public managerProfile: ManagerProfile;
+  managerEmail = this.authService.tokenEmail();
 
 
   public getProfile() {
@@ -34,18 +34,17 @@ export class ProfileComponent implements OnInit {
       .subscribe((data: ManagerProfile) => {
         this.managerProfile = data;
       }, (error: HttpErrorResponse) => {
-        console.log(error);
+        // console.log(error);
       });
   }
 
   public ngOnInit() {
     this.getProfile();
   }
-  // http://localhost:5500/
 
-    backToClients() {
-      this.router.navigate([`manager/clients/`]);
-    }
+  backToClients() {
+    this.router.navigate([`manager/clients/`]);
+  }
 
   logout() {
     this.authService.logout();

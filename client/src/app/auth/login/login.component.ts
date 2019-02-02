@@ -1,20 +1,15 @@
 
 import { LoginService } from './../services/login.service';
-import { AuthService } from './../../../../../server/src/auth/auth.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, AbstractControl, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-// import { AuthHomeService } from '../services/auth.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { MzToastService } from 'ngx-materialize';
 import { ToastrService } from 'ngx-toastr';
 import { AuthenticationService } from '../../shared/core/authentication/authentication.service';
 import { Role } from '../../../../../server/src/models/enums/roles.enum';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { IImage } from 'ng-simple-slideshow';
 import { UserLogin } from '../../shared/models/user-login.model';
-// import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -26,18 +21,20 @@ export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
 
   public imageUrls: (string | IImage)[] = [
-    {  url: 'assets/login/login-1-min.jpg',
-     backgroundSize: 'cover', backgroundPosition: 'center center' },
+    {
+      url: 'assets/login/login-1-min.jpg',
+      backgroundSize: 'cover', backgroundPosition: 'center center'
+    },
 
-    { url: 'assets/login/login-2-min.jpg',
-    backgroundSize: 'cover', backgroundPosition: 'center center' },
+    {
+      url: 'assets/login/login-2-min.jpg',
+      backgroundSize: 'cover', backgroundPosition: 'center center'
+    },
 
-     { url: 'assets/login/login-3-min.jpg',
-     backgroundSize: 'cover', backgroundPosition: 'center center' },
-
-    // { url: 'https://cdn.vox-cdn.com/uploads/chorus_image/image/56674755/mr_pb_is_the_best.0.jpg',
-    //  backgroundSize: 'contain', backgroundPosition: 'center' }
-
+    {
+      url: 'assets/login/login-3-min.jpg',
+      backgroundSize: 'cover', backgroundPosition: 'center center'
+    },
   ];
 
   height = '500px';
@@ -51,11 +48,10 @@ export class LoginComponent implements OnInit {
   autoPlayWaitForLazyLoad = true;
   debug = false;
   backgroundSize = 'cover';
-  // backgroundPosition = 'center center';
   backgroundRepeat = 'no-repeat';
   showDots = false;
   dotColor = '#FFF';
-  showCaptions  = false;
+  showCaptions = false;
   captionColor = '#FFF';
   captionBackground = 'rgba(0, 0, 0, .35)';
   lazyLoad = true;
@@ -69,9 +65,6 @@ export class LoginComponent implements OnInit {
   public emailErrMsg = 'Not a valid email';
   public passErrMsg = 'Password must have one \'capital\' and one small letter.';
   public genMaxLengthMsg = 'Max length should be less than 50 chars!';
-
-  // tslint:disable-next-line:max-line-length
-
   public passwordPattern = ('([A-Za-z0-9@#$%&*]+)$');
 
   loading = false;
@@ -82,13 +75,10 @@ export class LoginComponent implements OnInit {
     private loginService: LoginService,
     private toastService: ToastrService,
     private authService: AuthenticationService,
-    private breakpointObserver: BreakpointObserver,
   ) { }
-
 
   ngOnInit() {
     this.buildLoginForm();
-    console.log(this.loginForm);
   }
 
   public buildLoginForm(): void {
@@ -168,8 +158,6 @@ export class LoginComponent implements OnInit {
         }
 
       }, (err: HttpErrorResponse) => {
-        // console.log('err', err);
-
         this.errToast();
         this.loginForm.reset();
       });
