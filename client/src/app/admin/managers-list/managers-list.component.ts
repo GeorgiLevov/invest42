@@ -1,5 +1,4 @@
 import { AddManagerComponent } from './../admin-modals/add-manager/add-manager.component';
-
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
 import { AdminService } from '../services/admin.service';
@@ -24,9 +23,6 @@ export class ManagersListComponent implements OnInit, AfterViewInit {
     'actions'];
   dataSource = new MatTableDataSource<ManagerData>();
 
-  index: number;
-
-  id: number;
   @ViewChild('dynamicTable') myTable: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -44,7 +40,6 @@ export class ManagersListComponent implements OnInit, AfterViewInit {
     this.adminService.getManagers()
       .subscribe((res) => {
         this.dataSource.data = res as ManagerData[];
-        // this.adminService.dataChange.next(res); // added
       });
   }
 
@@ -74,19 +69,16 @@ export class ManagersListComponent implements OnInit, AfterViewInit {
     });
   }
 
-  startEdit(i, id, email, password) {
-    this.id = id;
-    this.index = i;
-
+  startEdit(id, email, password) {
     const dialogRef = this.dialog.open(EditManagerComponent, {
       data: { id: id, email: email, password: password }
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        console.log('dialogRefAfterClose:' , result);
-        this.dataSource.data.push(result);
-        this.applyFilter('');
+        setTimeout(() => {
+          this.refreshTable();
+        }, 1000);
       }
     });
   }

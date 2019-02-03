@@ -38,7 +38,7 @@ export class MarketComponent implements AfterViewInit, OnInit {
             const direction = (Math.random() >= 0.5) ? 1 : -1;
             let priceToUpdate = ((direction * Math.random()) + company.endprice);
             priceToUpdate = Number(priceToUpdate).toFixed(2);
-            if (priceToUpdate >= company.lowprice && priceToUpdate <= company.highprice ) {
+            if (priceToUpdate >= company.lowprice && priceToUpdate <= company.highprice) {
               company.endprice = Number(priceToUpdate);
             }
           });

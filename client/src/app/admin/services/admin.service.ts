@@ -1,8 +1,7 @@
-
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { AppConfig } from '../../config/app.config';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { UserData } from '../../shared/models/interfaces/user-data.model';
 import { ManagerData } from '../../shared/models/interfaces/manager-data.model';
 import { UserRegisterData } from '../../shared/models/user-register.model';
@@ -13,76 +12,48 @@ import { ClientRegisterData } from '../../shared/models/client-register.model';
 })
 export class AdminService {
 
-    private apiUrl = 'http://localhost:5500';
-
-    dataChange: BehaviorSubject<UserData[]> = new BehaviorSubject<UserData[]>([]);
-
-    dialogData: any;
-
     constructor(
-
         private http: HttpClient,
-
-        private toastService: ToastrService,
-
+        private appConfig: AppConfig,
     ) { }
 
     getUserInfo(email: string): Observable<object> {
-        return this.http.get(`${this.apiUrl}/user/profile/${email}`);
+        return this.http.get(`${this.appConfig.apiUrl}/user/profile/${email}`);
     }
 
     getAdmins(): Observable<UserData[]> {
-        return this.http.get<UserData[]>(`${this.apiUrl}/user/admins`);
+        return this.http.get<UserData[]>(`${this.appConfig.apiUrl}/user/admins`);
     }
 
     getManagers(): Observable<ManagerData[]> {
-        return this.http.get<ManagerData[]>(`${this.apiUrl}/user/managers`);
+        return this.http.get<ManagerData[]>(`${this.appConfig.apiUrl}/user/managers`);
     }
 
     getClientsInfo(): Observable<ClientData[]> {
-        return this.http.get<ClientData[]>(`${this.apiUrl}/user/get-client-info`);
+        return this.http.get<ClientData[]>(`${this.appConfig.apiUrl}/user/get-client-info`);
     }
 
-    updateUser(user): void {  // added
-        this.dialogData = user;
+    updateUser(user: any): Observable<object> {
         const id = user.id;
-        const manager = { email: user.email, password: user.password };
+        const manager = user.manager;
 
-        this.http.post(`${this.apiUrl}/user/update`, { id, manager }).subscribe((data) => {
-            this.dialogData = data;
-            this.toastService.success('', 'Successfully edited!', { timeOut: 2000 });
-        },
-            (err: HttpErrorResponse) => {
-                this.toastService.error('', 'Error occurred!', { timeOut: 2000 });
-            });
+        return this.http.post(`${this.appConfig.apiUrl}/user/update`, { id, manager });
     }
 
-    addUser(user: UserRegisterData):  Observable<UserData> {
-        return this.http.post<UserData>(`${this.apiUrl}/register/user`, user);
+    addUser(user: UserRegisterData): Observable<UserData> {
+        console.log(user);
+        return this.http.post<UserData>(`${this.appConfig.apiUrl}/register/user`, user);
     }
 
     addClient(client: ClientRegisterData): Observable<ClientData> {
-        return this.http.post<ClientData>(`${this.apiUrl}/register/client`, client);
+        return this.http.post<ClientData>(`${this.appConfig.apiUrl}/register/client`, client);
     }
 
-    updateClient(client): void {
-        const managerEmail = client.newManagerEmail;
+    updateClient(client): Observable<object> {
+        const managerEmail = client.newManagerEmail.email;
         const clientEmail = client.email;
 
-        this.http.post(`${this.apiUrl}/user/assign-to-manager`, { managerEmail, clientEmail }).subscribe((data) => {
-            this.dialogData = data;
-            this.toastService.success('', 'Successfully edited!', { timeOut: 2000 });
-        },
-            (err: HttpErrorResponse) => {
-                this.toastService.error('', 'Error occurred!', { timeOut: 5000 });
-            });
-    }
-
-    getDialogData() {
-        return this.dialogData;
-    }
-    get data(): UserData[] { // added
-        return this.dataChange.value;
+        return this.http.post(`${this.appConfig.apiUrl}/user/assign-to-manager`, { managerEmail, clientEmail });
     }
 
 }

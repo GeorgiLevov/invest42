@@ -1,52 +1,33 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { UserData } from '../../shared/models/interfaces/user-data.model';
+import { Observable } from 'rxjs';
 import { ClientModel } from '../../shared/models/interfaces/client.model';
+import { AppConfig } from '../../config/app.config';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ManagerService {
 
-    private apiUrl = 'http://localhost:5500';
-
-    dataChange: BehaviorSubject<UserData[]> = new BehaviorSubject<UserData[]>([]);
-
-    clientDataChange: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
-    dialogData: any;
-
     constructor(
-
         private http: HttpClient,
-
-        private toastService: ToastrService,
-
+        private appConfig: AppConfig,
     ) { }
 
-
     getClientsInfo(): Observable<ClientData[]> {
-        return this.http.get<ClientData[]>(`${this.apiUrl}/view/clients`);
+        return this.http.get<ClientData[]>(`${this.appConfig.apiUrl}/view/clients`);
     }
 
-    getClientOrders(): Observable<ClientData[]> { // here working
-        return this.http.get<ClientData[]>(`${this.apiUrl}/view/clients/orders`);
-    }
-
-    getDialogData() {
-        return this.dialogData;
-    }
-    get data(): UserData[] { // added
-        return this.dataChange.value;
+    getClientOrders(): Observable<ClientData[]> {
+        return this.http.get<ClientData[]>(`${this.appConfig.apiUrl}/view/clients/orders`);
     }
 
     getClientPortfolio(clientId: string): Observable<ClientModel> {
-        return this.http.get<ClientModel>(`${this.apiUrl}/client/portfolio/${clientId}`);
+        return this.http.get<ClientModel>(`${this.appConfig.apiUrl}/client/portfolio/${clientId}`);
     }
 
     updateBalance(data): Observable<object> {
-        // console.log('data', data);
+
         let info;
         if (data.isDeposit) {
             info = {
@@ -59,9 +40,8 @@ export class ManagerService {
                 balance: 0 - Number(data.balance)
             };
         }
-        console.log('info: ', info);
 
-        return this.http.post(`${this.apiUrl}/client/balance/update`, info);
+        return this.http.post(`${this.appConfig.apiUrl}/client/balance/update`, info);
     }
 
     updateClientInfo(data): Observable<object> {
@@ -70,19 +50,19 @@ export class ManagerService {
             email: data.newClientEmail,
             address: data.newClientAddress,
         };
-        return this.http.post(`${this.apiUrl}/client/update`, info);
+        return this.http.post(`${this.appConfig.apiUrl}/client/update`, info);
     }
 
     getActiveOrdersInfo(clientId): Observable<object[]> {
-        return this.http.get<object[]>(`${this.apiUrl}/client/activeOrders/${clientId}`);
+        return this.http.get<object[]>(`${this.appConfig.apiUrl}/client/activeOrders/${clientId}`);
     }
 
     getClosedOrdersInfo(clientId): Observable<object[]> {
-        return this.http.get<object[]>(`${this.apiUrl}/client/closedOrders/${clientId}`);
+        return this.http.get<object[]>(`${this.appConfig.apiUrl}/client/closedOrders/${clientId}`);
     }
 
     updateOrder(data): Observable<object> {
-        console.log(data);
+
         let info;
         if (!data.isSell) {
             info = {
@@ -99,17 +79,15 @@ export class ManagerService {
                 buyprice: data.buyprice,
             };
         }
-        // console.log(info);
 
-        return this.http.post(`${this.apiUrl}/client/units/update`, info);
+        return this.http.post(`${this.appConfig.apiUrl}/client/units/update`, info);
     }
 
     getMarketInfo(): Observable<object[]> {
-        return this.http.get<object[]>(`${this.apiUrl}/client/market`);
+        return this.http.get<object[]>(`${this.appConfig.apiUrl}/client/market`);
     }
 
     buyStocks(data): Observable<object> {
-
         const info = {
             clientId: data.clientId,
             companyId: data.companyId,
@@ -120,22 +98,22 @@ export class ManagerService {
             takeProfit: +data.takeProfit
         };
 
-        return this.http.post(`${this.apiUrl}/client/buy`, info);
+        return this.http.post(`${this.appConfig.apiUrl}/client/buy`, info);
     }
 
     addToWatchlist(clientId, companyId): Observable<object> {
-        // console.log({ clientId, companyName });
-        return this.http.post(`${this.apiUrl}/client/watchlist/add`, { clientId, companyId });
+
+        return this.http.post(`${this.appConfig.apiUrl}/client/watchlist/add`, { clientId, companyId });
     }
 
     removeFromWatchlist(clientId, companyId): Observable<object> {
-        // console.log({ clientId, companyName });
-        return this.http.post(`${this.apiUrl}/client/watchlist/remove`, { clientId, companyId });
+
+        return this.http.post(`${this.appConfig.apiUrl}/client/watchlist/remove`, { clientId, companyId });
     }
 
     getWatchlist(clientId): Observable<object[]> {
-        // console.log({ clientId, companyName });
-        return this.http.get<object[]>(`${this.apiUrl}/client/watchlist/${clientId}`);
+
+        return this.http.get<object[]>(`${this.appConfig.apiUrl}/client/watchlist/${clientId}`);
     }
 
 }

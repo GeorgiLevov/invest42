@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import {trigger, animate, style, group, animateChild, query, stagger, transition} from '@angular/animations';
+import { trigger, animate, style, query, transition } from '@angular/animations';
+
 const fade = [
   query(':self',
     [

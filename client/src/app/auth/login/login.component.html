@@ -1,57 +1,41 @@
-
 <div class="login-title">
-    Invest 42
+  Invest 42
 </div>
 <div class="login-body">
 
-  <div class="slideshow" >
-      <slideshow #slideshow 
-      [imageUrls]="imageUrls"
-      [height]="height"
-      [minHeight]="minHeight"
-      [arrowSize]="arrowSize"
-      [showArrows]="showArrows"
-      [disableSwiping]="disableSwiping"
-      [autoPlay]="autoPlay"
-      [stopAutoPlayOnSlide]="stopAutoPlayOnSlide"
-      [debug]="debug"
-      [backgroundSize]="backgroundSize"
-      [backgroundPosition]="backgroundPosition"
-      [backgroundRepeat]="backgroundRepeat"
-      [showDots]="showDots"
-      [dotColor]="dotColor"
-      [showCaptions]="showCaptions"
-      [captionColor]="captionColor"
-      [captionBackground]="captionBackground"
-      [lazyLoad]="lazyLoad"
-      [hideOnNoSlides]="hideOnNoSlides">
-      </slideshow>
-    </div>
+  <div class="slideshow">
+    <slideshow #slideshow [imageUrls]="imageUrls" [height]="height" [minHeight]="minHeight" [arrowSize]="arrowSize"
+      [showArrows]="showArrows" [disableSwiping]="disableSwiping" [autoPlay]="autoPlay" [stopAutoPlayOnSlide]="stopAutoPlayOnSlide"
+      [debug]="debug" [backgroundSize]="backgroundSize" [backgroundPosition]="backgroundPosition" [backgroundRepeat]="backgroundRepeat"
+      [showDots]="showDots" [dotColor]="dotColor" [showCaptions]="showCaptions" [captionColor]="captionColor"
+      [captionBackground]="captionBackground" [lazyLoad]="lazyLoad" [hideOnNoSlides]="hideOnNoSlides">
+    </slideshow>
+  </div>
 
   <div class="login-container">
 
     <div class="container login-div" layout="row" layout-wrap scroll="no">
-        <h2 class="login-form-title">Log In</h2>
+      <h2 class="login-form-title">Log In</h2>
       <form [formGroup]="loginForm" (ngSubmit)="login()" autocomplete="off">
-            <!-- EMAIL -->
-            <input autocomplete="false" name="hidden" type="text" style="display:none;">
-            <mat-form-field>
-              <mat-placeholder class="placeholder">Email</mat-placeholder>
-              <input class="login-input" matInput formControlName="email" id="email-input" type="email" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" required />
-              <mat-error *ngIf="!loginForm.controls['email'].valid">{{getEmailErrorMessage()}}</mat-error>
-            </mat-form-field>
-            <!-- PASSWORD -->
-            <mat-form-field>
-              <mat-placeholder class="placeholder">Password</mat-placeholder>
-              <input class="login-input" matInput formControlName="password" id="password-input" type="password" required />
-              <mat-error *ngIf="!loginForm.controls['password'].valid">{{getPassErrorMessage()}}</mat-error>
-            </mat-form-field>
-            <!-- LOGIN -->
-              <button mat-raised-button color="primary" class="login-button" [disabled]="!loginForm.valid">Login</button>
+        <!-- EMAIL -->
+        <input autocomplete="false" name="hidden" type="text" style="display:none;">
+        <mat-form-field>
+          <mat-placeholder class="placeholder">Email</mat-placeholder>
+          <input class="login-input" matInput formControlName="email" id="email-input" type="email" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+            required />
+          <mat-error *ngIf="!loginForm.controls['email'].valid">{{getEmailErrorMessage()}}</mat-error>
+        </mat-form-field>
+        <!-- PASSWORD -->
+        <mat-form-field>
+          <mat-placeholder class="placeholder">Password</mat-placeholder>
+          <input class="login-input" matInput formControlName="password" id="password-input" type="password" required />
+          <mat-error *ngIf="!loginForm.controls['password'].valid">{{getPassErrorMessage()}}</mat-error>
+        </mat-form-field>
+        <!-- LOGIN -->
+        <button mat-raised-button color="primary" class="login-button" [disabled]="!loginForm.valid">Login</button>
       </form>
     </div>
-    <p class="login-footer">© 2019 Invest42</p>
+    <p class="login-footer">Authors: Hristo Mirchev and George Levov © 2019 Invest42</p>
   </div>
 
 </div>
-

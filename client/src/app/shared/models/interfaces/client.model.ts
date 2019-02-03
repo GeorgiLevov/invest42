@@ -1,6 +1,5 @@
 import { Orders } from './orders.model';
 import { Watchlist } from './watchlist.model';
-import { MatTableDataSource } from '@angular/material';
 
 export interface ClientModel {
 
@@ -13,7 +12,6 @@ export interface ClientModel {
     availableBalance: number;
     icon: string;
     status: string;
-    // orders: MatTableDataSource<Orders>;
     orders: Orders[];
     watchlist: Watchlist[];
 
