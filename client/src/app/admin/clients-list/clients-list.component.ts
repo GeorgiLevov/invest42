@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs';
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
 import { AdminService } from '../services/admin.service';
@@ -25,20 +26,21 @@ export class ClientsListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
+  private subscription: Subscription;
+
   constructor(
     private adminService: AdminService,
     private dialog: MatDialog,
   ) { }
 
   ngOnInit() {
-    this.getClients();
+    this.subscription = this.getClients().subscribe((res) => {
+      this.dataSource.data = res as ClientData[];
+    });
   }
 
   public getClients = () => {
-    this.adminService.getClientsInfo()
-      .subscribe((res) => {
-        this.dataSource.data = res as ClientData[];
-      });
+   return this.adminService.getClientsInfo();
   }
 
   ngAfterViewInit(): void {
@@ -76,13 +78,15 @@ export class ClientsListComponent implements OnInit, AfterViewInit {
       if (result) {
         setTimeout(() => {
           this.refreshTable();
-        }, 1000);
+        }, 100);
       }
     });
   }
 
   private refreshTable() {
-    this.getClients();
+    return this.subscription = this.getClients().subscribe((res) => {
+      this.dataSource.data = res as ClientData[];
+    });
   }
 
 }

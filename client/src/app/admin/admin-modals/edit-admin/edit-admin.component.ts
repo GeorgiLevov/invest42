@@ -1,5 +1,6 @@
+import { Subscription } from 'rxjs';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { AdminService } from '../../services/admin.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -10,7 +11,7 @@ import { ToastrService } from 'ngx-toastr';
     templateUrl: './edit-admin.component.html',
     styleUrls: ['./edit-admin.component.css']
 })
-export class EditAdminComponent implements OnInit {
+export class EditAdminComponent implements OnInit, OnDestroy {
 
     public editAdminForm: FormGroup;
 
@@ -20,6 +21,8 @@ export class EditAdminComponent implements OnInit {
     public passwordPattern = ('([A-Za-z0-9@#$%&*]+)$');
     public genMaxLengthMsg = 'Max length should be less than 50 chars!';
     public genMinLengthMsg = 'Min length should be more than 8 chars!';
+
+    private subscription: Subscription;
 
     constructor(
         public dialogRef: MatDialogRef<EditAdminComponent>,
@@ -31,6 +34,10 @@ export class EditAdminComponent implements OnInit {
 
     ngOnInit() {
         this.buildTheForm();
+    }
+
+    ngOnDestroy(): void {
+        this.subscription.unsubscribe();
     }
 
     successToast() {
@@ -77,7 +84,7 @@ export class EditAdminComponent implements OnInit {
 
     stopEdit(): void {
         this.data.manager = this.formData;
-        this.adminService.updateUser(this.data).subscribe((data) => {
+       this.subscription =  this.adminService.updateUser(this.data).subscribe((data) => {
             this.successToast();
         },
             (err: HttpErrorResponse) => {

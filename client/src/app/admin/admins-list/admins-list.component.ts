@@ -1,16 +1,17 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
 import { AdminService } from '../services/admin.service';
 import { EditAdminComponent } from '../admin-modals/edit-admin/edit-admin.component';
 import { AddAdminComponent } from '../admin-modals/add-admin/add-admin.component';
 import { UserData } from '../../shared/models/interfaces/user-data.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-admins-list',
   templateUrl: './admins-list.component.html',
   styleUrls: ['./admins-list.component.css']
 })
-export class AdminsListComponent implements OnInit, AfterViewInit {
+export class AdminsListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   displayedColumns: string[] = [
     'id',
@@ -24,20 +25,25 @@ export class AdminsListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
+    public subscription: Subscription;
+
   constructor(
     private adminService: AdminService,
     private dialog: MatDialog,
   ) { }
 
   ngOnInit() {
-    this.getAdmins();
+    this.subscription = this.getAdmins().subscribe((res) => {
+      this.dataSource.data = res as UserData[];
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   public getAdmins = () => {
-    this.adminService.getAdmins()
-      .subscribe((res) => {
-        this.dataSource.data = res as UserData[];
-      });
+    return this.adminService.getAdmins();
   }
 
   ngAfterViewInit(): void {
@@ -75,14 +81,15 @@ export class AdminsListComponent implements OnInit, AfterViewInit {
       if (result) {
         setTimeout(() => {
           this.refreshTable();
-        }, 1000);
+        }, 100);
       }
     });
   }
 
   private refreshTable() {
-    this.getAdmins();
+    return this.subscription = this.getAdmins().subscribe((res) => {
+      this.dataSource.data = res as UserData[];
+    });
   }
-
 }
 

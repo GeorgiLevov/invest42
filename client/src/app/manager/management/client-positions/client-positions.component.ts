@@ -11,7 +11,7 @@ import { UpdateOrderComponent } from '../../manager-modals/update-order/update-o
 })
 export class ClientPositionsComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: string[] = ['name', 'industry', 'units', 'prices', 'sell'];
+  displayedColumns: string[] = ['name', 'industry', 'buyprice', 'sellprice', 'units', 'sell'];
   dataSource = new MatTableDataSource<any>();
   index: number;
   id: number;
@@ -34,6 +34,7 @@ export class ClientPositionsComponent implements OnInit, AfterViewInit {
     this.managerService.getActiveOrdersInfo(this.router.url.split('/')[3])
       .subscribe((res) => {
         this.dataSource.data = res;
+        console.log(res);
         // this.managerService.clientDataChange.next(res); // added
         // console.log(res);
       });

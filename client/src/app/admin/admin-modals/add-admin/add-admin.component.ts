@@ -1,11 +1,12 @@
 import { AdminService } from './../../services/admin.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { OnInit } from '@angular/core';
+import { OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Component, Inject } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { UserRegisterData } from '../../../shared/models/user-register.model';
+import { Subscribable, Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-add-admin',
@@ -13,7 +14,8 @@ import { UserRegisterData } from '../../../shared/models/user-register.model';
     styleUrls: ['./add-admin.component.css']
 })
 
-export class AddAdminComponent implements OnInit {
+export class AddAdminComponent implements OnInit, OnDestroy {
+
     public adminForm: FormGroup;
 
     public genericErrorMsg = 'The field is required!';
@@ -22,6 +24,8 @@ export class AddAdminComponent implements OnInit {
     public passErrMsg = 'Password must have Capitol, lowercase, number and special characters';
     public passwordPattern = ('([A-Za-z0-9@#$%&*]+)$');
     public genMaxLengthMsg = 'Max length should be less than 50 chars!';
+
+    private subscripton: Subscription;
 
     constructor(
         public dialogRef: MatDialogRef<AddAdminComponent>,
@@ -34,6 +38,10 @@ export class AddAdminComponent implements OnInit {
 
     ngOnInit() {
         this.buildTheForm();
+    }
+
+    ngOnDestroy(): void {
+    //   this.subscripton.unsubscribe();
     }
 
     successToast() {

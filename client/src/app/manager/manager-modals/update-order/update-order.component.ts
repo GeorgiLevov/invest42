@@ -32,6 +32,6 @@ export class UpdateOrderComponent {
 
     stopEdit(): void {
         this.managerService.updateOrder(this.data).subscribe(
-            data => this.toastr.success('', 'Successfully edited order!'));
+            data => this.toastr.success('', 'Successfully sold order!'));
     }
 }

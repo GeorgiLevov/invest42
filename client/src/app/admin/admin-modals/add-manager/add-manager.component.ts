@@ -1,7 +1,8 @@
+import { Subscribable, Subscription } from 'rxjs';
 
 import { AdminService } from './../../services/admin.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { OnInit } from '@angular/core';
+import { OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Component, Inject } from '@angular/core';
@@ -13,7 +14,7 @@ import { UserRegisterData } from '../../../shared/models/user-register.model';
     templateUrl: './add-manager.component.html',
     styleUrls: ['./add-manager.component.css']
 })
-export class AddManagerComponent implements OnInit {
+export class AddManagerComponent implements OnInit, OnDestroy {
 
     public managerForm: FormGroup;
 
@@ -22,6 +23,8 @@ export class AddManagerComponent implements OnInit {
     public emailErrMsg = 'Not a valid email';
     public passErrMsg = 'Password must have Capitol, lowercase, number and special characters';
     public genMaxLengthMsg = 'Max length should be less than 50 chars!';
+
+    private subscription: Subscription;
 
     constructor(
         public dialogRef: MatDialogRef<AddManagerComponent>,
@@ -35,6 +38,11 @@ export class AddManagerComponent implements OnInit {
     ngOnInit() {
         this.buildTheForm();
     }
+
+    ngOnDestroy(): void {
+        // this.subscription.unsubscribe();
+    }
+
 
     successToast() {
         this.toastService.success('', 'Manager added!', { timeOut: 1000 });
@@ -83,8 +91,7 @@ export class AddManagerComponent implements OnInit {
     }
 
     public confirmAdd(addManagerData): void {
-        console.log(addManagerData);
-        this.adminService.addUser(addManagerData).subscribe((result) => {
+       this.adminService.addUser(addManagerData).subscribe((result) => {
             this.successToast(),
                 this.dialogRef.close(result);
         },

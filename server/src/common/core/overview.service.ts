@@ -65,7 +65,7 @@ export class OverviewService {
     return toREturn;
   }
 
-  async getCompanyPrices(companyId): Promise<object[]> {
+  async getCompanyPrices(companyId, limit): Promise<object[]> {
 
     const prices = [];
     const companyPrices = await this.pricesRepository.query(
@@ -80,8 +80,7 @@ export class OverviewService {
       //     prices AS p
       // WHERE
       //     p.companyId = ${companyId} AND (p.id % 1440) = 0;
-      `
-        SELECT
+      `SELECT
             p.id,
             p.opendate,
             p.startprice,
@@ -93,7 +92,7 @@ export class OverviewService {
         WHERE
             p.companyId = 1
             ORDER BY opendate DESC
-            LIMIT 60;`,
+            LIMIT ${limit};`,
     );
 
     companyPrices.forEach((price) => {

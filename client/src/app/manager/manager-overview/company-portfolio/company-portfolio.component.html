@@ -1,9 +1,9 @@
 <div class="page-container">
-  <mat-chip-list>
-    <mat-chip color="primary" selected>Company Details</mat-chip>
-  </mat-chip-list>
-  <div class="company-details-container">
 
+  <div class="company-details-container">
+    <mat-chip-list>
+      <mat-chip color="primary" selected>Company Details</mat-chip>
+    </mat-chip-list>
     <mat-card class="company-card" *ngIf="companyObject">
       <mat-card-header>
         <mat-card-title-group>
@@ -23,7 +23,7 @@
         </mat-list>
       </mat-card-content>
     </mat-card>
-  </div>
+
   <span *ngIf="companyNews">
     <mat-chip-list *ngIf="companyNews[0]">
       <mat-chip color="primary" selected>Recent News</mat-chip>
@@ -78,6 +78,21 @@
     </mat-accordion>
   </div>
 </div>
+  <div class="chart-container">
+    <mat-chip-list>
+        <mat-chip color="primary" disabled>Price Chart</mat-chip>
 
 
-<div id="chartdiv" style="width: 98%; height: 500px; border: 12px solid rgb(216, 31, 31); background-color: white"></div>
+        <mat-chip color="primary" (click)="chartData(60)" selected>Last Hour</mat-chip>
+        <mat-chip color="primary" (click)="chartData(360)" selected>Last 6 Hours</mat-chip>
+        <mat-chip color="primary" (click)="chartData(720)" selected>Last 12 Hours</mat-chip>
+        <mat-chip color="primary" (click)="chartData(1440)" selected>Last 24 Hours</mat-chip>
+
+
+
+    </mat-chip-list>
+    <div id="chartdiv"></div>
+  </div>
+</div>
+
+

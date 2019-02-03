@@ -4,6 +4,7 @@ import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/m
 import { AdminService } from '../services/admin.service';
 import { EditManagerComponent } from '../admin-modals/edit-manager/edit-manager.component';
 import { ManagerData } from '../../shared/models/interfaces/manager-data.model';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -27,20 +28,21 @@ export class ManagersListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
+ private subscription: Subscription;
+
   constructor(
     private adminService: AdminService,
     private dialog: MatDialog,
   ) { }
 
   ngOnInit() {
-    this.getManagers();
+    this.subscription = this.getManagers().subscribe((res) => {
+      this.dataSource.data = res as ManagerData[];
+    });
   }
 
   public getManagers = () => {
-    this.adminService.getManagers()
-      .subscribe((res) => {
-        this.dataSource.data = res as ManagerData[];
-      });
+    return this.adminService.getManagers();
   }
 
   ngAfterViewInit(): void {
@@ -78,13 +80,15 @@ export class ManagersListComponent implements OnInit, AfterViewInit {
       if (result) {
         setTimeout(() => {
           this.refreshTable();
-        }, 1000);
+        }, 100);
       }
     });
   }
 
   private refreshTable() {
-    this.getManagers();
+    this.subscription = this.getManagers().subscribe((res) => {
+      this.dataSource.data = res as ManagerData[];
+    });
   }
 
 }

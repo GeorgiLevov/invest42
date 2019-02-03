@@ -1,6 +1,7 @@
+import { Subscription } from 'rxjs';
 
 import { LoginService } from './../services/login.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -16,7 +17,8 @@ import { UserLogin } from '../../shared/models/user-login.model';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
+
   options: FormGroup;
   public loginForm: FormGroup;
 
@@ -69,6 +71,8 @@ export class LoginComponent implements OnInit {
 
   loading = false;
 
+  private subscription: Subscription;
+
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
@@ -79,6 +83,10 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.buildLoginForm();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   public buildLoginForm(): void {
@@ -140,7 +148,7 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    this.loginService.login(user, { observe: 'response', responseType: 'json' })
+    this.subscription = this.loginService.login(user, { observe: 'response', responseType: 'json' })
       .subscribe((data: { message: string, token: string }) => {
         localStorage.setItem('token', data.token);
 

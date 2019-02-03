@@ -386,7 +386,7 @@ export class ManagementService {
                 opendate: new Date(),
                 closedate: new Date(),
                 buyprice: orderInfo.currentprice,
-                sellprice: orderInfo.sellprice,
+                sellprice: orderInfo.sellprice * (Math.random() * 2),
                 units: orderInfo.quantity,
                 companyId: orderInfo.companyId,
                 clientId: orderInfo.clientId,

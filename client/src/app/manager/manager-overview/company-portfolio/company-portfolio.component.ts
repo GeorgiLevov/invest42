@@ -17,7 +17,9 @@ import { PriceData } from '../../../shared/models/interfaces/prices.model';
 export class CompanyPortfolioComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private chart: am4charts.XYChart;
+
   private params = this.route.snapshot.params;
+
   public companyObject;
   public companyNews;
   public step = 0;
@@ -37,7 +39,18 @@ export class CompanyPortfolioComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   ngAfterViewInit() {
+    this.chartData(60);
+  }
 
+  ngOnDestroy() {
+    this.zone.runOutsideAngular(() => {
+      if (this.chart) {
+        this.chart.dispose();
+      }
+    });
+  }
+
+  chartData(limit) {
     this.zone.runOutsideAngular(() => {
       const chart = am4core.create('chartdiv', am4charts.XYChart);
       chart.paddingRight = 20;
@@ -76,7 +89,7 @@ export class CompanyPortfolioComponent implements OnInit, AfterViewInit, OnDestr
       scrollbarX.series.push(lineSeries);
       chart.scrollbarX = scrollbarX;
 
-      this.portfolioService.getCompanyPrices(this.params.id)
+      this.portfolioService.getCompanyPrices(this.params.id, limit)
         .subscribe((prices) => {
           // console.log(prices);
           this.prices = prices as PriceData[];
@@ -88,13 +101,7 @@ export class CompanyPortfolioComponent implements OnInit, AfterViewInit, OnDestr
     });
   }
 
-  ngOnDestroy() {
-    this.zone.runOutsideAngular(() => {
-      if (this.chart) {
-        this.chart.dispose();
-      }
-    });
-  }
+
 
   showProfile(companyId) {
     this.portfolioService.getCompanies(companyId)
@@ -105,7 +112,6 @@ export class CompanyPortfolioComponent implements OnInit, AfterViewInit, OnDestr
         },
         error => console.log(error)
       );
-
   }
 
   // News service

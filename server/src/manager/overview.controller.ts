@@ -29,11 +29,11 @@ export class OverviewController {
     return this.overviewService.companyDetais(params.id);
   }
 
-  @Get('market/prices/company/:id')
+  @Get('market/prices/company/:id/:limit')
   @Roles('MANAGER')
   @UseGuards(AuthGuard(), RolesGuard)
   companyPrices(@Param() params): Promise<object> {
-    return this.overviewService.getCompanyPrices(params.id);
+    return this.overviewService.getCompanyPrices(params.id, params.limit);
   }
 
   @Get('market/prices')

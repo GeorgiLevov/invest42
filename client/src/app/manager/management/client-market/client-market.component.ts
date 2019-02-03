@@ -1,9 +1,10 @@
 import { ToastrService } from 'ngx-toastr';
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { ManagerService } from '../../services/manager.service';
 import { BuyOrderComponent } from '../../manager-modals/buy-modal/buy-order.component';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -11,9 +12,9 @@ import { BuyOrderComponent } from '../../manager-modals/buy-modal/buy-order.comp
   templateUrl: './client-market.component.html',
   styleUrls: ['./client-market.component.css']
 })
-export class ClientMarketComponent implements OnInit, AfterViewInit {
+export class ClientMarketComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  displayedColumns: string[] = ['name', 'industry', 'highprice', 'currentprice', 'buy', 'addToWatchlsit',];
+  displayedColumns: string[] = ['name', 'industry', 'highprice', 'currentprice', 'buy', 'addToWatchlsit'];
   dataSource = new MatTableDataSource<any>();
   index: number;
   id: number;
@@ -23,6 +24,8 @@ export class ClientMarketComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
+  private subscription1: Subscription;
+
   constructor(
     private managerService: ManagerService,
     private dialog: MatDialog,
@@ -31,31 +34,34 @@ export class ClientMarketComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit() {
-    // (this.router.url.split('/')[3]
-    this.getMarketInfo();
+
+    this.subscription1 = this.getMarketInfo().subscribe((res) => {
+      this.dataSource.data = res;
+      setInterval((): any => {
+        (this.dataSource.data).forEach((company) => {
+          const direction = (Math.random() >= 0.5) ? 1 : -1;
+          let priceToUpdate = ((direction * Math.random()) + company.currentprice);
+          priceToUpdate = Number(priceToUpdate).toFixed(2);
+          if (priceToUpdate >= company.lowprice && priceToUpdate <= company.highprice ) {
+            company.currentprice = Number(priceToUpdate);
+          }
+        });
+      }, 1000);
+    });
+
   }
 
   public getMarketInfo = () => {
-    this.managerService.getMarketInfo()
-      .subscribe((res) => {
-        this.dataSource.data = res;
-
-        setInterval((): any => {
-          (this.dataSource.data).forEach((company) => {
-            const direction = (Math.random() >= 0.5) ? 1 : -1;
-            let priceToUpdate = ((direction * Math.random()) + company.currentprice);
-            priceToUpdate = Number(priceToUpdate).toFixed(2);
-            if (priceToUpdate >= company.lowprice && priceToUpdate <= company.highprice ) {
-              company.currentprice = Number(priceToUpdate);
-            }
-          });
-        }, 1000);
-      });
+  return this.managerService.getMarketInfo();
   }
 
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+  }
+
+  ngOnDestroy(): void {
+    this.subscription1.unsubscribe();
   }
 
   applyFilter(filterValue: string) {
@@ -79,16 +85,10 @@ export class ClientMarketComponent implements OnInit, AfterViewInit {
   }
 
   addToWatchlsit(companyId) {
-    // console.log(this.clientId, companyName);
-    this.managerService.addToWatchlist(this.clientId, companyId)
-      .subscribe((data) => {
-        this.toastr.success('', 'Successfully added to watchlist', { timeOut: 1000 });
-        // console.log(data);
-      });
-  }
 
-  private refreshTable() {
-    this.getMarketInfo();
+    this.managerService.addToWatchlist(this.clientId, companyId).subscribe((data) => {
+        this.toastr.success('', 'Successfully added to watchlist', { timeOut: 1000 });
+      });
   }
 
 }

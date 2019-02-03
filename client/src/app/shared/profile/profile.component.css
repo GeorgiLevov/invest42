@@ -19,9 +19,6 @@
     user-select: none;
   } 
 
-  mat-card-title {
-    max-width: 100px;
-  }
   mat-card-subtitle {
     user-select: none;
   }
@@ -32,12 +29,12 @@
   }
 
 .logout-button {
- background-color: #b30000;
+ background-color: #ff9933;
  color: white;
 }
 
 .complete-button {
-    background-color: #339966;
+    background-color: #3f51b5;
     color: white;
     /* font-size: 20px; */
   } 

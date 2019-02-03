@@ -1,6 +1,7 @@
+import { Subscription } from 'rxjs';
 import { AdminService } from './../../services/admin.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { OnInit } from '@angular/core';
+import { OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Component, Inject } from '@angular/core';
@@ -13,7 +14,8 @@ import { ClientRegisterData } from '../../../shared/models/client-register.model
     styleUrls: ['./add-client.component.css']
 })
 
-export class AddClientComponent implements OnInit {
+export class AddClientComponent implements OnInit, OnDestroy {
+
     public clientForm: FormGroup;
 
     public genericErrorMsg = 'The field is required!';
@@ -21,6 +23,8 @@ export class AddClientComponent implements OnInit {
     public emailErrMsg = 'Not a valid email';
     public passwordPattern = ('([A-Za-z0-9@#$%&*]+)$');
     public genMaxLengthMsg = 'Max length should be less than 50 chars!';
+
+    private subscription: Subscription;
 
     constructor(
         public dialogRef: MatDialogRef<AddClientComponent>,
@@ -32,6 +36,10 @@ export class AddClientComponent implements OnInit {
 
     ngOnInit() {
         this.buildTheForm();
+    }
+
+    ngOnDestroy(): void {
+        // this.subscription.unsubscribe();
     }
 
     successToast() {

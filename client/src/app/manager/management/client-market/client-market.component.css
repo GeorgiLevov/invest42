@@ -3,22 +3,33 @@ h3 {
 }
 
 .trade-button {
-  margin: 10%;
+  margin: 5%;
   display: inline-block;
 
 }
 
-
 .buy-button {
   background-color: #209955;
+  /* -webkit-text-stroke: 1px black; */
+  /* box-shadow: 0px 4px 3px rgba(0,0,0,0.4),
+  0px 8px 13px rgba(0,0,0,0.1),
+  0px 18px 23px rgba(0,0,0,0.1); */
   color: white;
-  font-size: 20px;
+  font-size: 25px;
+  width: 80px;
+  height: 50px;
 }
 
 .sell-button {
   background-color: #BB2020;
+  /* -webkit-text-stroke: 1px black; */
+  /* box-shadow: 0px 4px 3px rgba(0,0,0,0.4),
+  0px 8px 13px rgba(0,0,0,0.1),
+  0px 18px 23px rgba(0,0,0,0.1); */
   color: white;
-  font-size: 20px;  
+  font-size: 25px; 
+  width: 80px;
+  height: 50px; 
 }
 
 .full-width-table {
@@ -119,7 +130,7 @@ td.mat-cell:nth-of-type(4), td.mat-footer-cell:nth-of-type(4) {
 th.mat-header-cell:nth-of-type(5) {
   width: 15%;
   justify-content: center;
-  padding-left: 7%;
+  padding-left: 6%;
 }
 
 td.mat-cell:nth-of-type(5), td.mat-footer-cell:nth-of-type(5) {

@@ -1,5 +1,6 @@
+import { Subscription } from 'rxjs';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { AdminService } from '../../services/admin.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -10,7 +11,7 @@ import { ToastrService } from 'ngx-toastr';
     templateUrl: './edit-manager.component.html',
     styleUrls: ['./edit-manager.component.css']
 })
-export class EditManagerComponent implements OnInit {
+export class EditManagerComponent implements OnInit, OnDestroy {
 
     public editManagerForm: FormGroup;
 
@@ -20,6 +21,8 @@ export class EditManagerComponent implements OnInit {
     public passwordPattern = ('([A-Za-z0-9@#$%&*]+)$');
     public genMaxLengthMsg = 'Max length should be less than 50 chars!';
     public genMinLengthMsg = 'Min length should be more than 8 chars!';
+
+    private subscription: Subscription;
 
     constructor(
         public dialogRef: MatDialogRef<EditManagerComponent>,
@@ -31,6 +34,10 @@ export class EditManagerComponent implements OnInit {
 
     ngOnInit() {
         this.buildTheForm();
+    }
+
+    ngOnDestroy(): void {
+        // this.subscription.unsubscribe();
     }
 
     successToast() {

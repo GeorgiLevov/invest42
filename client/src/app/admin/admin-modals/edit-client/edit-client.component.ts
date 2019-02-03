@@ -1,5 +1,6 @@
+import { Subscription } from 'rxjs';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { AdminService } from '../../services/admin.service';
 import { ToastrService } from 'ngx-toastr';
@@ -10,7 +11,7 @@ import { HttpErrorResponse } from '@angular/common/http';
     templateUrl: './edit-client.component.html',
     styleUrls: ['./edit-client.component.css']
 })
-export class EditClientComponent implements OnInit {
+export class EditClientComponent implements OnInit, OnDestroy {
 
     public editClientForm: FormGroup;
 
@@ -18,6 +19,8 @@ export class EditClientComponent implements OnInit {
     public emailErrMsg = 'Not a valid email';
     public genMaxLengthMsg = 'Max length should be less than 50 chars!';
     public genMinLengthMsg = 'Min length should be more than 8 chars!';
+
+    private subscription: Subscription;
 
     constructor(
         public dialogRef: MatDialogRef<EditClientComponent>,
@@ -29,6 +32,10 @@ export class EditClientComponent implements OnInit {
 
     ngOnInit() {
         this.buildTheForm();
+    }
+
+    ngOnDestroy(): void {
+    //   this.subscription.unsubscribe();
     }
 
     successToast() {
@@ -62,7 +69,7 @@ export class EditClientComponent implements OnInit {
     }
 
     cancel(): void {
-        this.dialogRef.close();
+      this.dialogRef.close();
     }
 
     stopEdit(): void {
