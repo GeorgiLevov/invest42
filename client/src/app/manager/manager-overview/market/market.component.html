@@ -1,6 +1,7 @@
 <mat-toolbar color="primary">
     <mat-toolbar-row>
-      <span class="toolbar-spacer">Market - Work in Progress..</span>     
+      <mat-icon class="toolbar-icon">trending_up</mat-icon>&nbsp;
+      <span class="toolbar-spacer">Market</span>     
       <mat-form-field>
         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
       </mat-form-field>
@@ -37,7 +38,7 @@
 
      <!-- HighLow PRice Column -->
       <ng-container matColumnDef="highprice">
-          <th mat-header-cell *matHeaderCellDef>Last Minute Fluctuations</th>
+          <th mat-header-cell *matHeaderCellDef>High/Low</th>
           <td mat-cell *matCellDef="let row">
               <mat-icon class="cell-icon">swap_vert</mat-icon>
               <div class="prices">
@@ -55,9 +56,10 @@
     <ng-container matColumnDef="endprice">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Current Price</th>
       <td mat-cell *matCellDef="let row">
-        
+          
         <div class="endprice">
-            ${{row.endprice}}
+            {{row.endprice}}
+            <mat-icon class="attach-money">attach_money</mat-icon>
         </div>
 
       </td>

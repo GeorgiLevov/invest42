@@ -2,14 +2,14 @@
 .full-width-table {
   width: 100%;
 
-  background: -moz-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 23%, rgba(150,211,230,1) 64%, rgba(44,62,143,1) 100%);
-  background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255,255,255,1)), color-stop(23%, rgba(255,255,255,1)), color-stop(64%, rgba(150,211,230,1)), color-stop(100%, rgba(44,62,143,1)));
-  background: -webkit-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 23%, rgba(150,211,230,1) 64%, rgba(44,62,143,1) 100%);
-  background: -o-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 23%, rgba(150,211,230,1) 64%, rgba(44,62,143,1) 100%);
-  background: -ms-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 23%, rgba(150,211,230,1) 64%, rgba(44,62,143,1) 100%);
-  background: linear-gradient(to right, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 23%, rgba(150,211,230,1) 64%, rgba(44,62,143,1) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#2c3e8f', GradientType=1 );
-
+  background: rgba(235,235,235,1);
+  background: -moz-linear-gradient(left, rgba(235,235,235,1) 0%, rgba(255,255,255,1) 4%, rgba(255,255,255,1) 24%, rgba(237,237,237,1) 64%, rgba(138,138,138,1) 100%);
+  background: -webkit-gradient(left top, right top, color-stop(0%, rgba(235,235,235,1)), color-stop(4%, rgba(255,255,255,1)), color-stop(24%, rgba(255,255,255,1)), color-stop(64%, rgba(237,237,237,1)), color-stop(100%, rgba(138,138,138,1)));
+  background: -webkit-linear-gradient(left, rgba(235,235,235,1) 0%, rgba(255,255,255,1) 4%, rgba(255,255,255,1) 24%, rgba(237,237,237,1) 64%, rgba(138,138,138,1) 100%);
+  background: -o-linear-gradient(left, rgba(235,235,235,1) 0%, rgba(255,255,255,1) 4%, rgba(255,255,255,1) 24%, rgba(237,237,237,1) 64%, rgba(138,138,138,1) 100%);
+  background: -ms-linear-gradient(left, rgba(235,235,235,1) 0%, rgba(255,255,255,1) 4%, rgba(255,255,255,1) 24%, rgba(237,237,237,1) 64%, rgba(138,138,138,1) 100%);
+  background: linear-gradient(to right, rgba(235,235,235,1) 0%, rgba(255,255,255,1) 4%, rgba(255,255,255,1) 24%, rgba(237,237,237,1) 64%, rgba(138,138,138,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ebebeb', endColorstr='#8a8a8a', GradientType=1 );
 }
 
 .company-details {
@@ -64,13 +64,19 @@ td.mat-cell:nth-of-type(1), td.mat-footer-cell:nth-of-type(1), th.mat-header-cel
   justify-content: center;
 }
 
-td.mat-cell:nth-of-type(2), td.mat-footer-cell:nth-of-type(2), th.mat-header-cell:nth-of-type(2) {
+th.mat-header-cell:nth-of-type(2) {
   width: 5%;
   justify-content: center;
 }
+
+td.mat-cell:nth-of-type(2), td.mat-footer-cell:nth-of-type(2) {
+  width: 5%;
+  justify-content: center;
+  font-size:16px;
+}
 td.mat-cell:nth-of-type(3), td.mat-footer-cell:nth-of-type(3), th.mat-header-cell:nth-of-type(3) {
   justify-content: center;
-  width: 15%;
+  width: 5%;
   /* padding-left: 50px;   */
   /* padding-right: 100px; */
   text-align: center;
@@ -78,8 +84,8 @@ td.mat-cell:nth-of-type(3), td.mat-footer-cell:nth-of-type(3), th.mat-header-cel
 
 th.mat-header-cell:nth-of-type(4) {
   justify-content: center;
-  padding-left: 4%;
-  padding-right: 4%;
+  padding-left: 5%;
+  /* padding-right: 5%; */
   text-align: center;
 }
 
@@ -92,22 +98,31 @@ td.mat-cell:nth-of-type(4), td.mat-footer-cell:nth-of-type(4) {
   text-align: right;
 }
 
-td.mat-cell:nth-of-type(5), td.mat-footer-cell:nth-of-type(5), th.mat-header-cell:nth-of-type(5) {
+th.mat-header-cell:nth-of-type(5) {
+    /* padding-left: 75px; */
+    width: 15%;
+    justify-content: center;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+td.mat-cell:nth-of-type(5), td.mat-footer-cell:nth-of-type(5) {
   /* padding-left: 75px; */
   width: 15%;
   justify-content: center;
   padding-left: 50px;
   padding-right: 50px;
+  /* color: #000066; */
+  font-size:16px;
 }
 
 td.mat-cell:nth-of-type(6), td.mat-footer-cell:nth-of-type(6), th.mat-header-cell:nth-of-type(6) {
   padding-right: 75px;
   width: 5%;
   justify-content: center;
-  padding-left: 50px;
-  padding-right: 50px;
+  /* padding-left: 50px; */
+  /* padding-right: 50px; */
 }
-
 
 .mat-form-field {
   font-size: 20px;
@@ -140,9 +155,15 @@ td.mat-cell:nth-of-type(6), td.mat-footer-cell:nth-of-type(6), th.mat-header-cel
   color: red;
 }
 
+.attach-money {
+  font-size: 1.1em;
+  vertical-align: sub;
+  display: inline-block;
+}
+
 .endprice {
   vertical-align: middle;
   display: inline-block;
   font-size: 3em;
-  margin-left: 15%;
+  /* margin-left: 15%; */
 }
