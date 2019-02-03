@@ -119,6 +119,13 @@ export class ManagementController {
         return { result: 'Successfully notified client!' };
     }
 
+    @Get('old-data')
+    @Roles(Role.manager)
+    @UseGuards(AuthGuard(), RolesGuard)
+    getLastMinuteDate(): Promise<object[]> {
+        return this.managementService.getLastMinuteData();
+    }
+
     // @Get('investments')
     // @Roles(Role.manager)
     // @UseGuards(AuthGuard(), RolesGuard)

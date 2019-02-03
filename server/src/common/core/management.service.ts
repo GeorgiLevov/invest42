@@ -458,4 +458,28 @@ export class ManagementService {
         });
     }
 
+    async getLastMinuteData(): Promise<object[]> {
+        const oldData = await this.companyRepository.query(
+            `SELECT DISTINCT
+        prices.companyId AS companyId,
+        prices.opendate AS opendate,
+        prices.startprice AS startprice,
+        prices.endprice AS endprice,
+        prices.highprice AS highprice,
+        prices.lowprice AS lowprice,
+        prices.endprice AS currentprice
+    FROM
+        prices
+            JOIN
+        (SELECT
+            prices.opendate AS opendate
+        FROM
+            prices
+        GROUP BY prices.companyId
+        HAVING prices.opendate < MAX(prices.opendate)) maxOpenDates ON prices.opendate = maxOpenDates.opendate
+    GROUP BY prices.companyId;`);
+
+        return oldData;
+    }
+
 }

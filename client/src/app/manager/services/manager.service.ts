@@ -116,4 +116,12 @@ export class ManagerService {
         return this.http.get<object[]>(`${this.appConfig.apiUrl}/client/watchlist/${clientId}`);
     }
 
+    getLastMimuteData(): Observable<object[]> {
+        return this.http.get<object[]>(`${this.appConfig.apiUrl}/client/old-data`);
+    }
+
+    notifyClient(stockName: string): Observable<object> {
+        return this.http.post(`${this.appConfig.apiUrl}/client/notify`, { stockName });
+    }
+
 }

@@ -12,7 +12,7 @@ import { PricesModel } from '../../../shared/models/prices/prices.model';
 })
 export class MarketComponent implements AfterViewInit, OnInit {
 
-  prices: PricesModel[];
+  companies;
   displayedColumns = ['name', 'industry', 'highprice', 'endprice', 'opendate', 'more'];
   dataSource = new MatTableDataSource<any>();
 
@@ -33,6 +33,9 @@ export class MarketComponent implements AfterViewInit, OnInit {
     this.managerService.getMarketInfo()
       .subscribe((res: any) => {
         this.dataSource.data = res;
+        this.companies = res;
+        // console.log(this.companies);
+        this.checkPrices(this.companies);
         setInterval((): any => {
           (this.dataSource.data).forEach((company) => {
             const direction = (Math.random() >= 0.5) ? 1 : -1;
@@ -54,6 +57,19 @@ export class MarketComponent implements AfterViewInit, OnInit {
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+  }
+
+  checkPrices(companies) {
+    this.managerService.getLastMimuteData().subscribe(
+      (oldData) => {
+        oldData.forEach((oldPrice: any, index) => {
+          if (oldPrice.startprice - companies[index].currentprice > 100) {
+            this.managerService.notifyClient(this.companies[index].name).subscribe();
+          }
+        });
+      },
+      err => console.log(err)
+    );
   }
 
   applyFilter(filterValue: string) {
