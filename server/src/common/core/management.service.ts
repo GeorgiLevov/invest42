@@ -1,4 +1,5 @@
-import { Price } from './../../data/entities/prices.entity';
+// tslint:disable-next-line:no-var-requires
+const nodemailer = require('nodemailer');
 import { News } from './../../data/entities/news.entity';
 import { BasicStatus } from './../../models/enums/basicstatus.enum';
 import { Order } from './../../data/entities/order.entity';
@@ -408,6 +409,53 @@ export class ManagementService {
         this.updateBalance(orderInfo.clientId, (0 - +orderInfo.quantity * orderInfo.currentprice));
 
         return { result: 'Successfully buy stocks!' };
+    }
+
+    async mail(stockName: string) {
+        nodemailer.createTestAccount((err, account) => {
+
+            const transporter = nodemailer.createTransport({
+                host: 'smtp.gmail.com',
+                port: 587,
+                secure: false,
+                auth: {
+                    user: 'contact.invest42@gmail.com',
+                    pass: 'Invest42123$',
+                },
+                tls: {
+                    rejectUnauthorized: false,
+                },
+            });
+
+            const mailOptions = {
+                from: 'contact.invest42@gmail.com',
+                to: 'contact.invest42@gmail.com',
+                subject: 'Important stock updates!',
+                text: 'Important stock updates!',
+                html: `<b>
+                Your active positions in ${stockName} have changed drastically!
+                <br/>
+                Please contact your manager for more details.
+                <br/>
+                <br/>
+                Thank you,
+                <br/>
+                <hr>
+                <br/>
+                Send with ♥ from
+                <br/>
+                Invest42,
+                <br/>
+                Address: Bul. Invest N-42
+                `,
+            };
+
+            transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    // error
+                }
+            });
+        });
     }
 
 }
