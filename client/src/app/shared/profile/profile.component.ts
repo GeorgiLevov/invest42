@@ -3,8 +3,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ProfileService } from './getmanagerprofile.service';
 import { AuthenticationService } from './../core/authentication/authentication.service';
 import { Component, OnInit, Input } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { importExpr } from '@angular/compiler/src/output/output_ast';
 import { Router } from '@angular/router';
 import { ManagerProfile } from '../models/users/manager.model';
 
@@ -19,7 +17,7 @@ export class ProfileComponent implements OnInit {
     private authService: AuthenticationService,
     private profileService: ProfileService,
     private appConfig: AppConfig,
-    private router: Router
+    private router: Router,
   ) { }
 
   @Input() managing;
