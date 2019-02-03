@@ -43,7 +43,7 @@ export class ClientWatchlistComponent implements OnInit, AfterViewInit {
     this.managerService.getWatchlist(this.clientId)
       .subscribe((res) => {
         this.dataSource.data = res;
-        this.managerService.clientDataChange.next(res); // added
+        // this.managerService.clientDataChange.next(res); // added
         // console.log(res);
       });
   }

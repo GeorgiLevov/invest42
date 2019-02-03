@@ -20,20 +20,17 @@ export class UpdateClientInfoComponent {
 
     formControl = new FormControl('', [
         Validators.required
-        // Validators.email,
     ]);
 
     getErrorMessage() {
-        return this.formControl.hasError('required') ? 'Required field' :
-            this.formControl.hasError('email') ? 'Not a valid email' : '';
+        return this.formControl.hasError('required') ? 'Required field' : '';
     }
 
-    onNoClick(): void {
+    cancel(): void {
         this.dialogRef.close();
     }
 
     stopEdit(): void {
-        // console.log(this.data);
         this.managerService.updateClientInfo(this.data).subscribe(
             data => this.toastr.success('', 'Successfully edited account!')
         );

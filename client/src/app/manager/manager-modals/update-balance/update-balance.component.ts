@@ -20,20 +20,17 @@ export class UpdateBalanceComponent {
 
     formControl = new FormControl('', [
         Validators.required
-        // Validators.email,
     ]);
 
     getErrorMessage() {
-        return this.formControl.hasError('required') ? 'Required field' :
-            this.formControl.hasError('balance') ? 'Not a valid sum' : '';
+        return this.formControl.hasError('required') ? 'Required field' : '';
     }
 
-    onNoClick(): void {
+    cancel(): void {
         this.dialogRef.close();
     }
 
     stopEdit(): void {
-        // console.log(this.data);
         this.managerService.updateBalance(this.data).subscribe(
             data => this.toastr.success('', 'Successfully updated balance', { timeOut: 1000 })
         );
