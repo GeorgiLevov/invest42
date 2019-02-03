@@ -13,7 +13,7 @@ import { BuyOrderComponent } from '../../manager-modals/buy-modal/buy-order.comp
 })
 export class ClientMarketComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: string[] = ['name', 'industry', 'startprice', 'currentprice', 'addToWatchlsit', 'buy', 'sell'];
+  displayedColumns: string[] = ['name', 'industry', 'highprice', 'currentprice', 'buy', 'addToWatchlsit',];
   dataSource = new MatTableDataSource<any>();
   index: number;
   id: number;
@@ -43,10 +43,13 @@ export class ClientMarketComponent implements OnInit, AfterViewInit {
         setInterval((): any => {
           (this.dataSource.data).forEach((company) => {
             const direction = (Math.random() >= 0.5) ? 1 : -1;
-            const priceToUpdate = Math.round((direction * Math.random()) + company.currentprice);
-            company.currentprice = priceToUpdate;
+            let priceToUpdate = ((direction * Math.random()) + company.currentprice);
+            priceToUpdate = Number(priceToUpdate).toFixed(2);
+            if (priceToUpdate >= company.lowprice && priceToUpdate <= company.highprice ) {
+              company.currentprice = Number(priceToUpdate);
+            }
           });
-        }, 500);
+        }, 1000);
       });
   }
 

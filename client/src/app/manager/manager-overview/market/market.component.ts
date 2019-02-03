@@ -33,7 +33,6 @@ export class MarketComponent implements AfterViewInit, OnInit {
     this.managerService.getMarketInfo()
       .subscribe((res: any) => {
         this.dataSource.data = res;
-        // console.log(this.dataSource.data);
         setInterval((): any => {
           (this.dataSource.data).forEach((company) => {
             const direction = (Math.random() >= 0.5) ? 1 : -1;

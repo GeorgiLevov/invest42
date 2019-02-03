@@ -7,20 +7,52 @@ h3 {
 }
 
 .company-details {
-  max-width: 100px !important;
+  max-width: 250px !important;
   box-shadow: none;
 }
 
-.mat-table {
-  width: 95%;
+.mat-paginator {
+  width: 100%;
   float: right;
-}
+} 
 
 .mat-card {
-  max-width: 120px;
+  max-width: 250px;
   box-shadow: none;
   margin: none;
   padding-left: 0px;
+}
+
+
+.company-content {
+  display: inline-block;
+}
+
+.company-avatar {
+  width: 64px;
+  height: 64px;
+  margin: 0;
+}
+
+.company-image {
+  width: inherit;
+  height: inherit;
+  margin: inherit;
+}
+
+.mat-toolbar-row, .mat-toolbar-single-row {
+  padding-left: 75px;
+}
+
+td.mat-cell:nth-of-type(1), td.mat-footer-cell:nth-of-type(1), th.mat-header-cell:nth-of-type(1) {
+  padding-left: 75px;
+  width: 15%;
+  justify-content: center;
+}
+
+.mat-form-field {
+  font-size: 20px;
+  width: 30%;
 }
 
 .mat-header-cell {
@@ -54,13 +86,16 @@ th {
   width: 25%;
 }
 
-
-.mat-form-field {
-  font-size: 14px;
-  width: 100%;
+.toolbar-spacer {
+  flex: 1 1 auto;
 }
 
-.mat-paginator {
-  width: 94.95%;
-  float: right;
+.cell-icon {
+  vertical-align: middle;
+  user-select: none;
+}
+
+.sell{
+  display: block;
+  background-color: red;
 }

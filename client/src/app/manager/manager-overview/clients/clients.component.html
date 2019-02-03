@@ -1,18 +1,16 @@
 <mat-toolbar color="primary">
     <mat-toolbar-row>
-      <!-- <mat-icon class="toolbar-icon">verified_user</mat-icon> -->
-      <button mat-icon-button (click)="refreshTable()">
-        <mat-icon>refresh</mat-icon>
-      </button>
-      <span class="toolbar-spacer">Cleints</span>     
+      <mat-icon class="toolbar-icon">people</mat-icon>&nbsp;
+      <span class="toolbar-spacer">Clients</span>     
       <mat-form-field>
         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
       </mat-form-field>
-    </mat-toolbar-row> 
+    </mat-toolbar-row>
+  
   </mat-toolbar>
 
   <div class="mat-elevation-z8">
-  <table mat-table [dataSource]="dataSource" matSort>
+  <table mat-table [dataSource]="dataSource" matSort class="full-width-table">
 
     <!-- Id Column -->
     <ng-container matColumnDef="id">
@@ -48,7 +46,7 @@
 
       <mat-cell *matCellDef="let row; let i=index;">
         <button mat-icon-button color="accent" (click)="manage(row.id)">
-          <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+          <mat-icon class="manage-button">input</mat-icon>
         </button>
       </mat-cell>
 
