@@ -12,6 +12,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { ProjectTreeComponent } from './project-tree/project-tree.component';
 import { MaterialWrapModule } from '../material-module/material.module';
 import { SlideshowModule } from 'ng-simple-slideshow';
+import { CapitalizeFirstPipe } from './core/pipes/capitalizefirst.pipe';
 
 @NgModule({
     declarations: [
@@ -21,6 +22,7 @@ import { SlideshowModule } from 'ng-simple-slideshow';
         SideNavComponent,
         ProfileComponent,
         ProjectTreeComponent,
+        CapitalizeFirstPipe,
     ],
     imports: [
         MaterialWrapModule,
@@ -34,6 +36,7 @@ import { SlideshowModule } from 'ng-simple-slideshow';
         SideNavComponent,
         ProfileComponent,
         ProjectTreeComponent,
+        CapitalizeFirstPipe,
     ],
     providers: [ProfileService, AppConfig],
 })

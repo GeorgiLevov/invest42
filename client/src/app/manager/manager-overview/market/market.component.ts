@@ -13,7 +13,7 @@ import { Subscription } from 'rxjs';
 })
 export class MarketComponent implements AfterViewInit, OnInit, OnDestroy {
 
-  prices: PricesModel[];
+  companies;
   displayedColumns = ['name', 'industry', 'highprice', 'endprice', 'opendate', 'more'];
   dataSource = new MatTableDataSource<any>();
 
@@ -60,6 +60,19 @@ export class MarketComponent implements AfterViewInit, OnInit, OnDestroy {
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+  }
+
+  checkPrices(companies) {
+    this.managerService.getLastMimuteData().subscribe(
+      (oldData) => {
+        oldData.forEach((oldPrice: any, index) => {
+          if (oldPrice.startprice - companies[index].currentprice > 100) {
+            this.managerService.notifyClient(this.companies[index].name).subscribe();
+          }
+        });
+      },
+      err => console.log(err)
+    );
   }
 
   applyFilter(filterValue: string) {

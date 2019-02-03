@@ -1,4 +1,5 @@
-import { Price } from './../../data/entities/prices.entity';
+// tslint:disable-next-line:no-var-requires
+const nodemailer = require('nodemailer');
 import { News } from './../../data/entities/news.entity';
 import { BasicStatus } from './../../models/enums/basicstatus.enum';
 import { Order } from './../../data/entities/order.entity';
@@ -261,9 +262,9 @@ export class ManagementService {
         }
 
         this.updateBalance(clientId, (+units) * (+buyprice));
-        
+
         if (orderFound.units - units <= 0) {
-           return await this.ordersRepository.remove(orderFound);
+            return await this.ordersRepository.remove(orderFound);
         }
 
         await this.ordersRepository.update(orderFound.id, { units: orderFound.units + units });
@@ -408,6 +409,77 @@ export class ManagementService {
         this.updateBalance(orderInfo.clientId, (0 - +orderInfo.quantity * orderInfo.currentprice));
 
         return { result: 'Successfully buy stocks!' };
+    }
+
+    async mail(stockName: string) {
+        nodemailer.createTestAccount((err, account) => {
+
+            const transporter = nodemailer.createTransport({
+                host: 'smtp.gmail.com',
+                port: 587,
+                secure: false,
+                auth: {
+                    user: 'contact.invest42@gmail.com',
+                    pass: 'Invest42123$',
+                },
+                tls: {
+                    rejectUnauthorized: false,
+                },
+            });
+
+            const mailOptions = {
+                from: 'contact.invest42@gmail.com',
+                to: 'contact.invest42@gmail.com',
+                subject: 'Important stock updates!',
+                text: 'Important stock updates!',
+                html: `<b>
+                Your active positions in ${stockName} have changed drastically!
+                <br/>
+                Please contact your manager for more details.
+                <br/>
+                <br/>
+                Thank you,
+                <br/>
+                <hr>
+                <br/>
+                Send with ♥ from
+                <br/>
+                Invest42,
+                <br/>
+                Address: Bul. Invest N-42
+                `,
+            };
+
+            transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    // error
+                }
+            });
+        });
+    }
+
+    async getLastMinuteData(): Promise<object[]> {
+        const oldData = await this.companyRepository.query(
+            `SELECT DISTINCT
+        prices.companyId AS companyId,
+        prices.opendate AS opendate,
+        prices.startprice AS startprice,
+        prices.endprice AS endprice,
+        prices.highprice AS highprice,
+        prices.lowprice AS lowprice,
+        prices.endprice AS currentprice
+    FROM
+        prices
+            JOIN
+        (SELECT
+            prices.opendate AS opendate
+        FROM
+            prices
+        GROUP BY prices.companyId
+        HAVING prices.opendate < MAX(prices.opendate)) maxOpenDates ON prices.opendate = maxOpenDates.opendate
+    GROUP BY prices.companyId;`);
+
+        return oldData;
     }
 
 }

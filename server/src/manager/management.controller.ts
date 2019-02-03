@@ -113,6 +113,19 @@ export class ManagementController {
         return this.managementService.sellStock(info.orderId);
     }
 
+    @Post('notify')
+    notifyManager(@Body() info): object {
+        this.managementService.mail(info.stockName);
+        return { result: 'Successfully notified client!' };
+    }
+
+    @Get('old-data')
+    @Roles(Role.manager)
+    @UseGuards(AuthGuard(), RolesGuard)
+    getLastMinuteDate(): Promise<object[]> {
+        return this.managementService.getLastMinuteData();
+    }
+
     // @Get('investments')
     // @Roles(Role.manager)
     // @UseGuards(AuthGuard(), RolesGuard)
