@@ -93,9 +93,9 @@ export class ManagerService {
             companyId: data.companyId,
             currentprice: +data.currentprice,
             quantity: +data.quantity,
-            sellprice: +data.sellprice,
-            stopLoss: +data.stopLoss,
-            takeProfit: +data.takeProfit
+            sellprice: +data.currentprice,
+            // stopLoss: +data.stopLoss,
+            // takeProfit: +data.takeProfit
         };
 
         return this.http.post(`${this.appConfig.apiUrl}/client/buy`, info);

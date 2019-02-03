@@ -261,9 +261,9 @@ export class ManagementService {
         }
 
         this.updateBalance(clientId, (+units) * (+buyprice));
-        
+
         if (orderFound.units - units <= 0) {
-           return await this.ordersRepository.remove(orderFound);
+            return await this.ordersRepository.remove(orderFound);
         }
 
         await this.ordersRepository.update(orderFound.id, { units: orderFound.units + units });
@@ -386,7 +386,7 @@ export class ManagementService {
                 opendate: new Date(),
                 closedate: new Date(),
                 buyprice: orderInfo.currentprice,
-                sellprice: orderInfo.sellprice,
+                sellprice: orderInfo.sellprice * 1.2,
                 units: orderInfo.quantity,
                 companyId: orderInfo.companyId,
                 clientId: orderInfo.clientId,
