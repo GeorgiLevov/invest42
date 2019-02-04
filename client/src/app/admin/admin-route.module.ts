@@ -1,6 +1,5 @@
 import { AdminComponent } from './admin.component';
 import { AdminGuard } from './../shared/core/authentication/admin-guard.service';
-import { RoleGuard } from './../shared/core/authentication/role-guard.service';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './admin-home/home.component';

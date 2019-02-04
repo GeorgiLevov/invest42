@@ -1,0 +1,78 @@
+ .page-container {
+   margin: 1%;
+   margin-left: 75px;
+
+ }
+
+ .company-card {
+   max-width: 300px;
+   min-width: 200px;
+   margin: 1%;
+ }
+
+ .company-image {
+   width: 64px;
+   height: 64px;
+   padding: 0px 0px 10px 10px;
+ }
+
+ .mat-card-header-text {
+   margin: 0px;
+ }
+
+ .preposition {
+   margin: 0 16px;
+ }
+
+.company-details-container{
+  display: inline-block;
+  width: 25%;
+  vertical-align: top;
+  min-width: 25%;
+}
+
+ .news-container {
+   max-width: 332px;
+   min-width: 200px;
+   margin: 1%;
+   display: inline-block;
+ }
+
+ .news-accordion .mat-expansion-panel-header-title,
+ .news-accordion .mat-expansion-panel-header-description {
+   flex-basis: 0;
+ }
+
+ .news-accordion .mat-expansion-panel-header-description {
+   justify-content: flex-end;
+   align-items: center;
+ }
+
+mat-chip-list {
+   margin: 0px;
+   margin-bottom: -10px;
+   color: blue;
+ }
+
+ /* mat-chip {
+   max-width: 200px;
+   margin-left: 1%;
+   margin-bottom: -10px;
+ } */
+ 
+ .chart-container {
+  display: inline-block;
+  width: 75%;
+  vertical-align: top;
+ }
+
+ #chartdiv {
+  margin: 0.3%;
+  display: inline-block;
+  width: 100%;
+  min-width: 45%;
+  height: 650px;
+  max-height: 900px;
+  border-radius: 4px;
+  background-color: white;
+ }

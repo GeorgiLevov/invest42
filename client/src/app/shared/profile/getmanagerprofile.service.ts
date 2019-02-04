@@ -2,7 +2,8 @@ import { AppConfig } from './../../config/app.config';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ManagerProfile } from 'src/app/models/users/manager.model';
+import { ManagerProfile } from '../models/users/manager.model';
+
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };

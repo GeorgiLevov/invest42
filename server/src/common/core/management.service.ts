@@ -1,4 +1,5 @@
-import { Price } from './../../data/entities/prices.entity';
+// tslint:disable-next-line:no-var-requires
+const nodemailer = require('nodemailer');
 import { News } from './../../data/entities/news.entity';
 import { BasicStatus } from './../../models/enums/basicstatus.enum';
 import { Order } from './../../data/entities/order.entity';
@@ -56,15 +57,17 @@ export class ManagementService {
             o.id
         FROM companies as c
         JOIN orders as o ON c.id = o.companyId
-        JOIN clients as cl ON ${clientId} = o.clientId;`,
+        JOIN clients as cl ON ${clientId} = o.clientId
+        WHERE o.status = 'OPEN';`,
         );
 
         return orders;
     }
 
-    async getMarketInfo(): Promise<object[]> {
-        const market = await this.companyRepository.query(
+    async getAllClosedClientOrders(clientId: string): Promise<Order[]> {
+        const orders = await this.clientsRepository.query(
             `SELECT
+            DISTINCT
             c.id,
             c.name,
             c.abbr,
@@ -72,40 +75,123 @@ export class ManagementService {
             c.ceo,
             c.address,
             c.industry,
-            Max(p.opendate),
-            p.startprice,
-            p.endprice,
-            p.highprice,
-            p.lowprice,
-            p.endprice as currentprice
+            o.opendate,
+            o.closedate,
+            o.buyprice,
+            o.sellprice,
+            o.units,
+            o.status,
+            o.id
         FROM companies as c
-        JOIN prices as p ON c.id = p.companyId
-        GROUP BY(c.id);`,
+        JOIN orders as o ON c.id = o.companyId
+        JOIN clients as cl ON ${clientId} = o.clientId
+        WHERE o.status = 'CLOSED';`,
+        );
+
+        return orders;
+    }
+
+    async getMarketInfo(): Promise<object[]> {
+        const market = await this.companyRepository.query(
+            `SELECT DISTINCT
+            c.id,
+            c.name,
+            c.abbr,
+            c.icon,
+            c.ceo,
+            c.address,
+            c.industry,
+            pricesTable.companyId,
+            pricesTable.opendate,
+            pricesTable.startprice,
+            pricesTable.endprice,
+            pricesTable.highprice,
+            pricesTable.lowprice,
+            pricesTable.currentprice
+        FROM
+            (SELECT DISTINCT
+                prices.companyId AS companyId,
+                    prices.opendate AS opendate,
+                    prices.startprice AS startprice,
+                    prices.endprice AS endprice,
+                    prices.highprice AS highprice,
+                    prices.lowprice AS lowprice,
+                    prices.endprice AS currentprice
+            FROM
+                prices
+            JOIN (SELECT
+                MAX(prices.opendate) AS opendate
+            FROM
+                prices
+            GROUP BY prices.companyId) maxOpenDates ON prices.opendate = maxOpenDates.opendate
+            GROUP BY prices.companyId) pricesTable
+                JOIN
+            companies AS c ON c.id = pricesTable.companyId;`,
         );
 
         return market;
     }
 
-    async getClientWatchlist(clientEmail: string): Promise<Company[]> {
+    async getClientWatchlist(clientId: string): Promise<Company[]> {
 
-        const foundClient = await this.clientsRepository.findOne({ email: `${clientEmail}` });
+        const foundClient = await this.clientsRepository.findOne({ id: `${clientId}` });
 
         if (!foundClient) {
             throw new HttpException('There is no such client!', HttpStatus.NOT_FOUND);
         }
 
-        return await foundClient.watchlist;
+        const watchlist = await this.companyRepository.query(
+            ` SELECT DISTINCT
+            c.id,
+            c.name,
+            c.abbr,
+            c.icon,
+            c.ceo,
+            c.address,
+            c.industry,
+            pricesTable.companyId,
+            pricesTable.opendate,
+            pricesTable.startprice,
+            pricesTable.endprice,
+            pricesTable.highprice,
+            pricesTable.lowprice,
+            pricesTable.currentprice
+        FROM
+            (SELECT DISTINCT
+                prices.companyId AS companyId,
+                    prices.opendate AS opendate,
+                    prices.startprice AS startprice,
+                    prices.endprice AS endprice,
+                    prices.highprice AS highprice,
+                    prices.lowprice AS lowprice,
+                    prices.endprice AS currentprice
+            FROM
+                prices
+            JOIN (SELECT
+                MAX(prices.opendate) AS opendate
+            FROM
+                prices
+            GROUP BY prices.companyId) maxOpenDates ON prices.opendate = maxOpenDates.opendate
+            GROUP BY prices.companyId) pricesTable
+                JOIN
+            companies AS c ON c.id = pricesTable.companyId
+                JOIN clients_watchlist_companies ON clients_watchlist_companies.companiesId = c.id
+                JOIN clients ON clients.id = clients_watchlist_companies.clientsId
+                WHERE clients.id = ${foundClient.id};`,
+        );
+
+        return watchlist;
     }
 
-    async addCompanyToWatchlist(clientEmail: string, companyName: string): Promise<object> {
+    async addCompanyToWatchlist(clientId: string, companyId: string): Promise<object> {
 
-        const clientFound = await this.clientsRepository.findOne({ email: `${clientEmail}` });
+        const clientFound = await this.clientsRepository.findOne({ id: `${clientId}` });
 
         if (!clientFound) {
             throw new HttpException('There is no such client!', HttpStatus.NOT_FOUND);
         }
 
-        const foundCompany = await this.companyRepository.findOne({ name: `${companyName}` });
+        const foundCompany = await this.companyRepository.findOne({ id: `${companyId}` });
 
         if (!foundCompany) {
             throw new HttpException('There is no such company!', HttpStatus.NOT_FOUND);
@@ -123,15 +209,15 @@ export class ManagementService {
         return { result: 'Company was successfully added to watchlist!' };
     }
 
-    async removeCompanyFromWatchlist(clientEmail: string, companyName: string): Promise<object> {
+    async removeCompanyFromWatchlist(clientId: string, companyId: string): Promise<object> {
 
-        const clientFound = await this.clientsRepository.findOne({ email: `${clientEmail}` });
+        const clientFound = await this.clientsRepository.findOne({ id: `${clientId}` });
 
         if (!clientFound) {
             throw new HttpException('There is no such client!', HttpStatus.NOT_FOUND);
         }
 
-        const foundCompany = await this.companyRepository.findOne({ name: `${companyName}` });
+        const foundCompany = await this.companyRepository.findOne({ id: `${companyId}` });
 
         if (!foundCompany) {
             throw new HttpException('There is no such company!', HttpStatus.NOT_FOUND);
@@ -148,9 +234,8 @@ export class ManagementService {
         if (index === -1) {
             throw new HttpException('There is no such company in client list!', HttpStatus.NOT_FOUND);
         }
-        clientFound.watchlist = Promise.all(watchlist.splice(index, 1));
-        // tslint:disable-next-line:no-console
-        console.log(clientFound);
+
+        watchlist.splice(index, 1);
         await this.clientsRepository.save(clientFound);
 
         return { result: 'Company was successfully removed from client watchlist!' };
@@ -169,15 +254,43 @@ export class ManagementService {
         return { result: 'Balance was updated successfully!' };
     }
 
-    async updateOrder(orderId: string, units: number): Promise<object> {
+    async updateOrder(orderId: string, units: number, clientId, buyprice): Promise<object> {
 
-        const orderFound = await this.ordersRepository.findOne({ id: `${orderId}` });
-
+        const orderFound = await this.ordersRepository.findOne({ id: `${orderId}` }, { relations: ['company', 'client'] });
         if (!orderFound) {
             throw new HttpException('There is no such order!', HttpStatus.NOT_FOUND);
         }
 
+        this.updateBalance(clientId, (+units) * (+buyprice));
+
+        if (orderFound.units - units <= 0) {
+            return await this.ordersRepository.remove(orderFound);
+        }
+
         await this.ordersRepository.update(orderFound.id, { units: orderFound.units + units });
+
+        const clientFound = await this.clientsRepository.findOne({ id: clientId });
+
+        const order = {
+            opendate: new Date(),
+            closedate: new Date(),
+            buyprice: orderFound.buyprice - 1,
+            sellprice: orderFound.sellprice + 2,
+            units: +`${units * -1}`,
+            status: OrderStatus.closed,
+            companyId: orderFound.company.id,
+        };
+        const createOrder = this.ordersRepository.create(order);
+        const newOrder = await this.ordersRepository.save(createOrder);
+
+        const companyFound = await this.companyRepository.findOne({ id: orderFound.company.id });
+
+        const com = await companyFound.orders;
+        com.push(newOrder);
+        await this.companyRepository.save(companyFound);
+        // console.log(newOrder);
+        clientFound.orders.push(newOrder);
+        await this.clientsRepository.save(clientFound);
 
         return { result: 'Units was updated successfully!' };
     }
@@ -274,7 +387,7 @@ export class ManagementService {
                 opendate: new Date(),
                 closedate: new Date(),
                 buyprice: orderInfo.currentprice,
-                sellprice: orderInfo.sellprice,
+                sellprice: orderInfo.sellprice * (Math.random() * 2),
                 units: orderInfo.quantity,
                 companyId: orderInfo.companyId,
                 clientId: orderInfo.clientId,
@@ -293,7 +406,80 @@ export class ManagementService {
 
         }
 
+        this.updateBalance(orderInfo.clientId, (0 - +orderInfo.quantity * orderInfo.currentprice));
+
         return { result: 'Successfully buy stocks!' };
+    }
+
+    async mail(stockName: string) {
+        nodemailer.createTestAccount((err, account) => {
+
+            const transporter = nodemailer.createTransport({
+                host: 'smtp.gmail.com',
+                port: 587,
+                secure: false,
+                auth: {
+                    user: 'contact.invest42@gmail.com',
+                    pass: 'Invest42123$',
+                },
+                tls: {
+                    rejectUnauthorized: false,
+                },
+            });
+
+            const mailOptions = {
+                from: 'contact.invest42@gmail.com',
+                to: 'contact.invest42@gmail.com',
+                subject: 'Important stock updates!',
+                text: 'Important stock updates!',
+                html: `<b>
+                Your active positions in ${stockName} have changed drastically!
+                <br/>
+                Please contact your manager for more details.
+                <br/>
+                <br/>
+                Thank you,
+                <br/>
+                <hr>
+                <br/>
+                Send with ♥ from
+                <br/>
+                Invest42,
+                <br/>
+                Address: Bul. Invest N-42
+                `,
+            };
+
+            transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    // error
+                }
+            });
+        });
+    }
+
+    async getLastMinuteData(): Promise<object[]> {
+        const oldData = await this.companyRepository.query(
+            `SELECT DISTINCT
+        prices.companyId AS companyId,
+        prices.opendate AS opendate,
+        prices.startprice AS startprice,
+        prices.endprice AS endprice,
+        prices.highprice AS highprice,
+        prices.lowprice AS lowprice,
+        prices.endprice AS currentprice
+    FROM
+        prices
+            JOIN
+        (SELECT
+            prices.opendate AS opendate
+        FROM
+            prices
+        GROUP BY prices.companyId
+        HAVING prices.opendate < MAX(prices.opendate)) maxOpenDates ON prices.opendate = maxOpenDates.opendate
+    GROUP BY prices.companyId;`);
+
+        return oldData;
     }
 
 }

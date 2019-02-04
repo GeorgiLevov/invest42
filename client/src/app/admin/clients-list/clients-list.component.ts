@@ -1,7 +1,7 @@
+import { Subscription } from 'rxjs';
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
 import { AdminService } from '../services/admin.service';
-import { ClientData } from '../../models/interfaces/client-data.model';
 import { AddClientComponent } from '../admin-modals/add-client/add-client.component';
 import { EditClientComponent } from '../admin-modals/edit-client/edit-client.component';
 
@@ -12,16 +12,21 @@ import { EditClientComponent } from '../admin-modals/edit-client/edit-client.com
 })
 export class ClientsListComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: string[] = ['id',
-    'fullname', 'email', 'address', 'availableBalance', 'icon', 'status', 'managerName', 'managerEmail', 'actions'];
+  displayedColumns: string[] = [
+    'id',
+    'icon',
+    'fullname',
+    'email',
+    'address',
+    'availableBalance',
+    'status',
+    'managerName',
+    'actions'];
   dataSource = new MatTableDataSource<ClientData>();
-
-  index: number;
-
-  id: number;
-
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+
+  private subscription: Subscription;
 
   constructor(
     private adminService: AdminService,
@@ -29,15 +34,13 @@ export class ClientsListComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit() {
-    this.getClients();
+    this.subscription = this.getClients().subscribe((res) => {
+      this.dataSource.data = res as ClientData[];
+    });
   }
 
   public getClients = () => {
-    this.adminService.getClientsInfo()
-      .subscribe((res) => {
-        this.dataSource.data = res as ClientData[];
-        // this.adminService.dataChange.next(res); // added
-      });
+   return this.adminService.getClientsInfo();
   }
 
   ngAfterViewInit(): void {
@@ -59,31 +62,31 @@ export class ClientsListComponent implements OnInit, AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result === 1) {
-        this.adminService.dataChange.value.push(this.adminService.getDialogData());
+      if (result) {
+        this.dataSource.data.push(result);
+        this.applyFilter('');
       }
     });
   }
 
-  startEdit(i, id, email, managerEmail) {
-    this.id = id;
-    this.index = i;
-    // console.log(this.index); // for debugging / can be removed
-
+  startEdit(id, email, managerEmail) {
     const dialogRef = this.dialog.open(EditClientComponent, {
       data: { id: id, email: email, managerEmail: managerEmail }
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result === 1) {
-        const foundIndex = this.adminService.dataChange.value.findIndex((x: any) => x.id === this.id);
-        this.adminService.dataChange.value[foundIndex] = this.adminService.getDialogData();
+      if (result) {
+        setTimeout(() => {
+          this.refreshTable();
+        }, 100);
       }
     });
   }
 
   private refreshTable() {
-    this.getClients();
+    return this.subscription = this.getClients().subscribe((res) => {
+      this.dataSource.data = res as ClientData[];
+    });
   }
 
 }

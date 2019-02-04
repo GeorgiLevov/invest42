@@ -1,16 +1,17 @@
-import { CompanyPortfolioComponent } from './company-portfolio/company-portfolio.component';
-import { ClientHistoryComponent } from './client-history/client-history.component';
-import { ClientWatchlistComponent } from './client-watchlist/client-watchlist.component';
-import { ClientMarketComponent } from './client-market/client-market.component';
-import { ClientPortfolioComponent } from './client-portfolio/client-portfolio.component';
-import { ClientsComponent } from './clients/clients.component';
-import { PositionsComponent } from './positions/positions.component';
-import { MarketComponent } from './market/market.component';
-import { ManageClientComponent } from './manage-client/manage-client.component';
-import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { OverviewComponent } from './overview/overview.component';
-import { ClientPositionsComponent } from './client-positions/client-positions.component';
+import { OverviewComponent } from './manager-overview/overview/overview.component';
+import { MarketComponent } from './manager-overview/market/market.component';
+import { PositionsComponent } from './manager-overview/positions/positions.component';
+import { ClientsComponent } from './manager-overview/clients/clients.component';
+import { CompanyPortfolioComponent } from './manager-overview/company-portfolio/company-portfolio.component';
+import { ManageClientComponent } from './management/manage-client/manage-client.component';
+import { ClientPortfolioComponent } from './management/client-portfolio/client-portfolio.component';
+import { ClientPositionsComponent } from './management/client-positions/client-positions.component';
+import { ClientMarketComponent } from './management/client-market/client-market.component';
+import { ClientWatchlistComponent } from './management/client-watchlist/client-watchlist.component';
+import { ClientHistoryComponent } from './management/client-history/client-history.component';
+import { NgModule } from '@angular/core';
+
 
 const routes: Routes = [
     {

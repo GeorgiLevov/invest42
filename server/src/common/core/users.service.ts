@@ -36,7 +36,7 @@ export class UsersService {
     user.password = await bcrypt.hash(user.password, 10);
     await this.usersRepository.create(user);
 
-    const result = await this.usersRepository.save([user]);
+    const result = await this.usersRepository.save(user);
 
     return result;
   }
@@ -47,7 +47,7 @@ export class UsersService {
       throw new Error('Client already exists!');
     }
     await this.clientsRepository.create(client);
-    const result = await this.clientsRepository.save([client]);
+    const result = await this.clientsRepository.save(client);
     return result;
   }
 
@@ -204,8 +204,8 @@ export class UsersService {
             availableBalance: client.availableBalance,
             icon: client.icon,
             status: client.status,
-            managerName: 'No manager',
-            managerEmail: 'No manager',
+            managerName: '-',
+            managerEmail: '-',
           };
 
           return clientInfo;

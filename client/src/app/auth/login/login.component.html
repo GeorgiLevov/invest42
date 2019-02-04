@@ -1,51 +1,41 @@
-<div class="container login-div" layout="row" layout-wrap>
-  <form [formGroup]="loginForm" (ngSubmit)="login()" autocomplete="off">
-    <mat-card tabindex="0" class="login-card">
-      <mat-card-title>
-        <!-- TITLE -->
-        <!-- <mat-icon svgIcon="thumbs-up"></mat-icon> -->
-      </mat-card-title>
-      <mat-card-subtitle>
-        <h2>Log In</h2>
-      </mat-card-subtitle>
-      <mat-card-content>
+<div class="login-title">
+  Invest 42
+</div>
+<div class="login-body">
+
+  <div class="slideshow">
+    <slideshow #slideshow [imageUrls]="imageUrls" [height]="height" [minHeight]="minHeight" [arrowSize]="arrowSize"
+      [showArrows]="showArrows" [disableSwiping]="disableSwiping" [autoPlay]="autoPlay" [stopAutoPlayOnSlide]="stopAutoPlayOnSlide"
+      [debug]="debug" [backgroundSize]="backgroundSize" [backgroundPosition]="backgroundPosition" [backgroundRepeat]="backgroundRepeat"
+      [showDots]="showDots" [dotColor]="dotColor" [showCaptions]="showCaptions" [captionColor]="captionColor"
+      [captionBackground]="captionBackground" [lazyLoad]="lazyLoad" [hideOnNoSlides]="hideOnNoSlides">
+    </slideshow>
+  </div>
+
+  <div class="login-container">
+
+    <div class="container login-div" layout="row" layout-wrap scroll="no">
+      <h2 class="login-form-title">Log In</h2>
+      <form [formGroup]="loginForm" (ngSubmit)="login()" autocomplete="off">
         <!-- EMAIL -->
-
         <input autocomplete="false" name="hidden" type="text" style="display:none;">
-
         <mat-form-field>
           <mat-placeholder class="placeholder">Email</mat-placeholder>
-          <input class="login-input" matInput formControlName="email" id="email-input" type="email" required />
-          <div class="alert" *ngIf="!loginForm.controls['email'].valid && loginForm.controls['email'].touched">
-            <span *ngIf="loginForm.controls['email'].hasError('required') "> {{ genericErrorMsg }} </span>
-            <span *ngIf="loginForm.controls['email'].hasError('minlength') "> {{ genMinLengthMsg }} </span>
-            <span *ngIf="loginForm.controls['email'].hasError('maxlength') "> {{ genMaxLengthMsg }} </span>
-            <span *ngIf="loginForm.controls['email'].hasError('pattern') "> {{ emailErrMsg }} </span>
-          </div>
+          <input class="login-input" matInput formControlName="email" id="email-input" type="email" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+            required />
+          <mat-error *ngIf="!loginForm.controls['email'].valid">{{getEmailErrorMessage()}}</mat-error>
         </mat-form-field>
         <!-- PASSWORD -->
         <mat-form-field>
           <mat-placeholder class="placeholder">Password</mat-placeholder>
           <input class="login-input" matInput formControlName="password" id="password-input" type="password" required />
-          <div class="alert" *ngIf="!loginForm.controls['password'].valid && loginForm.controls['password'].touched">
-            <span *ngIf="loginForm.controls['password'].hasError('required') "> {{ genericErrorMsg }} </span>
-            <span *ngIf="loginForm.controls['password'].hasError('minlength') "> {{ genMinLengthMsg }} </span>
-            <span *ngIf="loginForm.controls['password'].hasError('maxlength') "> {{ genMaxLengthMsg }} </span>
-            <span *ngIf="loginForm.controls['password'].hasError('pattern') "> {{ genericErrorMsg }} </span>
-          </div>
+          <mat-error *ngIf="!loginForm.controls['password'].valid">{{getPassErrorMessage()}}</mat-error>
         </mat-form-field>
-      </mat-card-content>
-      <mat-card-footer>
         <!-- LOGIN -->
-        <mat-card-actions>
-          <button mat-raised-button color="primary" class="login-button" [disabled]="!loginForm.valid">Login</button>
-        </mat-card-actions>
-      </mat-card-footer>
-    </mat-card>
-  </form>
+        <button mat-raised-button color="primary" class="login-button" [disabled]="!loginForm.valid">Login</button>
+      </form>
+    </div>
+    <p class="login-footer"> 2019 Invest42<br/> Authors: Hristo Mirchev and George Levov</p>
+  </div>
+
 </div>
-
-
-<!-- <mat-progress-bar mode="intermediate">
-
-</mat-progress-bar> -->

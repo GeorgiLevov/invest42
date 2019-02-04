@@ -1,32 +1,31 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
 import { AdminService } from '../services/admin.service';
-import { UserData } from '../../models/interfaces/user-data.model';
 import { EditAdminComponent } from '../admin-modals/edit-admin/edit-admin.component';
 import { AddAdminComponent } from '../admin-modals/add-admin/add-admin.component';
+import { UserData } from '../../shared/models/interfaces/user-data.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-admins-list',
   templateUrl: './admins-list.component.html',
   styleUrls: ['./admins-list.component.css']
 })
-export class AdminsListComponent implements OnInit, AfterViewInit {
+export class AdminsListComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  displayedColumns: string[] = ['avatar', 'id', 'fullname', 'email', 'role', 'status', 'actions'];
+  displayedColumns: string[] = [
+    'id',
+    'avatar',
+    'fullname',
+    'email',
+    'status',
+    'actions'];
   dataSource = new MatTableDataSource<UserData>();
-
-  // dataChange: BehaviorSubject<UserData[]> = new BehaviorSubject<UserData[]>([]);
-
-  // dialogData: any;
-
-  index: number;
-
-  id: number;
-
-  role: string;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+
+    public subscription: Subscription;
 
   constructor(
     private adminService: AdminService,
@@ -34,15 +33,17 @@ export class AdminsListComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit() {
-    this.getAdmins();
+    this.subscription = this.getAdmins().subscribe((res) => {
+      this.dataSource.data = res as UserData[];
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   public getAdmins = () => {
-    this.adminService.getAdmins()
-      .subscribe((res) => {
-        this.dataSource.data = res as UserData[];
-        this.adminService.dataChange.next(res); // added
-      });
+    return this.adminService.getAdmins();
   }
 
   ngAfterViewInit(): void {
@@ -59,38 +60,36 @@ export class AdminsListComponent implements OnInit, AfterViewInit {
   }
 
   addNewUser() {
-
     const dialogRef = this.dialog.open(AddAdminComponent, {
       data: {}
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result === 1) {
-        this.adminService.dataChange.value.push(this.adminService.getDialogData());
+      if (result) {
+        this.dataSource.data.push(result);
+        this.applyFilter('');
       }
     });
   }
 
-  startEdit(i, id, email, password) {
-    this.id = id;
-    this.index = i;
-    // console.log(this.index); // for debugging / can be removed
-
+  startEdit(id, email, password) {
     const dialogRef = this.dialog.open(EditAdminComponent, {
       data: { id: id, email: email, password: password }
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result === 1) {
-        const foundIndex = this.adminService.dataChange.value.findIndex((x: any) => x.id === this.id);
-        this.adminService.dataChange.value[foundIndex] = this.adminService.getDialogData();
+      if (result) {
+        setTimeout(() => {
+          this.refreshTable();
+        }, 100);
       }
     });
   }
 
   private refreshTable() {
-    this.getAdmins();
+    return this.subscription = this.getAdmins().subscribe((res) => {
+      this.dataSource.data = res as UserData[];
+    });
   }
-
 }
 

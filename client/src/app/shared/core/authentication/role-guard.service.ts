@@ -1,13 +1,7 @@
 import { Injectable } from '@angular/core';
-import {
-    CanActivate,
-    Router,
-    ActivatedRouteSnapshot
-} from '@angular/router';
-import { debug } from 'util';
-import * as jwt_decode from 'jwt-decode';
+import { CanActivate, Router } from '@angular/router';
 import { AuthenticationService } from './authentication.service';
-import { Role } from '../../../models/enums/role.enum';
+import { Role } from '../../../../../../server/src/models/enums/roles.enum';
 
 @Injectable()
 export class RoleGuard implements CanActivate {
@@ -18,7 +12,6 @@ export class RoleGuard implements CanActivate {
     }
 
     canActivate(): boolean {
-
         if (!this.auth.getToken()) {
             return true;
         }
@@ -31,8 +24,6 @@ export class RoleGuard implements CanActivate {
             return false;
         }
 
-
-        // this.router.navigate(['unauthorised']);  /// should be redirecte to another route :)
         return true;
     }
 }

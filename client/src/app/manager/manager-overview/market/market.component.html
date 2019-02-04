@@ -1,0 +1,95 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <mat-icon class="toolbar-icon">trending_up</mat-icon>&nbsp;
+      <span class="toolbar-spacer">Market</span>     
+      <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+      </mat-form-field>
+    </mat-toolbar-row>
+  
+  </mat-toolbar>
+
+<div class="mat-elevation-z8">
+  <table mat-table class="full-width-table" matSort aria-label="Elements" [dataSource]="dataSource">
+
+    <!-- Company Detail -->
+    <ng-container matColumnDef="name">
+      <div style="text-align: center; justify-content: center;">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Company Details</th>
+      </div>
+      <td mat-cell *matCellDef="let row">
+        <mat-card class="comapny-details">
+          <mat-card-header>
+            <div mat-card-avatar class="company-avatar">
+              <img class="company-image" [src]="'http://localhost:5500//'+row.icon" alt="Company Photo">
+            </div>
+            <mat-card-title>{{row.name}}</mat-card-title>
+            <mat-card-subtitle>{{row.abbr}}</mat-card-subtitle>
+          </mat-card-header>
+        </mat-card>
+      </td>
+    </ng-container>
+
+    <!-- Industry Column -->
+    <ng-container matColumnDef="industry">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Industry</th>
+      <td mat-cell *matCellDef="let row">{{row.industry}}</td>
+    </ng-container>
+
+     <!-- HighLow PRice Column -->
+      <ng-container matColumnDef="highprice">
+          <th mat-header-cell *matHeaderCellDef>High/Low</th>
+          <td mat-cell *matCellDef="let row">
+              <mat-icon class="cell-icon">swap_vert</mat-icon>
+              <div class="prices">
+                <div class="highprice">
+                  {{row.highprice}}
+                </div>
+                <div class="lowprice">
+                  {{row.lowprice}}
+                </div>
+              </div>
+          </td>
+        </ng-container>
+
+    <!-- CurrentPrice Column -->
+    <ng-container matColumnDef="endprice">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Current Price</th>
+      <td mat-cell *matCellDef="let row">
+          
+        <div class="endprice">
+            {{row.endprice}}
+            <mat-icon class="attach-money">attach_money</mat-icon>
+        </div>
+
+      </td>
+    </ng-container>
+
+    <!-- Time of Date Column -->
+    <ng-container matColumnDef="opendate">
+        <th mat-header-cell *matHeaderCellDef>Price Last Updated</th>
+        <td mat-cell *matCellDef="let row">{{row.opendate.replace('T', ' ').slice(0, 19)}}</td>
+      </ng-container>
+
+
+    <!-- More Column -->
+    <ng-container matColumnDef="more">
+      <th mat-header-cell *matHeaderCellDef >Get More</th>
+      <td mat-cell *matCellDef="let row">
+        <button mat-raised-button (click)="companyProfile(row.id)">More Info</button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <div class="no-results" [style.display]="dataSource.length == 0 ? '' : 'none'">
+      No results
+    </div>
+
+  <mat-paginator [pageSizeOptions]="[10, 20, 40, 80, 100]"></mat-paginator>
+
+</div>
+
+<router-outlet></router-outlet>

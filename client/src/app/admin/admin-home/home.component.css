@@ -1,1 +1,31 @@
+.admin-home-container {
+  margin: 5%;
+  margin-top: 1%;
+}
 
+.first-div {
+  max-width: 400px;
+  display: inline-block;
+}
+
+.mat-card {
+  margin: 15px;
+}
+
+.app-tree {
+  max-width: 600px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.add {
+  color: white;
+  display: inline-block;
+}
+
+/* display: inline-block; */
+
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}

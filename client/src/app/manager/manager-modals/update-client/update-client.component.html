@@ -4,8 +4,8 @@
   <form class="mat-dialog-content" (ngSubmit)="submit" #formControl="ngForm">
 
     <div>
-      <p>Current Client Email:</p>
-      <p>{{data.email}}</p>
+      <p>Current Client Email:&nbsp;  <strong>{{data.email}}</strong></p>
+
     </div>
 
     <div class="form">
@@ -17,8 +17,7 @@
     </div>
 
     <div>
-      <p>Current Client Address:</p>
-      <p>{{data.address}}</p>
+      <p>Current Client Address:&nbsp;  <strong>{{data.address}}</strong></p>
     </div>
 
     <div class="form">
@@ -31,7 +30,7 @@
 
     <div mat-dialog-actions>
       <button mat-button type="button" [disabled]="!formControl.valid" [mat-dialog-close]="1" (click)="stopEdit()">Save</button>
-      <button mat-button type="button" (click)="onNoClick()" tabindex="-1">Cancel</button>
+      <button mat-button type="button" (click)="cancel()" tabindex="-1">Cancel</button>
     </div>
   </form>
 </div>

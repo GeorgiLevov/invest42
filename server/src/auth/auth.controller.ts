@@ -49,7 +49,7 @@ export class AuthController {
   }))
   async registerUser(
     @Body() user: UserRegisterDTO,
-    @UploadedFile() file): Promise<UserRegisterDTO[]> {
+    @UploadedFile() file): Promise<UserRegisterDTO> {
     const folder = join('.', 'images');
     if (!file) {
       user.avatar = join(folder, 'default.png');
@@ -90,7 +90,7 @@ export class AuthController {
   }))
   async registerClient(
     @Body() client: ClientRegisterDTO,
-    @UploadedFile() file): Promise<ClientRegisterDTO[]> {
+    @UploadedFile() file): Promise<ClientRegisterDTO> {
     const folder = join('.', 'images');
     if (!file) {
       client.icon = join(folder, 'default.png');

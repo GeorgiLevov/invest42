@@ -1,16 +1,32 @@
+<mat-card class="profile-card" color="primary" *ngIf="managerProfile">
+  <mat-card-header>
+    <div mat-card-avatar>
+      <img class="profile-image" [src]="'http://localhost:5500/'+managerProfile.avatar">
+    </div>
 
-  <mat-card class="example-card" color="primary" *ngIf="managerProfile">
-      <mat-card-header>
-        <div mat-card-avatar>
-          <img class="profile-image" [src]="'http://localhost:5500/'+managerProfile.avatar">
-        </div>
-         
-        <mat-card-title>{{ managerProfile.fullname }}</mat-card-title>
-        <mat-card-subtitle>{{ managerProfile.role }}</mat-card-subtitle>
-      </mat-card-header>
+    <mat-card-title>{{ managerProfile.fullname | capitalizeFirst }}</mat-card-title>
+    <mat-card-subtitle>{{ managerProfile.role }}</mat-card-subtitle>
+  </mat-card-header>
 
-      <mat-card-actions>
-          <span flex></span>
-          <button mat-raised-button class="logout-button" (click)="logout()" color="primary">Logout</button>
-      </mat-card-actions>
-    </mat-card>
+  <mat-card-actions>
+
+    <div *ngIf="managing; then managementButtons else overviewButtons"></div>
+
+    <ng-template #overviewButtons>
+      <button mat-raised-button (click)="logout()" class="logout-button">
+        Logout &nbsp; <mat-icon class="toolbar-icon">exit_to_app</mat-icon>
+      </button>
+    </ng-template>
+
+    <ng-template #managementButtons>
+      <button mat-raised-button (click)="logout()" class="logout-button">
+        <mat-icon class="toolbar-icon">exit_to_app</mat-icon>
+      </button>
+
+      <button mat-raised-button (click)="backToClients()" class="complete-button">
+        Complete &nbsp; <mat-icon class="toolbar-icon">check_box</mat-icon>
+      </button>
+    </ng-template>
+
+  </mat-card-actions>
+</mat-card>

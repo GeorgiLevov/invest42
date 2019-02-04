@@ -1,13 +1,7 @@
 import { Injectable } from '@angular/core';
-import {
-    CanActivate,
-    Router,
-    ActivatedRouteSnapshot
-} from '@angular/router';
-import { debug } from 'util';
-import * as jwt_decode from 'jwt-decode';
+import { CanActivate, Router, } from '@angular/router';
 import { AuthenticationService } from './authentication.service';
-import { Role } from '../../../models/enums/role.enum';
+import { Role } from '../../models/enums/role.enum';
 
 @Injectable()
 export class AdminGuard implements CanActivate {
@@ -18,10 +12,7 @@ export class AdminGuard implements CanActivate {
     }
 
     canActivate(): boolean {
-
-
         if (Role.admin === this.auth.getRole()) {
-            // this.router.navigate(['admin']);
             return true;
         }
 
