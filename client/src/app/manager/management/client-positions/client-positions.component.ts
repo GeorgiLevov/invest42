@@ -53,9 +53,9 @@ export class ClientPositionsComponent implements OnInit, AfterViewInit {
     }
   }
 
-  sell(orderId, units, buyprice) {
+  sell(orderId, units, sellprice) {
     const dialogRef = this.dialog.open(UpdateOrderComponent, {
-      data: { id: orderId, units: units, isSell: true, clientId: this.router.url.split('/')[3], buyprice: buyprice }
+      data: { id: orderId, units: units, isSell: true, clientId: this.router.url.split('/')[3], buyprice: sellprice }
     });
 
     dialogRef.afterClosed().subscribe((result) => {

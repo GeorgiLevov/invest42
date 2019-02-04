@@ -45,11 +45,6 @@
   margin: inherit;
 }
 
-.mat-column-endprice {
-  width:15%;
-  margin: auto;
-}
-
 .mat-toolbar-row, .mat-toolbar-single-row {
   padding-left: 75px;
 }

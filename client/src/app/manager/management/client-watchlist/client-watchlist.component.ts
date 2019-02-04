@@ -12,7 +12,7 @@ import { BuyOrderComponent } from '../../manager-modals/buy-modal/buy-order.comp
 })
 export class ClientWatchlistComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: string[] = ['name', 'industry', 'startprice', 'currentprice', 'removeFromWatchlsit', 'buy'];
+  displayedColumns: string[] = ['name', 'industry', 'startprice', 'currentprice', 'buy', 'removeFromWatchlsit'];
   dataSource = new MatTableDataSource<any>();
   index: number;
   id: number;
@@ -43,8 +43,7 @@ export class ClientWatchlistComponent implements OnInit, AfterViewInit {
     this.managerService.getWatchlist(this.clientId)
       .subscribe((res) => {
         this.dataSource.data = res;
-        // this.managerService.clientDataChange.next(res); // added
-        // console.log(res);
+
       });
   }
 
@@ -70,11 +69,9 @@ export class ClientWatchlistComponent implements OnInit, AfterViewInit {
   }
 
   removeFromWatchlsit(companyId) {
-    // console.log(this.clientId, companyName);
     this.managerService.removeFromWatchlist(this.clientId, companyId)
       .subscribe((data) => {
         this.toastr.success('', 'Successfully removed from watchlist', { timeOut: 1000 });
-        // console.log(data);
       });
   }
 
