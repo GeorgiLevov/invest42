@@ -1,15 +1,13 @@
 <mat-toolbar color="primary">
-  <span>To Do: redesign </span>
-  <span class="spacer"></span>
-  Reload data:
-  <button mat-icon-button (click)="refreshTable()">
-    <mat-icon>refresh</mat-icon>
-  </button>
-</mat-toolbar>
-
-<mat-form-field>
-  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-</mat-form-field>
+    <mat-toolbar-row>
+      <mat-icon class="toolbar-icon">hisotry</mat-icon>&nbsp;
+      <span class="toolbar-spacer">History</span>     
+      <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+      </mat-form-field>
+    </mat-toolbar-row>
+  
+  </mat-toolbar>
 
 <div class="mat-elevation-z8">
   <table mat-table class="full-width-table" matSort aria-label="Elements" [dataSource]="dataSource">
@@ -38,27 +36,46 @@
 
     <!-- Units Column -->
     <ng-container matColumnDef="units">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Units</th>
-      <td mat-cell *matCellDef="let row">{{row.units}}</td>
-    </ng-container>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Units</th>
+        <td mat-cell  *matCellDef="let row">
+          <div class="units">
+            {{row.units}}
+          </div>
+        </td>
+      </ng-container>
 
-    <!-- Buy Price Column -->
-    <ng-container matColumnDef="prices">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Buy Price</th>
-      <td mat-cell *matCellDef="let row">{{row.buyprice}}</td>
-    </ng-container>
+    Buy Price Column
+    <ng-container matColumnDef="buyprice">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Price Bought</th>
+        <td mat-cell *matCellDef="let row">
+            <div class="buyprice">
+                {{row.buyprice}}
+                <mat-icon class="attach-money">attach_money</mat-icon>
+            </div>
+        </td>
+      </ng-container>
 
-    <!-- Sell Price Column -->
+    Sell Price Column
     <ng-container matColumnDef="sellprice">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Sell Price</th>
-      <td mat-cell *matCellDef="let row">{{row.sellprice}}</td>
-    </ng-container>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Price Sold</th>
+        <td mat-cell *matCellDef="let row">
+            <div class="buyprice">
+                {{row.sellprice}}
+                <mat-icon class="attach-money">attach_money</mat-icon>
+            </div>
+        </td>
+      </ng-container>
 
-    <!-- Profit Column -->
-    <ng-container matColumnDef="profit">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Profit</th>
-      <td mat-cell *matCellDef="let row">{{row.sellprice - row.buyprice}}</td>
-    </ng-container>
+    <!-- Profit/Loss Column -->
+    <ng-container matColumnDef="dateopened">
+        <th mat-header-cell *matHeaderCellDef>Profit</th>
+        <td mat-cell *matCellDef="let row">
+            <div class="buyprice">
+                {{row.sellprice - row.buyprice}}
+                <mat-icon class="attach-money">attach_money</mat-icon>
+            </div>
+        </td>
+      </ng-container>
 
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

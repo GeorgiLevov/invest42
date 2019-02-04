@@ -70,7 +70,7 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Sell</th>
       <td mat-cell *matCellDef="let row">
           <div class="trade-button">
-              <button class="sell-button" mat-raised-button  (click)="sell(row.id, row.units, row.buyprice)">Sell</button>
+              <button class="sell-button" mat-raised-button  (click)="sell(row.id, row.units, row.sellprice)">Sell</button>
           </div>
       </td>
     </ng-container>
@@ -78,7 +78,6 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
-
 
   <mat-paginator [pageSizeOptions]="[10, 20, 40, 80, 100]"></mat-paginator>
 

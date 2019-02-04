@@ -10,7 +10,7 @@ import { ManagerService } from '../../services/manager.service';
 })
 export class ClientHistoryComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: string[] = ['name', 'industry', 'units', 'prices', 'sellprice', 'profit'];
+  displayedColumns: string[] = ['name', 'industry', 'units', 'buyprice', 'sellprice', 'dateopened'];
   dataSource = new MatTableDataSource<any>();
   index: number;
   id: number;
@@ -32,9 +32,10 @@ export class ClientHistoryComponent implements OnInit, AfterViewInit {
   public getClientClosedOrders = () => {
     this.managerService.getClosedOrdersInfo(this.router.url.split('/')[3])
       .subscribe((res) => {
+        console.log('chc: ', res);
         this.dataSource.data = res;
         // this.managerService.clientDataChange.next(res); // added
-        // console.log(res);
+
       });
   }
 

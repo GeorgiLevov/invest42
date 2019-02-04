@@ -61,8 +61,8 @@ export class ClientPortfolioComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result === 1) {
-        this.showClientPortfolio(this.client.id);
+      if (result) {
+        setTimeout(() => this.showClientPortfolio(this.client.id), 50);
       }
     });
   }
@@ -73,8 +73,8 @@ export class ClientPortfolioComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result === 1) {
-        this.showClientPortfolio(this.client.id);
+      if (result) {
+        setTimeout(() => this.showClientPortfolio(this.client.id), 50);
       }
     });
   }

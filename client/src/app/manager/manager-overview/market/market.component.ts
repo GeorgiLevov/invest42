@@ -31,6 +31,8 @@ export class MarketComponent implements AfterViewInit, OnInit, OnDestroy {
   ngOnInit() {
     this.subscription = this.returnWithPrices().subscribe((res: any) => {
       this.dataSource.data = res;
+      this.companies = res;
+      this.checkPrices(this.companies);
       setInterval((): any => {
         (this.dataSource.data).forEach((company) => {
           const direction = (Math.random() >= 0.5) ? 1 : -1;
