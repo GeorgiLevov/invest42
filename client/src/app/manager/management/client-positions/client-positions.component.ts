@@ -34,7 +34,7 @@ export class ClientPositionsComponent implements OnInit, AfterViewInit {
     this.managerService.getActiveOrdersInfo(this.router.url.split('/')[3])
       .subscribe((res) => {
         this.dataSource.data = res;
-        console.log(res);
+        // console.log(res);
         // this.managerService.clientDataChange.next(res); // added
         // console.log(res);
       });
