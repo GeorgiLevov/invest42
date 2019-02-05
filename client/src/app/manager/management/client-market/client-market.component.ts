@@ -46,7 +46,7 @@ export class ClientMarketComponent implements OnInit, AfterViewInit, OnDestroy {
             company.currentprice = Number(priceToUpdate);
           }
         });
-      }, 1000);
+      }, 500);
     });
 
   }

@@ -33,6 +33,8 @@ export class BuyOrderComponent {
     stopEdit(): void {
         // console.log(this.data);
         this.managerService.buyStocks(this.data).subscribe(
-            data => this.toastr.success('', 'Successfully buy stocks!'));
+            data => {
+                this.toastr.success('', 'Successfully buy stocks!');
+            });
     }
 }

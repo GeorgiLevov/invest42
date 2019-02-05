@@ -42,7 +42,7 @@ export class MarketComponent implements AfterViewInit, OnInit, OnDestroy {
             company.endprice = Number(priceToUpdate);
           }
         });
-      }, 1000);
+      }, 500);
 
     });
   }

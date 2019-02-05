@@ -1,8 +1,7 @@
 
 import { Injectable } from '@angular/core';
 import { AppConfig } from 'src/app/config/app.config';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { map, switchMap } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
 import { Router } from '@angular/router';
 
