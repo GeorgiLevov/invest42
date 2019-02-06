@@ -1,25 +1,54 @@
-// import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { AuthenticationServiceMock } from './mocks/authentication-mock.service';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-// import { HomeComponent } from './home.component';
+import { HomeComponent } from './home.component';
+import { AuthenticationService } from '../../shared/core/authentication/authentication.service';
+import { SharedModule } from '../../shared/shared.module';
 
-// describe('HomeComponent', () => {
-//   let component: HomeComponent;
-//   let fixture: ComponentFixture<HomeComponent>;
+describe('HomeComponent', () => {
+    let component: HomeComponent;
+    let fixture: ComponentFixture<HomeComponent>;
 
-//   beforeEach(async(() => {
-//     TestBed.configureTestingModule({
-//       declarations: [ HomeComponent ]
-//     })
-//     .compileComponents();
-//   }));
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                SharedModule
+            ],
+            declarations: [
+                HomeComponent
+            ],
+            providers: [
+                {
+                    provide: AuthenticationService,
+                    useClass: AuthenticationServiceMock
+                }
+            ]
+        })
+            .compileComponents();
+    }));
 
-//   beforeEach(() => {
-//     fixture = TestBed.createComponent(HomeComponent);
-//     component = fixture.componentInstance;
-//     fixture.detectChanges();
-//   });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(HomeComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-//   it('should create', () => {
-//     expect(component).toBeTruthy();
-//   });
-// });
+    it('should be created', () => {
+
+        // Arrange & Act & Assert
+        expect(component).toBeTruthy();
+    });
+
+    it('logout method should be called 1 time', () => {
+
+        // Arrange
+        spyOn(component, 'logout');
+
+        // Act
+        component.logout();
+
+        // Assert
+        expect(component.logout).toHaveBeenCalledTimes(1);
+    });
+
+});
