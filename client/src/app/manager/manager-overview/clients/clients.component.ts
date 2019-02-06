@@ -45,7 +45,7 @@ export class ClientsComponent implements OnInit, AfterViewInit {
     }
   }
 
-  private refreshTable(): void {
+  public refreshTable(): void {
     this.getClients();
   }
 
