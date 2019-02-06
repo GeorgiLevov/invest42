@@ -1,44 +1,57 @@
-<li *ngFor="let client of clients; let i = index">
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <mat-icon class="toolbar-icon">trending_up</mat-icon>&nbsp;
+      <span class="toolbar-spacer">Positions</span>     
 
-  <mat-accordion>
-    <mat-expansion-panel>
+    </mat-toolbar-row>
+  
+  </mat-toolbar>
 
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          {{client.id}}
-        </mat-panel-title>
-        <mat-panel-title>
-          {{client.fullname}}
-        </mat-panel-title>
-        <mat-panel-title>
-          {{client.email}}
-        </mat-panel-title>
-        <mat-panel-title>
-          {{client.icon}}
-        </mat-panel-title>
-        <mat-panel-description>
-          View Orders:
-        </mat-panel-description>
+<div class="positions-page-container">
+  <div *ngFor="let client of clients; let i = index" class="client-row-container">
 
-      </mat-expansion-panel-header>
+    <mat-accordion>
+      <mat-expansion-panel>
 
-      <h3>Orders: </h3>
-      <table matSort (matSortChange)="sortData($event, i)">
-        <tr>
-          <th mat-sort-header="id">Id</th>
-          <th mat-sort-header="units">Units</th>
-          <th mat-sort-header="closedate">Close Date</th>
-          <th mat-sort-header="buyprice">Buy Price</th>
-        </tr>
+        <mat-expansion-panel-header>
 
-        <tr *ngFor="let order of client.orders">
-          <td>{{order.id}}</td>
-          <td>{{order.units}}</td>
-          <td>{{order.closedate}}</td>
-          <td>{{order.buyprice}}</td>
-        </tr>
-      </table>
+          <mat-panel-title class="title">
+           Client ID: {{client.id}}
+          </mat-panel-title>
+          <mat-panel-title class="title">
+              <img class="client-avatar" [src]="'http://localhost:5500//'+client.icon" alt="Company Photo">
+            </mat-panel-title>
+          <mat-panel-title class="title">
+           Name: {{client.fullname}}
+          </mat-panel-title>
+          <mat-panel-title class="title">
+           Email: {{client.email}}
+          </mat-panel-title>
 
-    </mat-expansion-panel>
-  </mat-accordion>
-</li>
+          <!-- <mat-panel-description>
+            View Orders:
+          </mat-panel-description> -->
+
+        </mat-expansion-panel-header>
+        <div class="mat-table-container">
+          <h2>Orders: </h2>
+          <table matSort (matSortChange)="sortData($event, i)">
+            <tr>
+              <th mat-sort-header="id">Id</th>
+              <th mat-sort-header="units">Units</th>
+              <th mat-sort-header="closedate">Close Date</th>
+              <th mat-sort-header="buyprice">Buy Price</th>
+            </tr>
+
+            <tr *ngFor="let order of client.orders">
+              <td>{{order.id}}</td>
+              <td>{{order.units}}</td>
+              <td>{{order.closedate.slice(0,10)}} {{order.closedate.slice(11,19)}}</td>
+              <td>{{order.buyprice}}</td>
+            </tr>
+          </table>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</div>
