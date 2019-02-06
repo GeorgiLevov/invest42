@@ -12,10 +12,6 @@ export class ClientsComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['id', 'icon', 'fullname', 'email', 'actions'];
   dataSource = new MatTableDataSource<ClientData>();
 
-  index: number;
-
-  id: number;
-
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -29,11 +25,10 @@ export class ClientsComponent implements OnInit, AfterViewInit {
     this.getClients();
   }
 
-  public getClients = () => {
+  public getClients = (): void => {
     this.managerService.getClientsInfo()
       .subscribe((res) => {
         this.dataSource.data = res as ClientData[];
-        // this.adminService.dataChange.next(res); // added
       });
   }
 
@@ -42,7 +37,7 @@ export class ClientsComponent implements OnInit, AfterViewInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  applyFilter(filterValue: string) {
+  applyFilter(filterValue: string): void {
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
     if (this.dataSource.paginator) {
@@ -50,11 +45,11 @@ export class ClientsComponent implements OnInit, AfterViewInit {
     }
   }
 
-  private refreshTable() {
+  private refreshTable(): void {
     this.getClients();
   }
 
-  manage(clientId) {
+  manage(clientId): void {
     this.router.navigate([`manager/client/${clientId}`]);
   }
 
