@@ -1,12 +1,8 @@
 import { AuthenticationServiceMock } from './mocks/authentication-mock.service';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { HomeComponent } from './home.component';
 import { AuthenticationService } from '../../shared/core/authentication/authentication.service';
-import { SharedModule } from '../../shared/shared.module';
 import { MaterialWrapModule } from '../../material-module/material.module';
-import { CommonModule } from '@angular/common';
-import { ProjectTreeComponent } from '../../shared/project-tree/project-tree.component';
 import { MockProjectTreeComponent } from './mocks/project-tree-mock.component';
 
 describe('HomeComponent', () => {
