@@ -32,7 +32,7 @@ export class ClientHistoryComponent implements OnInit, AfterViewInit {
   public getClientClosedOrders = () => {
     this.managerService.getClosedOrdersInfo(this.router.url.split('/')[3])
       .subscribe((res) => {
-        console.log('chc: ', res);
+        // console.log('chc: ', res);
         this.dataSource.data = res;
         // this.managerService.clientDataChange.next(res); // added
 
