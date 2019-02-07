@@ -1,5 +1,4 @@
 import { Subscription } from 'rxjs';
-
 import { LoginService } from './../services/login.service';
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -8,7 +7,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { AuthenticationService } from '../../shared/core/authentication/authentication.service';
 import { Role } from '../../../../../server/src/models/enums/roles.enum';
-import { BreakpointObserver } from '@angular/cdk/layout';
 import { IImage } from 'ng-simple-slideshow';
 import { UserLogin } from '../../shared/models/user-login.model';
 
