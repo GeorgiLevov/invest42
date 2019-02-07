@@ -13,8 +13,8 @@ createConnection().then(async (conn) => {
             company1.name = 'Prison-Escobar';
             company1.abbr = 'PBR';
             company1.icon = 'images\\companies\\escobar.png';
-            company1.ceo = 'CEO of Prison Escobar';
-            company1.address = 'Prison Escobar Address';
+            company1.ceo = 'Hristo Mirchev';
+            company1.address = 'ul. "61-va" nom. 10, g.k. Vrajdebna, Sofia';
             company1.industry = Industry.health;
             // market1.prices = Promise.resolve([]);
             // market1.orders = Promise.resolve([]);
@@ -27,27 +27,26 @@ createConnection().then(async (conn) => {
             company2.name = 'Tick-42';
             company2.industry = Industry.tech;
             company2.abbr = 'T42';
-            company2.address = 'Tick-42 Address';
-            company2.ceo = 'CEO of Tick-42';
+            company2.address = 'ul. "Doctor Atanas Moskov" nom. 40, 1715 g.k. Mladost 4, Sofia';
+            company2.ceo = 'Leslie Spiro';
             company2.icon = 'images\\companies\\tick42.png';
             // market2.prices = Promise.resolve([]);
             // market2.orders = Promise.resolve([]);
             // market2.clients = Promise.resolve([]);
-            company2.startdate = new Date(2006, 0, 0, 8, 0);
-
+            company2.startdate = new Date(1942, 1, 1, 8, 0);
             await companyRepository.save(company2);
 
             const company3 = new Company();
             company3.name = 'Tesla';
             company3.abbr = 'TSA';
             company3.icon = 'images\\companies\\tesla.png';
-            company3.ceo = 'CEO of Tesla Escobar';
-            company3.address = 'Tesla Address';
+            company3.ceo = 'Elon Musk';
+            company3.address = '500 Deer Creek Road Palo Alto, CA 94304 United States';
             company3.industry = Industry.tech;
             // market3.prices = Promise.resolve([]);
             // market3.orders = Promise.resolve([]);
             // market3.clients = Promise.resolve([]);
-            company3.startdate = new Date(1997, 12, 31, 12, 0);
+            company3.startdate = new Date(2003, 7, 1, 0, 0);
 
             await companyRepository.save(company3);
 
@@ -55,13 +54,13 @@ createConnection().then(async (conn) => {
             company4.name = 'Amazon';
             company4.industry = Industry.tech;
             company4.abbr = 'AZN';
-            company4.address = 'Amazon Address';
-            company4.ceo = 'CEO of Amazon';
+            company4.address = '410 Terry Ave. North Seattle, WA';
+            company4.ceo = 'Jeff Bezos';
             company4.icon = 'images\\companies\\amazon.png';
             // market4.prices = Promise.resolve([]);
             // market4.orders = Promise.resolve([]);
             // market4.clients = Promise.resolve([]);
-            company4.startdate = new Date(1994, 0, 0, 8, 0);
+            company4.startdate = new Date(1994, 7, 5, 0, 0);
 
             await companyRepository.save(company4);
 
@@ -69,13 +68,13 @@ createConnection().then(async (conn) => {
             company5.name = 'Telerik Academy';
             company5.abbr = 'TKA';
             company5.icon = 'images\\companies\\telerik.png';
-            company5.ceo = 'CEO of Telerik';
-            company5.address = 'Telerik Address';
+            company5.ceo = 'Vasil Terziev and Svetozar Georgiev';
+            company5.address = 'Aleksandar Malinov Boulevard 31, 1729 g.k. Mladost 1A, Sofia';
             company5.industry = Industry.tech;
             // market5.prices = Promise.resolve([]);
             // market5.orders = Promise.resolve([]);
             // market5.clients = Promise.resolve([]);
-            company5.startdate = new Date(1997, 12, 31, 12, 0);
+            company5.startdate = new Date(2002, 1, 1, 0, 0);
 
             await companyRepository.save(company5);
 
@@ -83,13 +82,13 @@ createConnection().then(async (conn) => {
             company6.name = 'Google';
             company6.industry = Industry.tech;
             company6.abbr = 'GOOG';
-            company6.address = 'Google Address';
-            company6.ceo = 'CEO of Google';
+            company6.address = '600 Amphitheatre Parkway, Mountain View, California, U.S.';
+            company6.ceo = 'Pichai Sundararajan';
             company6.icon = 'images\\companies\\google.png';
             // market6.prices = Promise.resolve([]);
             // market6.orders = Promise.resolve([]);
             // market6.clients = Promise.resolve([]);
-            company6.startdate = new Date(1991, 1, 0, 8, 0);
+            company6.startdate = new Date(1998, 9, 4, 8, 0);
 
             await companyRepository.save(company6);
 
@@ -97,13 +96,13 @@ createConnection().then(async (conn) => {
             company7.name = 'Facebook';
             company7.industry = Industry.tech;
             company7.abbr = 'FCB';
-            company7.address = 'Facebook Address';
-            company7.ceo = 'CEO of Facebook';
+            company7.address = '1601 Willow Road Menlo Park, California, U.S.';
+            company7.ceo = 'Mark Zuckerberg';
             company7.icon = 'images\\companies\\facebook.png';
             // market7.prices = Promise.resolve([]);
             // market7.orders = Promise.resolve([]);
             // market7.clients = Promise.resolve([]);
-            company7.startdate = new Date(2006, 0, 12, 8, 0);
+            company7.startdate = new Date(2004, 2, 4, 8, 0);
 
             await companyRepository.save(company7);
 
@@ -111,13 +110,13 @@ createConnection().then(async (conn) => {
             company8.name = 'Microsoft';
             company8.industry = Industry.tech;
             company8.abbr = 'MRS';
-            company8.address = 'Microsoft Address';
-            company8.ceo = 'CEO of Microsoft';
+            company8.address = 'One Microsoft Way, Redmond, Washington, U.S.';
+            company8.ceo = 'Satya Nadella';
             company8.icon = 'images\\companies\\microsoft.png';
             // market8.prices = Promise.resolve([]);
             // market8.orders = Promise.resolve([]);
             // market8.clients = Promise.resolve([]);
-            company8.startdate = new Date(1955, 0, 0, 8, 0);
+            company8.startdate = new Date(1975, 4, 4, 0, 0);
 
             await companyRepository.save(company8);
 
@@ -125,13 +124,13 @@ createConnection().then(async (conn) => {
             company9.name = 'Apple';
             company9.industry = Industry.tech;
             company9.abbr = 'APPL';
-            company9.address = 'Apple Address';
-            company9.ceo = 'CEO of Apple';
+            company9.address = '1 Apple Park Way, Cupertino, California, U.S.';
+            company9.ceo = 'Tim Cook';
             company9.icon = 'images\\companies\\apple.png';
             // market9.prices = Promise.resolve([]);
             // market9.orders = Promise.resolve([]);
             // market9.clients = Promise.resolve([]);
-            company9.startdate = new Date(1974, 0, 0, 8, 0);
+            company9.startdate = new Date(1976, 4, 1, 8, 0);
 
             await companyRepository.save(company9);
 
@@ -139,13 +138,13 @@ createConnection().then(async (conn) => {
             company10.name = 'HSBC';
             company10.industry = Industry.finance;
             company10.abbr = 'HSBC';
-            company10.address = 'HSBC Address';
-            company10.ceo = 'CEO of HSBC';
+            company10.address = '8 Canada Square, Canary Wharf, London, UK';
+            company10.ceo = 'Mark Tucker (Group Chairman)';
             company10.icon = 'images\\companies\\hsbc.png';
             // market9.prices = Promise.resolve([]);
             // market9.orders = Promise.resolve([]);
             // market9.clients = Promise.resolve([]);
-            company10.startdate = new Date(1911, 0, 1, 8, 0);
+            company10.startdate = new Date(1865, 3, 3, 8, 0);
 
             await companyRepository.save(company10);
 

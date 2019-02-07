@@ -261,10 +261,10 @@ export class ManagementService {
             throw new HttpException('There is no such order!', HttpStatus.NOT_FOUND);
         }
 
-        this.updateBalance(clientId, (+units) * (+buyprice));
+        this.updateBalance(clientId, 0 - ( (+units) * (+buyprice) )  );
 
         if (orderFound.units - units <= 0) {
-            return await this.ordersRepository.remove(orderFound);
+            return await this.ordersRepository.delete(orderFound);
         }
 
         await this.ordersRepository.update(orderFound.id, { units: orderFound.units + units });
