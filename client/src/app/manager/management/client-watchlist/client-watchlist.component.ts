@@ -55,15 +55,14 @@ export class ClientWatchlistComponent implements OnInit, AfterViewInit {
       this.dataSource.paginator.firstPage();
     }
   }
-
   buy(companyId, currentprice) {
     const dialogRef = this.dialog.open(BuyOrderComponent, {
       data: { clientId: this.router.url.split('/')[3], companyId: companyId, currentprice: currentprice }
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result === 1) {
-        this.getMarketInfo();
+      if (result) {
+      this.getMarketInfo();
       }
     });
   }
@@ -71,7 +70,9 @@ export class ClientWatchlistComponent implements OnInit, AfterViewInit {
   removeFromWatchlsit(companyId) {
     this.managerService.removeFromWatchlist(this.clientId, companyId)
       .subscribe((data) => {
+        this.refreshTable();
         this.toastr.success('', 'Successfully removed from watchlist', { timeOut: 1000 });
+
       });
   }
 

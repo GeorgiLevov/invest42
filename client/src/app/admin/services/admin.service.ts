@@ -41,7 +41,6 @@ export class AdminService {
     }
 
     addUser(user: UserRegisterData): Observable<UserData> {
-        // console.log(user);
         return this.http.post<UserData>(`${this.appConfig.apiUrl}/register/user`, user);
     }
 

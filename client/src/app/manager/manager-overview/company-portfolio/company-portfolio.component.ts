@@ -91,7 +91,6 @@ export class CompanyPortfolioComponent implements OnInit, AfterViewInit, OnDestr
 
       this.portfolioService.getCompanyPrices(this.params.id, limit)
         .subscribe((prices) => {
-          // console.log(prices);
           this.prices = prices as PriceData[];
           chart.data = prices.reverse();
         },

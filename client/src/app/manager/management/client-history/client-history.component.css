@@ -135,3 +135,11 @@ th {
   vertical-align: sub;
   display: inline-block;
 }
+
+.red {
+  color: red;
+}
+
+.green {
+  color: green;
+}

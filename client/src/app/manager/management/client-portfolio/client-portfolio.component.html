@@ -9,7 +9,6 @@
               <mat-list>
                   <mat-list-item > <b>Fullname:</b>&nbsp;  {{client.fullname}} </mat-list-item>
                   <mat-list-item > <b>Email:</b>&nbsp; {{client.email}} </mat-list-item>
-                  <mat-list-item > <b>Address:</b>&nbsp; {{client.address}} </mat-list-item>
                   <mat-list-item > <b>Date Registered:</b>&nbsp; {{client.dateOfCreation.slice(0, 10)}} </mat-list-item>
                   <mat-list-item > <b>Address:</b>&nbsp; {{client.address}} </mat-list-item>
               </mat-list>
@@ -34,23 +33,20 @@
           Available Balance:<br/> 
         </p> -->
         <div class="important-info-header">
-          <p class="number-info">{{client.availableBalance}}</p>
+          <p class="number-info">{{client.availableBalance}} <mat-icon class="attach-money">attach_money</mat-icon></p> 
           Available Balance
         </div>
         <mat-divider></mat-divider>
         <div class="important-info-header">
-          <p class="number-info">{{clientOrders.length}}</p>
+          <p class="orders-info">{{clientOrders.length}}</p>
           Active Investments
         </div>
         <mat-divider></mat-divider>
         <div class="important-info-header" *ngIf="client.orders">
-            <p class="number-info">{{profitLoss}}</p>
+            <p class="profit-loss-info" [ngClass]="{green : profitLoss > 0, red: profitLoss < 0}">{{profitLoss}} <mat-icon class="attach-money">attach_money</mat-icon></p>
             Profit/Loss
           </div>
           <mat-divider></mat-divider>
-            <!-- <mat-list-item > <b>Address:</b>&nbsp; {{client.address}} </mat-list-item>
-            <mat-list-item > <b>Date Registered:</b>&nbsp; {{client.dateOfCreation.slice(0, 10)}} </mat-list-item>
-            <mat-list-item > <b>Address:</b>&nbsp; {{client.address}} </mat-list-item> -->
 
 
     </mat-card-content>

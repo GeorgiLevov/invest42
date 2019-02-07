@@ -39,7 +39,6 @@ export class OverviewService {
   }
 
   async companyDetais(companyId: string): Promise<object> {
-    // console.log(companyId);
     const foundCompany: Company = await this.companyRepository.findOne({ where: { id: companyId } });
     if (!foundCompany) {
       throw new HttpException('Company not found', HttpStatus.NOT_FOUND);
@@ -127,7 +126,6 @@ export class OverviewService {
     if (assignedClients.length < 1) {
       throw new HttpException('You have no assigned clients.', HttpStatus.BAD_REQUEST);
     }
-    // console.log(assignedClients);
     return assignedClients;
   }
 

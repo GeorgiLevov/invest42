@@ -288,7 +288,6 @@ export class ManagementService {
         const com = await companyFound.orders;
         com.push(newOrder);
         await this.companyRepository.save(companyFound);
-        // console.log(newOrder);
         clientFound.orders.push(newOrder);
         await this.clientsRepository.save(clientFound);
 
@@ -400,7 +399,6 @@ export class ManagementService {
             const com = await companyFound.orders;
             com.push(newOrder);
             await this.companyRepository.save(companyFound);
-            // console.log(newOrder);
             clientFound.orders.push(newOrder);
             await this.clientsRepository.save(clientFound);
 

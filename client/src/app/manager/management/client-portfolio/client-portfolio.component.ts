@@ -19,7 +19,8 @@ export class ClientPortfolioComponent implements OnInit {
   private params = this.route.snapshot.params;
   public client: ClientModel;
   public clientOrders: Orders[];
-  public profitLoss;
+  public profitLoss: number;
+
   constructor(
     private route: ActivatedRoute,
     private managerService: ManagerService,
@@ -38,16 +39,11 @@ export class ClientPortfolioComponent implements OnInit {
           this.client = clientData as ClientModel;
           const orders = clientData.orders as Orders[];
           this.clientOrders = orders.filter((clientOrder) => clientOrder.status === 'OPEN');
-          // console.log(this.clientOrders);
           this.profitLoss = this.clientProfitLoss(this.clientOrders);
         },
         error => console.log(error)
       );
   }
-  // this.managerService.updateBalance({ id : this.data.clientId, isDeposit: false, balance: this.data.currentPrice })
-  // .subscribe(
-  //     data => console.log(data)
-  // )
 
   clientProfitLoss(clientOrders) {
     return clientOrders.reduce((reducer, clientOrder: Orders) => {

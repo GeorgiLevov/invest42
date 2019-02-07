@@ -47,7 +47,39 @@
   }
 
   .number-info {
+      text-shadow: 2px 4px 3px rgba(0,0,0,0.3);
       font-size: 72px;
       margin-bottom: 0;
       margin-top: 5%;
   }
+
+  .orders-info {
+    /* color: #0033cc; */
+    text-shadow: 2px 4px 3px rgba(0,0,0,0.3);
+    font-size: 72px;
+    margin-bottom: 0;
+    margin-top: 5%;
+}
+
+.attach-money {
+    color: #000;
+    font-size: 1.1em;
+    vertical-align: sub;
+    display: inline-block;
+  }
+
+  .profit-loss-info {  	
+    text-shadow: 2px 4px 3px rgba(0,0,0,0.3);
+    font-size: 72px;
+    margin-bottom: 0;
+    margin-top: 5%;
+}
+
+.red {
+    color: red;
+}
+
+
+.green {
+    color: green;
+}

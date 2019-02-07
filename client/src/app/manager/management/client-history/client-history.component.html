@@ -70,8 +70,8 @@
     <ng-container matColumnDef="dateopened">
         <th mat-header-cell *matHeaderCellDef>Profit</th>
         <td mat-cell *matCellDef="let row">
-            <div class="buyprice">
-                {{row.sellprice - row.buyprice}}
+            <div class="buyprice" [ngClass]="{green : row.sellprice - row.buyprice > 0, red: row.sellprice - row.buyprice < 0}">
+               {{row.sellprice - row.buyprice}}
                 <mat-icon class="attach-money">attach_money</mat-icon>
             </div>
         </td>
