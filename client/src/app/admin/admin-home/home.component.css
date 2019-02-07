@@ -4,12 +4,23 @@
 }
 
 .first-div {
-  max-width: 400px;
+  /* margin-top: 50px; */
+  width: 100%;
   display: inline-block;
 }
 
 .mat-card {
-  margin: 15px;
+  margin: 10px;
+  width: 100%;
+}
+
+
+.home-text {
+  text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+  /* margin: 5%; */
+  font-size: 60px;
+  line-height: 120%;
+  text-align: center;
 }
 
 .app-tree {
