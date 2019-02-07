@@ -131,6 +131,10 @@ o Your application should receive the prices for the instruments by subscribing 
 | 1.	   | Georgi  	| Levov      |
 | 2.	   | Hristo  	| Mirchev 	 |
 
+## Presentation
+
+[https://prezi.com/view/wy5uoSg0wUufDz6Hi6T8/](Presentation Link)
+
 
 [https://my.telerikacademy.com/Users/GeorgeLevov](https://my.telerikacademy.com/Users/GeorgeLevov)
 
